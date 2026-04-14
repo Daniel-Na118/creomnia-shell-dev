@@ -3,8 +3,8 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Effects
 import Quickshell
-import Caelestia.Internal
-import Caelestia.Services
+import Creomnia.Internal
+import Creomnia.Services
 import qs.components
 import qs.services
 import qs.config

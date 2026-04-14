@@ -5,7 +5,7 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
-import Caelestia
+import Creomnia
 import qs.components
 import qs.services
 import qs.config

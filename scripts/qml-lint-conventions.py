@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 """Checks QML files for Qt coding convention violations.
-
-https://doc.qt.io/qt-6/qml-codingconventions.html
-
 Required ordering within each QML object (with blank line between sections):
   1. id
   2. property declarations
@@ -74,7 +71,7 @@ def import_group(module: str) -> tuple[int, int] | None:
         return (3, depth)
     if module == "M3Shapes":
         return (4, depth)
-    if module == "Caelestia" or module.startswith("Caelestia."):
+    if module == "Creomnia" or module.startswith("Creomnia."):
         return (5, depth)
     if module == "qs.components" or module.startswith("qs.components."):
         return (6, depth)

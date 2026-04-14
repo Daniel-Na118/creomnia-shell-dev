@@ -8,7 +8,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
-import Caelestia
+import Creomnia
 import qs.components
 import qs.components.containers
 import qs.components.controls

@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Services.UPower
-import Caelestia
+import Creomnia
 import qs.config
 
 Scope {
@@ -50,7 +50,7 @@ Scope {
     Timer {
         id: hibernateTimer
 
-        interval: 5000
+        interval: 2000
         onTriggered: Quickshell.execDetached(["systemctl", "hibernate"])
     }
 }

@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import ".."
 import QtQuick
-import Caelestia.Models
+import Creomnia.Models
 import qs.components
 import qs.components.controls
 import qs.components.effects

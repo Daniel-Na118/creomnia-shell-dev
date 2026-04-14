@@ -5,7 +5,7 @@ import QtQuick.Layouts
 import QtQuick.Shapes
 import Quickshell
 import Quickshell.Services.Mpris
-import Caelestia.Services
+import Creomnia.Services
 import qs.components
 import qs.components.controls
 import qs.services

@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Services.Notifications
-import Caelestia
+import Creomnia
 import qs.services
 import qs.config
 import qs.utils

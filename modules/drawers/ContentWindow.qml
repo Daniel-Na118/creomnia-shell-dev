@@ -6,7 +6,7 @@ import QtQuick.Effects
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
-import Caelestia.Blobs
+import Creomnia.Blobs
 import qs.components
 import qs.components.containers
 import qs.services

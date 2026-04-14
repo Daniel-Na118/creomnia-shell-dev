@@ -4,8 +4,8 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Pipewire
-import Caelestia
-import Caelestia.Services
+import Creomnia
+import Creomnia.Services
 import qs.config
 
 Singleton {

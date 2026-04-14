@@ -5,7 +5,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
-import Caelestia
+import Creomnia
 import qs.components.misc
 import qs.services
 import qs.config

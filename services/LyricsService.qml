@@ -4,7 +4,7 @@ import "../utils/scripts/lrcparser.js" as Lrc
 import QtQuick
 import Quickshell
 import Quickshell.Io
-import Caelestia
+import Creomnia
 import qs.config
 import qs.utils
 

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
-import Caelestia
+import Creomnia
 import qs.components
 import qs.components.effects
 import qs.services

@@ -1,6 +1,6 @@
 import QtQuick
 import Quickshell
-import Caelestia.Internal
+import Creomnia.Internal
 import qs.utils
 
 Image {

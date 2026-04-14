@@ -1,7 +1,7 @@
 pragma Singleton
 
 import Quickshell
-import Caelestia
+import Creomnia
 import qs.config
 import qs.utils
 

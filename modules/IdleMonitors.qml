@@ -3,7 +3,7 @@ pragma ComponentBehavior: Bound
 import "lock"
 import Quickshell
 import Quickshell.Wayland
-import Caelestia.Internal
+import Creomnia.Internal
 import qs.services
 import qs.config
 

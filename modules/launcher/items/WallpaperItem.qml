@@ -1,5 +1,5 @@
 import QtQuick
-import Caelestia.Models
+import Creomnia.Models
 import qs.components
 import qs.components.effects
 import qs.components.images

@@ -4,7 +4,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
 import Quickshell
-import Caelestia.Models
+import Creomnia.Models
 import qs.components
 import qs.components.controls
 import qs.components.filedialog
