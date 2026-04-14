@@ -60,7 +60,7 @@ JsonObject {
             name: "Random",
             icon: "casino",
             description: "Switch to a random wallpaper",
-            command: ["caelestia", "wallpaper", "-r"],
+            command: ["creomnia", "wallpaper", "-r"],
             enabled: true,
             dangerous: false
         },
@@ -124,7 +124,7 @@ JsonObject {
             name: "Settings",
             icon: "settings",
             description: "Configure the shell",
-            command: ["caelestia", "shell", "controlCenter", "open"],
+            command: ["creomnia", "shell", "controlCenter", "open"],
             enabled: true,
             dangerous: false
         }

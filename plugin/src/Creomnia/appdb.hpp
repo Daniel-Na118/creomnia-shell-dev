@@ -68,7 +68,7 @@ class AppDb : public QObject {
     Q_PROPERTY(QString path READ path WRITE setPath NOTIFY pathChanged REQUIRED)
     Q_PROPERTY(QObjectList entries READ entries WRITE setEntries NOTIFY entriesChanged REQUIRED)
     Q_PROPERTY(QStringList favouriteApps READ favouriteApps WRITE setFavouriteApps NOTIFY favouriteAppsChanged REQUIRED)
-    Q_PROPERTY(QQmlListProperty<caelestia::AppEntry> apps READ apps NOTIFY appsChanged)
+    Q_PROPERTY(QQmlListProperty<creomnia::AppEntry> apps READ apps NOTIFY appsChanged)
 
 public:
     explicit AppDb(QObject* parent = nullptr);

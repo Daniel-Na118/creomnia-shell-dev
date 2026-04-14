@@ -33,6 +33,12 @@ Item {
                 enabled: Config.dashboard.showDashboard
             },
             {
+                component: toolsComponent,
+                iconName: "checklist",
+                text: qsTr("Tools"),
+                enabled: Config.dashboard.showTools
+            },
+            {
                 component: mediaComponent,
                 iconName: "queue_music",
                 text: qsTr("Media"),
@@ -177,6 +183,12 @@ Item {
                 MediaWrapper {
                     visibilities: root.visibilities
                 }
+            }
+
+            Component {
+                id: toolsComponent
+
+                TodoTools {}
             }
 
             Component {

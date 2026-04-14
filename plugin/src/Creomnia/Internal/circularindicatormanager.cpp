@@ -49,7 +49,7 @@ inline qreal getFractionInRange(qreal playtime, qreal start, qreal duration) {
 
 } // namespace
 
-namespace caelestia::internal {
+namespace creomnia::internal {
 
 CircularIndicatorManager::CircularIndicatorManager(QObject* parent)
     : QObject(parent)

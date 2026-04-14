@@ -1,8 +1,8 @@
 {
   "nodes": {
-    "caelestia-cli": {
+    "creomnia-cli": {
       "inputs": {
-        "caelestia-shell": [],
+        "creomnia-shell": [],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -10,13 +10,13 @@
       "locked": {
         "lastModified": 1772764582,
         "narHash": "sha256-hSwjmpXHFqzSXrndVekA0IheKrbC7wi0IbfZTYwlmXw=",
-        "owner": "caelestia-dots",
+        "owner": "creomnia-dots",
         "repo": "cli",
         "rev": "4bcd42f482d038b98145b0b03388244b68b7d35d",
         "type": "github"
       },
       "original": {
-        "owner": "caelestia-dots",
+        "owner": "creomnia-dots",
         "repo": "cli",
         "type": "github"
       }
@@ -59,7 +59,7 @@
     },
     "root": {
       "inputs": {
-        "caelestia-cli": "caelestia-cli",
+        "creomnia-cli": "creomnia-cli",
         "nixpkgs": "nixpkgs",
         "quickshell": "quickshell"
       }

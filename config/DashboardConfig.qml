@@ -7,7 +7,8 @@ JsonObject {
     property int resourceUpdateInterval: 1000
     property int dragThreshold: 50
     property bool showDashboard: true
-    property bool showMedia: true
+    property bool showMedia: false
+    property bool showTools: true
     property bool showPerformance: true
     property bool showWeather: true
     property Sizes sizes: Sizes {}

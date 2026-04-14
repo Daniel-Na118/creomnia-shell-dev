@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell.Services.UPower
-import Caelestia.Internal
+import Creomnia.Internal
 import qs.components
 import qs.components.misc
 import qs.services

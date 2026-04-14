@@ -2,7 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell.Io
-import Caelestia
+import Creomnia
 import qs.config
 
 // TODO: handle this better later

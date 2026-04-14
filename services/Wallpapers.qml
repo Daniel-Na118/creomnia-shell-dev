@@ -22,7 +22,7 @@ Searcher {
 
     function setWallpaper(path: string): void {
         actualCurrent = path;
-        Quickshell.execDetached(["caelestia", "wallpaper", "-f", path, ...smartArg]);
+        Quickshell.execDetached(["creomnia", "wallpaper", "-f", path, ...smartArg]);
     }
 
     function preview(path: string): void {

@@ -37,7 +37,7 @@
         }
     },
     "general": {
-        "logo": "caelestia",
+        "logo": "creomnia",
         "apps": {
             "terminal": ["foot"],
             "audio": ["pavucontrol"],
@@ -277,7 +277,7 @@
                 "name": "Random",
                 "icon": "casino",
                 "description": "Switch to a random wallpaper",
-                "command": ["caelestia", "wallpaper", "-r"],
+                "command": ["creomnia", "wallpaper", "-r"],
                 "enabled": true,
                 "dangerous": false
             },
@@ -341,7 +341,7 @@
                 "name": "Settings",
                 "icon": "settings",
                 "description": "Configure the shell",
-                "command": ["caelestia", "shell", "controlCenter", "open"],
+                "command": ["creomnia", "shell", "controlCenter", "open"],
                 "enabled": true,
                 "dangerous": false
             }
@@ -488,26 +488,26 @@
 
 ### I want to make my own changes to the hyprland config!
 
-You can add your custom hyprland configs to `~/.config/caelestia/hypr-user.conf`.
+You can add your custom hyprland configs to `~/.config/creomnia/hypr-user.conf`.
 
 ### I want to make my own changes to other stuff!
 
-See the [manual installation](https://github.com/caelestia-dots/shell?tab=readme-ov-file#manual-installation) section
+See the [manual installation](https://github.com/creomnia-dots/shell?tab=readme-ov-file#manual-installation) section
 for the corresponding repo.
 
 ### I want to disable XXX feature!
 
-Please read the [configuring](https://github.com/caelestia-dots/shell?tab=readme-ov-file#configuring) section in the readme.
+Please read the [configuring](https://github.com/creomnia-dots/shell?tab=readme-ov-file#configuring) section in the readme.
 If there is no corresponding option, make feature request.
 
 ### How do I make my colour scheme change with my wallpaper?
 
-Set a wallpaper via the launcher or `caelestia wallpaper` and set the scheme to the dynamic scheme via the launcher
-or `caelestia scheme set`. e.g.
+Set a wallpaper via the launcher or `creomnia wallpaper` and set the scheme to the dynamic scheme via the launcher
+or `creomnia scheme set`. e.g.
 
 ```sh
-caelestia wallpaper -f <path/to/file>
-caelestia scheme set -n dynamic
+creomnia wallpaper -f <path/to/file>
+creomnia scheme set -n dynamic
 ```
 
 ### My wallpapers aren't showing up in the launcher!

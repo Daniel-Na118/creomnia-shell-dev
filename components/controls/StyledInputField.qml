@@ -10,6 +10,7 @@ Item {
     id: root
 
     property string text: ""
+    property alias placeholderText: inputField.placeholderText
     property var validator: null
     property bool readOnly: false
     property int horizontalAlignment: TextInput.AlignHCenter
@@ -20,6 +21,7 @@ Item {
     signal textEdited(string text)
 
     signal editingFinished
+    signal accepted()
 
     implicitWidth: 70
     implicitHeight: inputField.implicitHeight + Appearance.padding.small * 2
@@ -68,6 +70,10 @@ Item {
 
             onEditingFinished: {
                 root.editingFinished();
+            }
+
+            onAccepted: {
+                root.accepted();
             }
 
             Binding {

@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Shapes
-import Caelestia.Services
+import Creomnia.Services
 import qs.components
 import qs.services
 import qs.config
