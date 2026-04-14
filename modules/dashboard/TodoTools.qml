@@ -206,7 +206,7 @@ Item {
                         text: qsTr("Dark Mode")
                         icon: Colours.light ? "light_mode" : "dark_mode"
                         checked: !Colours.light
-                        onToggled: Colours.setMode(checked ? "dark" : "light")
+                        onClicked: Colours.setMode(checked ? "dark" : "light")
                     }
                 }
             }

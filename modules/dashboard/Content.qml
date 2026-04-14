@@ -7,6 +7,7 @@ import Quickshell.Widgets
 import qs.components
 import qs.components.filedialog
 import qs.config
+import "."
 
 Item {
     id: root
