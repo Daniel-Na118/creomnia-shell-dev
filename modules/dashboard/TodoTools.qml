@@ -60,7 +60,7 @@ Item {
                     StyledRect {
                         id: rect
                         Layout.fillWidth: true
-                        implicitHeight: 35 // Match StyledInputField height
+                        implicitHeight: 35
                         color: (itemHover.hovered && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
@@ -76,8 +76,8 @@ Item {
 
                         StyledText {
                             anchors.fill: parent
-                            anchors.leftMargin: Appearance.padding.normal / 2
-                            anchors.rightMargin: Appearance.padding.normal / 2
+                            anchors.leftMargin: Appearance.padding.normal
+                            anchors.rightMargin: Appearance.padding.normal
                             text: modelData.text || ""
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
@@ -89,7 +89,6 @@ Item {
                     IconButton {
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
-                        type: IconButton.Text
                         onClicked: {
                             if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(modelData.id);
@@ -220,7 +219,7 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 10
+                    Layout.topMargin: 20
                     spacing: 0
 
                     Item {
