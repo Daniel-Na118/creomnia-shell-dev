@@ -61,45 +61,17 @@ Item {
                     model: TodoService.todos
 
                     delegate: RowLayout {
-<<<<<<< HEAD
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 40
-=======
                         width: parent.width
->>>>>>> 63715941 (data binding fix)
                         spacing: Appearance.spacing.small
                         
                         required property var modelData
 
-<<<<<<< HEAD
-                        Item {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
-
-                            RowLayout {
-                                anchors.fill: parent
-                                spacing: Appearance.padding.normal
-
-                                Item { Layout.preferredWidth: Appearance.padding.small }
-
-                                StyledText {
-                                    Layout.fillWidth: true
-                                    Layout.fillHeight: true
-                                    text: modelData.text
-                                    verticalAlignment: Text.AlignVCenter
-                                    color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                    font.strikeout: modelData.checked
-                                    elide: Text.ElideRight
-                                }
-                            }
-=======
                         StyledInputField {
                             id: todoItemDisplay
                             Layout.fillWidth: true
                             text: modelData.text
                             readOnly: true
                             horizontalAlignment: TextInput.AlignLeft
->>>>>>> 63715941 (data binding fix)
                         }
 
                         IconButton {
