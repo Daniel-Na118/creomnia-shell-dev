@@ -69,7 +69,7 @@ Item {
                         StyledInputField {
                             id: todoItemDisplay
                             Layout.fillWidth: true
-                            text: "   " + modelData.text
+                            text: "  " + modelData.text
                             readOnly: true
                             horizontalAlignment: TextInput.AlignLeft
                         }
