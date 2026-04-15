@@ -115,7 +115,7 @@ Item {
                     
                     onAccepted: {
                         if (text.trim() !== "") {
-                            TodoService.addTodo("     " + text.trim());
+                            TodoService.addTodo(text.trim());
                             text = "";
                         }
                     }
