@@ -55,21 +55,21 @@ Item {
 
             Column {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.small
+                spacing: Appearance.spacing.normal
 
                 Repeater {
                     model: TodoService.todos
 
                     delegate: RowLayout {
                         width: parent.width
-                        spacing: Appearance.spacing.small
+                        spacing: Appearance.spacing.normal
                         
                         required property var modelData
 
                         StyledInputField {
                             id: todoItemDisplay
                             Layout.fillWidth: true
-                            text: modelData.text
+                            text: "   " + modelData.text
                             readOnly: true
                             horizontalAlignment: TextInput.AlignLeft
                         }
@@ -115,7 +115,7 @@ Item {
                     
                     onAccepted: {
                         if (text.trim() !== "") {
-                            TodoService.addTodo("   " + text.trim());
+                            TodoService.addTodo("     " + text.trim());
                             text = "";
                         }
                     }
