@@ -63,26 +63,28 @@ Item {
 
                     delegate: RowLayout {
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 40
                         spacing: Appearance.spacing.small
                         
                         required property var modelData
 
-                        Item {
+                        StyledRect {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 40
+                            implicitHeight: 40
+                            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                            radius: Appearance.rounding.small
 
                             RowLayout {
                                 anchors.fill: parent
-                                spacing: Appearance.padding.normal
+                                anchors.leftMargin: Appearance.padding.normal
+                                anchors.rightMargin: Appearance.padding.normal
+                                spacing: 0
 
                                 Item { Layout.preferredWidth: Appearance.padding.small }
 
                                 StyledText {
                                     Layout.fillWidth: true
-                                    Layout.fillHeight: true
-                                    text: modelData.text
                                     verticalAlignment: Text.AlignVCenter
+                                    text: modelData.text
                                     color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                                     font.strikeout: modelData.checked
                                     elide: Text.ElideRight
