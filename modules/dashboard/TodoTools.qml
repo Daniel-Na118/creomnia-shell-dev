@@ -203,10 +203,9 @@ Item {
 
                     ToggleRow {
                         Layout.fillWidth: true
-                        text: qsTr("Dark Mode")
-                        icon: Colours.light ? "light_mode" : "dark_mode"
+                        label: qsTr("Dark Mode")
                         checked: !Colours.light
-                        onClicked: Colours.setMode(checked ? "dark" : "light")
+                        toggle.onToggled: Colours.setMode(checked ? "dark" : "light")
                     }
                 }
             }
