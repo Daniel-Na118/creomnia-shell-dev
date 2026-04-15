@@ -72,55 +72,49 @@ Item {
                         Behavior on color { CAnim {} }
                         Behavior on opacity { Anim { duration: Appearance.anim.durations.small } }
 
-                        Row {
-                            anchors.fill: parent
+                        Text {
+                            anchors.left: parent.left
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             anchors.leftMargin: Appearance.padding.normal
+                            anchors.right: checkMouse.left
+                            anchors.rightMargin: Appearance.spacing.small
+                            verticalAlignment: Text.AlignVCenter
+                            text: modelData.text
+                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                            font.strikeout: modelData.checked
+                            elide: Text.ElideRight
+                        }
+
+                        MouseArea {
+                            id: checkMouse
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             anchors.rightMargin: Appearance.padding.normal
-                            spacing: Appearance.spacing.small
+                            width: 40
+                            hoverEnabled: true
 
                             Text {
-                                anchors.verticalCenter: parent.verticalCenter
-                                width: parent.width - 40 - Appearance.spacing.small
-                                text: modelData.text
-                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                font.strikeout: modelData.checked
-                                elide: Text.ElideRight
-                            }
-
-                            MouseArea {
-                                id: checkMouse
-                                width: 40
-                                height: parent.height
-                                hoverEnabled: true
-
-                                Rectangle {
-                                    anchors.centerIn: parent
-                                    width: 28
-                                    height: 28
-                                    color: "transparent"
-
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: {
-                                            if (checkMouse.containsMouse && modelData.checked) {
-                                                return "✕"
-                                            } else if (modelData.checked) {
-                                                return "☑"
-                                            } else {
-                                                return "☐"
-                                            }
-                                        }
-                                        font.pixelSize: 20
-                                        color: Colours.palette.m3primary
+                                anchors.centerIn: parent
+                                text: {
+                                    if (checkMouse.containsMouse && modelData.checked) {
+                                        return "✕"
+                                    } else if (modelData.checked) {
+                                        return "☑"
+                                    } else {
+                                        return "☐"
                                     }
                                 }
+                                font.pixelSize: 20
+                                color: Colours.palette.m3primary
+                            }
 
-                                onClicked: {
-                                    if (checkMouse.containsMouse && modelData.checked) {
-                                        TodoService.removeTodo(modelData.id)
-                                    } else {
-                                        TodoService.toggleTodo(modelData.id)
-                                    }
+                            onClicked: {
+                                if (checkMouse.containsMouse && modelData.checked) {
+                                    TodoService.removeTodo(modelData.id)
+                                } else {
+                                    TodoService.toggleTodo(modelData.id)
                                 }
                             }
                         }
