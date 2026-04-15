@@ -218,8 +218,6 @@ Item {
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.small
 
-                property real previousVolume: 0.5
-
                 StyledText {
                     text: qsTr("Quick Actions")
                     font.pointSize: Appearance.font.size.normal
@@ -266,28 +264,8 @@ Item {
                             type: IconButton.Tonal
                             radius: width / 2
                             onClicked: {
-                                if (Audio.sink && Audio.sink.audio) {
-                                    if (Audio.muted) {
-                                        // Unmute and restore volume
-                                        Audio.sink.audio.muted = false;
-                                        // Use saved volume, or default to 0.5 if it's somehow 0
-                                        const volumeToRestore = quickActions.previousVolume > 0 ? quickActions.previousVolume : 0.5;
-                                        Audio.sink.audio.volume = volumeToRestore;
-                                    } else {
-                                        // Mute and save current volume
-                                        quickActions.previousVolume = Audio.volume;
-                                        Audio.sink.audio.muted = true;
-                                    }
-                                }
-                            }
-
-                            Connections {
-                                target: Audio
-                                function onVolumeChanged() {
-                                    // Always track the volume when not muted so we have a good value to restore
-                                    if (!Audio.muted && Audio.volume > 0) {
-                                        quickActions.previousVolume = Audio.volume;
-                                    }
+                                if (Audio.sink?.audio) {
+                                    Audio.sink.audio.muted = !Audio.sink.audio.muted;
                                 }
                             }
                         }
