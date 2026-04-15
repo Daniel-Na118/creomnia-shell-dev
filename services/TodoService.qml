@@ -30,10 +30,15 @@ Singleton {
     }
 
     function toggleTodo(id: real): void {
-        const newList = todos.slice();
-        const todo = newList.find(t => t.id === id);
-        if (todo) {
-            todo.checked = !todo.checked;
+        const index = todos.findIndex(t => t.id === id);
+        if (index !== -1) {
+            const newList = todos.slice();
+            const todo = newList[index];
+            newList[index] = {
+                id: todo.id,
+                text: todo.text,
+                checked: !todo.checked
+            };
             todos = newList;
             save();
         }

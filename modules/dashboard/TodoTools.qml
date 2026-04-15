@@ -27,6 +27,7 @@ Item {
         // Left Side: Todo List
         ColumnLayout {
             Layout.fillWidth: true
+            Layout.preferredWidth: 300 // Set a base preferred width to prevent shrinking
             Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.normal
 
@@ -89,6 +90,8 @@ Item {
                     IconButton {
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
+                        toggle: true
+                        checked: modelData.checked
                         onClicked: {
                             if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(modelData.id);
@@ -219,7 +222,8 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 20
+                    Layout.topMargin: 25
+                    Layout.bottomMargin: 25
                     spacing: 0
 
                     Item {
