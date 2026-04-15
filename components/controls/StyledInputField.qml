@@ -26,12 +26,6 @@ Item {
     implicitWidth: 70
     implicitHeight: inputField.implicitHeight + Appearance.padding.small * 2
 
-    onTextChanged: {
-        if (inputField.text !== text) {
-            inputField.text = text;
-        }
-    }
-
     StyledRect {
         id: container
 
@@ -69,6 +63,7 @@ Item {
             validator: root.validator
             readOnly: root.readOnly
             enabled: root.enabled
+            text: root.text
 
             onTextChanged: {
                 if (root.text !== text) {

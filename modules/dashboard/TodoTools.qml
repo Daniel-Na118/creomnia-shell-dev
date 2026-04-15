@@ -49,57 +49,52 @@ Item {
                 }
             }
 
-            ColumnLayout {
-                id: todoItems
-                Layout.fillWidth: true
-                spacing: Appearance.spacing.smaller
+            Repeater {
+                model: TodoService.todos
 
-                Repeater {
-                    model: TodoService.todos
+                delegate: RowLayout {
+                    id: delegateRoot
+                    Layout.fillWidth: true
+                    spacing: Appearance.spacing.small
 
-                    delegate: StyledRect {
-                        id: delegateRoot
+                    StyledRect {
+                        id: rect
                         Layout.fillWidth: true
-                        implicitHeight: 35
-                        color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                        implicitHeight: 35 // Match StyledInputField height
+                        color: (itemHover.hovered && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
                         border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
                         
                         opacity: (itemHover.hovered && modelData.checked) ? 0.6 : 1
                         Behavior on opacity { Anim { duration: Appearance.anim.durations.small }}
+                        Behavior on color { CAnim {} }
 
                         HoverHandler {
                             id: itemHover
                         }
 
-                        RowLayout {
+                        StyledText {
                             anchors.fill: parent
-                            anchors.leftMargin: Appearance.padding.normal
-                            anchors.rightMargin: Appearance.padding.small
-                            spacing: Appearance.spacing.small
+                            anchors.leftMargin: Appearance.padding.normal / 2
+                            anchors.rightMargin: Appearance.padding.normal / 2
+                            text: modelData.text || ""
+                            font.strikeout: modelData.checked
+                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                            elide: Text.ElideRight
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                    }
 
-                            StyledText {
-                                Layout.fillWidth: true
-                                Layout.preferredWidth: 0
-                                text: modelData.text || ""
-                                font.strikeout: modelData.checked
-                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                elide: Text.ElideRight
-                                verticalAlignment: Text.AlignVCenter
-                            }
-
-                            IconButton {
-                                icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
-                                color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
-                                type: IconButton.Text
-                                onClicked: {
-                                    if (itemHover.hovered && modelData.checked) {
-                                        TodoService.removeTodo(modelData.id);
-                                    } else {
-                                        TodoService.toggleTodo(modelData.id);
-                                    }
-                                }
+                    IconButton {
+                        icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
+                        color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
+                        type: IconButton.Text
+                        onClicked: {
+                            if (itemHover.hovered && modelData.checked) {
+                                TodoService.removeTodo(modelData.id);
+                            } else {
+                                TodoService.toggleTodo(modelData.id);
                             }
                         }
                     }
@@ -134,6 +129,8 @@ Item {
                     }
                 }
             }
+
+            Item { Layout.fillHeight: true }
         }
 
         // Right Side: Tools
@@ -223,7 +220,7 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 5
+                    Layout.topMargin: 10
                     spacing: 0
 
                     Item {
