@@ -44,7 +44,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Show Dashboard tab")
+            label: qsTr("Dashboard Tab")
             checked: root.rootItem.showDashboard
             onToggled: checked => {
                 root.rootItem.showDashboard = checked;
@@ -54,7 +54,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Show Tools tab")
+            label: qsTr("Tools Tab")
             checked: root.rootItem.showTools
             onToggled: checked => {
                 root.rootItem.showTools = checked;
@@ -64,7 +64,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Show Media tab")
+            label: qsTr("Media Tab")
             checked: root.rootItem.showMedia
             onToggled: checked => {
                 root.rootItem.showMedia = checked;
@@ -74,7 +74,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Show Performance tab")
+            label: qsTr("Performance Tab")
             checked: root.rootItem.showPerformance
             onToggled: checked => {
                 root.rootItem.showPerformance = checked;
@@ -84,7 +84,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Show Weather tab")
+            label: qsTr("Weather Tab")
             checked: root.rootItem.showWeather
             onToggled: checked => {
                 root.rootItem.showWeather = checked;
