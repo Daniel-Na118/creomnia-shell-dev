@@ -71,6 +71,14 @@ Item {
                             Anim { duration: Appearance.anim.durations.small }
                         }
 
+                        add: Transition {
+                            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Appearance.anim.durations.small }
+                        }
+
+                        remove: Transition {
+                            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: Appearance.anim.durations.small }
+                        }
+
                         HoverHandler {
                             id: itemHover
                         }
