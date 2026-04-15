@@ -104,7 +104,6 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.topMargin: TodoService.todos.length > 0 ? -Appearance.spacing.normal : 0
                 spacing: Appearance.spacing.small
                 visible: TodoService.todos.length < 5
                 implicitHeight: 40
