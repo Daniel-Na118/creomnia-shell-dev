@@ -27,7 +27,8 @@ Item {
         // Left Side: Todo List
         ColumnLayout {
             Layout.fillWidth: true
-            Layout.preferredWidth: 300 // Set a base preferred width to prevent shrinking
+            Layout.preferredWidth: 250
+            Layout.maximumWidth: 250
             Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.normal
 
@@ -47,6 +48,7 @@ Item {
                     icon: "close"
                     visible: TodoService.todos.length > 0
                     onClicked: TodoService.clearAll()
+                    type: IconButton.Text
                 }
             }
 
@@ -76,22 +78,22 @@ Item {
                         }
 
                         StyledText {
-                            anchors.fill: parent
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            text: modelData.text || ""
+                            text: modelData.text
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
-                            verticalAlignment: Text.AlignVCenter
                         }
                     }
 
                     IconButton {
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
-                        toggle: true
-                        checked: modelData.checked
+                        type: IconButton.Text
                         onClicked: {
                             if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(modelData.id);
@@ -222,8 +224,8 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 25
-                    Layout.bottomMargin: 25
+                    Layout.topMargin: 20
+                    Layout.bottomMargin: 20
                     spacing: 0
 
                     Item {
