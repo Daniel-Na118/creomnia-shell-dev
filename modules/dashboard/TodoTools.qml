@@ -61,35 +61,33 @@ Item {
                 spacing: Appearance.spacing.small
 
                 delegate: RowLayout {
-                    id: delegateRoot
                     width: parent.width
                     spacing: Appearance.spacing.small
 
                     StyledRect {
-                        id: rect
                         Layout.fillWidth: true
-                        implicitHeight: 40
-                        color: (itemHover.hovered && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                        height: 40
+                        color: (hoverArea.containsMouse && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
                         border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
                         
-                        opacity: (itemHover.hovered && modelData.checked) ? 0.6 : 1
+                        opacity: (hoverArea.containsMouse && modelData.checked) ? 0.6 : 1
                         Behavior on opacity { Anim { duration: Appearance.anim.durations.small }}
                         Behavior on color { CAnim {} }
 
-                        HoverHandler {
-                            id: itemHover
+                        MouseArea {
+                            id: hoverArea
+                            anchors.fill: parent
+                            hoverEnabled: true
                         }
 
-                        StyledText {
+                        Text {
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
+                            anchors.verticalCenter: parent.verticalCenter
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            verticalAlignment: Text.AlignVCenter
                             text: modelData.text
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
@@ -98,18 +96,14 @@ Item {
                     }
 
                     IconButton {
-                        id: checkboxBtn
-                        icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
-                        toggle: false
-                        checked: modelData.checked
+                        icon: (hoverArea.containsMouse && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         implicitWidth: 28
                         implicitHeight: 28
                         onClicked: {
-                            const todoId = modelData.id;
-                            if (itemHover.hovered && modelData.checked) {
-                                TodoService.removeTodo(todoId);
+                            if (hoverArea.containsMouse && modelData.checked) {
+                                TodoService.removeTodo(modelData.id);
                             } else {
-                                TodoService.toggleTodo(todoId);
+                                TodoService.toggleTodo(modelData.id);
                             }
                         }
                     }
