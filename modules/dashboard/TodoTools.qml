@@ -66,19 +66,15 @@ Item {
 
                         StyledRect {
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 40
                             implicitHeight: 40
                             color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
                             radius: Appearance.rounding.small
 
                             Behavior on color { CAnim {} }
 
-                            Text {
-                                anchors.left: parent.left
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
+                            StyledText {
+                                anchors.fill: parent
                                 anchors.leftMargin: Appearance.padding.normal
-                                anchors.right: parent.right
                                 anchors.rightMargin: Appearance.padding.normal
                                 verticalAlignment: Text.AlignVCenter
                                 text: modelData.text
@@ -89,17 +85,9 @@ Item {
                         }
 
                         IconButton {
-                            implicitWidth: 40
-                            implicitHeight: 40
-                            icon: {
-                                if (checkButtonHover.hovered && modelData.checked) {
-                                    return "delete"
-                                } else if (modelData.checked) {
-                                    return "check"
-                                } else {
-                                    return "check_box_outline_blank"
-                                }
-                            }
+                            implicitWidth: 28
+                            implicitHeight: 28
+                            icon: checkButtonHover.hovered && modelData.checked ? "delete" : (modelData.checked ? "check" : "check_box_outline_blank")
                             onClicked: {
                                 if (checkButtonHover.hovered && modelData.checked) {
                                     TodoService.removeTodo(modelData.id)
