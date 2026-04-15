@@ -22,7 +22,7 @@ Singleton {
 
     Connections {
         target: Config.dashboard
-        function onPomodoroTimeChanged(): {
+        function onPomodoroTimeChanged() {
             if (!root.running) {
                 root.reset();
             }
