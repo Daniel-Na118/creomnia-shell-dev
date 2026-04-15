@@ -54,6 +54,16 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
+            label: qsTr("Show Tools tab")
+            checked: root.rootItem.showTools
+            onToggled: checked => {
+                root.rootItem.showTools = checked;
+                root.rootItem.saveConfig();
+            }
+        }
+
+        SwitchRow {
+            Layout.fillWidth: true
             label: qsTr("Show Media tab")
             checked: root.rootItem.showMedia
             onToggled: checked => {

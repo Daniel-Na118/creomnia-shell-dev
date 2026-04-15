@@ -29,6 +29,7 @@ Item {
     // Dashboard Tabs
     property bool showDashboard: Config.dashboard.showDashboard ?? true
     property bool showMedia: Config.dashboard.showMedia ?? true
+    property bool showTools: Config.dashboard.showTools ?? true
     property bool showPerformance: Config.dashboard.showPerformance ?? true
     property bool showWeather: Config.dashboard.showWeather ?? true
 
@@ -48,6 +49,7 @@ Item {
         Config.dashboard.dragThreshold = root.dragThreshold;
         Config.dashboard.showDashboard = root.showDashboard;
         Config.dashboard.showMedia = root.showMedia;
+        Config.dashboard.showTools = root.showTools;
         Config.dashboard.showPerformance = root.showPerformance;
         Config.dashboard.showWeather = root.showWeather;
         Config.dashboard.performance.showBattery = root.showBattery;
