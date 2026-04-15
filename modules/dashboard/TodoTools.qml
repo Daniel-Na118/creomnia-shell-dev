@@ -45,7 +45,7 @@ Item {
                 }
 
                 IconButton {
-                    icon: "close"
+                    icon: "delete_sweep"
                     visible: TodoService.todos.length > 0
                     implicitWidth: 24
                     implicitHeight: 24
@@ -99,7 +99,7 @@ Item {
                                 anchors.centerIn: parent
                                 text: {
                                     if (checkMouse.containsMouse && modelData.checked) {
-                                        return "✕"
+                                        return "🗑"
                                     } else if (modelData.checked) {
                                         return "☑"
                                     } else {
