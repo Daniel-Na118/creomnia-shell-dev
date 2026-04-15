@@ -49,8 +49,9 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.IBeamCursor
-            acceptedButtons: Qt.NoButton
             enabled: root.enabled
+
+            onClicked: inputField.forceActiveFocus()
         }
 
         StyledTextField {
