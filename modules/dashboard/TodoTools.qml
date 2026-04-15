@@ -53,72 +53,71 @@ Item {
                 }
             }
 
-            Column {
+            StyledListView {
                 Layout.fillWidth: true
+                Layout.preferredHeight: TodoService.todos.length * 40 + TodoService.todos.length * Appearance.spacing.normal
+                interactive: false
                 spacing: Appearance.spacing.normal
+                model: TodoService.todos
 
-                Repeater {
-                    model: TodoService.todos
+                delegate: RowLayout {
+                    id: delegateRoot
+                    width: parent.width - parent.leftMargin - parent.rightMargin
+                    spacing: Appearance.spacing.normal
+                    implicitHeight: 40
+                    Layout.preferredHeight: 40
+                    opacity: itemHover.hovered ? 0.7 : 1
+                    
+                    required property var modelData
 
-                    delegate: RowLayout {
-                        id: delegateRoot
-                        width: parent.width
-                        spacing: Appearance.spacing.normal
-                        implicitHeight: 40
+                    HoverHandler {
+                        id: itemHover
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
                         Layout.preferredHeight: 40
-                        opacity: itemHover.hovered ? 0.7 : 1
-                        
-                        required property var modelData
+                        implicitHeight: 40
+
+                        StyledInputField {
+                            id: todoItemDisplay
+                            anchors.fill: parent
+                            text: "  " + modelData.text
+                            readOnly: true
+                            horizontalAlignment: TextInput.AlignLeft
+                        }
 
                         HoverHandler {
-                            id: itemHover
+                            id: textHover
                         }
 
-                        Item {
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: 40
-                            implicitHeight: 40
-
-                            StyledInputField {
-                                id: todoItemDisplay
-                                anchors.fill: parent
-                                text: "  " + modelData.text
-                                readOnly: true
-                                horizontalAlignment: TextInput.AlignLeft
-                            }
-
-                            HoverHandler {
-                                id: textHover
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                cursorShape: (textHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                onClicked: {
-                                    if (textHover.hovered && modelData.checked) {
-                                        TodoService.removeTodo(modelData.id)
-                                    }
-                                }
-                            }
-                        }
-
-                        IconButton {
-                            Layout.preferredWidth: 28
-                            Layout.preferredHeight: 28
-                            implicitWidth: 28
-                            implicitHeight: 28
-                            icon: {
-                                if (textHover.hovered && modelData.checked) {
-                                    return "delete"
-                                } else if (modelData.checked) {
-                                    return "check_box"
-                                } else {
-                                    return "check_box_outline_blank"
-                                }
-                            }
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: (textHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
                             onClicked: {
-                                TodoService.toggleTodo(modelData.id)
+                                if (textHover.hovered && modelData.checked) {
+                                    TodoService.removeTodo(modelData.id)
+                                }
                             }
+                        }
+                    }
+
+                    IconButton {
+                        Layout.preferredWidth: 28
+                        Layout.preferredHeight: 28
+                        implicitWidth: 28
+                        implicitHeight: 28
+                        icon: {
+                            if (textHover.hovered && modelData.checked) {
+                                return "delete"
+                            } else if (modelData.checked) {
+                                return "check_box"
+                            } else {
+                                return "check_box_outline_blank"
+                            }
+                        }
+                        onClicked: {
+                            TodoService.toggleTodo(modelData.id)
                         }
                     }
                 }
