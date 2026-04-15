@@ -77,7 +77,6 @@ Item {
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
                             spacing: Appearance.spacing.small
-                            verticalCenter: parent.verticalCenter
 
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
