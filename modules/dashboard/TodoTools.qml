@@ -53,57 +53,76 @@ Item {
                 }
             }
 
-            ListView {
+            Column {
                 Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-                interactive: false
-                model: TodoService.todos
                 spacing: Appearance.spacing.small
 
-                delegate: RowLayout {
-                    width: parent.width
-                    spacing: Appearance.spacing.small
+                Repeater {
+                    model: TodoService.todos
 
-                    StyledRect {
-                        Layout.fillWidth: true
+                    Rectangle {
+                        width: parent.width
                         height: 40
-                        color: (hoverArea.containsMouse && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                        color: checkMouse.containsMouse && modelData.checked ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
                         border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
-                        
-                        opacity: (hoverArea.containsMouse && modelData.checked) ? 0.6 : 1
-                        Behavior on opacity { Anim { duration: Appearance.anim.durations.small }}
+                        opacity: checkMouse.containsMouse && modelData.checked ? 0.6 : 1
+
                         Behavior on color { CAnim {} }
+                        Behavior on opacity { Anim { duration: Appearance.anim.durations.small } }
 
-                        MouseArea {
-                            id: hoverArea
+                        Row {
                             anchors.fill: parent
-                            hoverEnabled: true
-                        }
-
-                        Text {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            text: modelData.text
-                            font.strikeout: modelData.checked
-                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                            elide: Text.ElideRight
-                        }
-                    }
+                            spacing: Appearance.spacing.small
+                            verticalCenter: parent.verticalCenter
 
-                    IconButton {
-                        icon: (hoverArea.containsMouse && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
-                        implicitWidth: 28
-                        implicitHeight: 28
-                        onClicked: {
-                            if (hoverArea.containsMouse && modelData.checked) {
-                                TodoService.removeTodo(modelData.id);
-                            } else {
-                                TodoService.toggleTodo(modelData.id);
+                            Text {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: parent.width - 40 - Appearance.spacing.small
+                                text: modelData.text
+                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                                font.strikeout: modelData.checked
+                                elide: Text.ElideRight
+                            }
+
+                            MouseArea {
+                                id: checkMouse
+                                width: 40
+                                height: parent.height
+                                hoverEnabled: true
+
+                                Rectangle {
+                                    anchors.centerIn: parent
+                                    width: 28
+                                    height: 28
+                                    color: "transparent"
+
+                                    Text {
+                                        anchors.centerIn: parent
+                                        text: {
+                                            if (checkMouse.containsMouse && modelData.checked) {
+                                                return "✕"
+                                            } else if (modelData.checked) {
+                                                return "☑"
+                                            } else {
+                                                return "☐"
+                                            }
+                                        }
+                                        font.pixelSize: 20
+                                        color: Colours.palette.m3primary
+                                    }
+                                }
+
+                                onClicked: {
+                                    if (checkMouse.containsMouse && modelData.checked) {
+                                        TodoService.removeTodo(modelData.id)
+                                    } else {
+                                        TodoService.toggleTodo(modelData.id)
+                                    }
+                                }
                             }
                         }
                     }
