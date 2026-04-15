@@ -72,23 +72,23 @@ Item {
                             implicitHeight: 40
                             color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
                             radius: Appearance.rounding.small
+                            border.width: 1
+                            border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
 
-                            RowLayout {
-                                anchors.fill: parent
-                                anchors.leftMargin: Appearance.padding.normal
+                            Behavior on color { CAnim {} }
+
+                            StyledText {
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.leftMargin: Appearance.padding.normal + Appearance.padding.small
                                 anchors.rightMargin: Appearance.padding.normal
-                                spacing: 0
-
-                                Item { Layout.preferredWidth: Appearance.padding.small }
-
-                                StyledText {
-                                    Layout.fillWidth: true
-                                    verticalAlignment: Text.AlignVCenter
-                                    text: modelData.text
-                                    color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                    font.strikeout: modelData.checked
-                                    elide: Text.ElideRight
-                                }
+                                verticalAlignment: Text.AlignVCenter
+                                text: modelData.text
+                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                                font.strikeout: modelData.checked
+                                elide: Text.ElideRight
                             }
                         }
 
