@@ -34,7 +34,7 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.small
+                spacing: Appearance.spacing.normal
 
                 StyledText {
                     Layout.fillWidth: true
@@ -111,11 +111,11 @@ Item {
                 StyledInputField {
                     id: todoInput
                     Layout.fillWidth: true
-                    placeholderText: qsTr("Add a new task...")
+                    placeholderText: qsTr("Add a new task")
                     
                     onAccepted: {
                         if (text.trim() !== "") {
-                            TodoService.addTodo(text.trim());
+                            TodoService.addTodo("   " + text.trim());
                             text = "";
                         }
                     }
@@ -136,6 +136,8 @@ Item {
 
             Item { Layout.fillHeight: true }
         }
+
+        Item { Layout.preferredWidth: 20 }
 
         // Right Side: Tools
         ColumnLayout {
