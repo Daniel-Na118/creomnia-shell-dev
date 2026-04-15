@@ -60,62 +60,56 @@ Item {
                 Repeater {
                     model: TodoService.todos
 
-                    Rectangle {
+                    RowLayout {
                         width: parent.width
-                        height: 40
-                        color: checkMouse.containsMouse && modelData.checked ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
-                        radius: Appearance.rounding.small
-                        border.width: 1
-                        border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
-                        opacity: checkMouse.containsMouse && modelData.checked ? 0.6 : 1
+                        spacing: Appearance.spacing.small
 
-                        Behavior on color { CAnim {} }
-                        Behavior on opacity { Anim { duration: Appearance.anim.durations.small } }
+                        StyledRect {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 40
+                            implicitHeight: 40
+                            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                            radius: Appearance.rounding.small
 
-                        Text {
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            anchors.leftMargin: Appearance.padding.normal
-                            anchors.right: checkMouse.left
-                            anchors.rightMargin: Appearance.spacing.small
-                            verticalAlignment: Text.AlignVCenter
-                            text: modelData.text
-                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                            font.strikeout: modelData.checked
-                            elide: Text.ElideRight
-                        }
-
-                        MouseArea {
-                            id: checkMouse
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            anchors.rightMargin: Appearance.padding.normal
-                            width: 40
-                            hoverEnabled: true
+                            Behavior on color { CAnim {} }
 
                             Text {
-                                anchors.centerIn: parent
-                                text: {
-                                    if (checkMouse.containsMouse && modelData.checked) {
-                                        return "🗑"
-                                    } else if (modelData.checked) {
-                                        return "☑"
-                                    } else {
-                                        return "☐"
-                                    }
-                                }
-                                font.pixelSize: 20
-                                color: Colours.palette.m3primary
+                                anchors.left: parent.left
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.leftMargin: Appearance.padding.normal
+                                anchors.right: parent.right
+                                anchors.rightMargin: Appearance.padding.normal
+                                verticalAlignment: Text.AlignVCenter
+                                text: modelData.text
+                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                                font.strikeout: modelData.checked
+                                elide: Text.ElideRight
                             }
+                        }
 
+                        IconButton {
+                            implicitWidth: 40
+                            implicitHeight: 40
+                            icon: {
+                                if (checkButtonHover.hovered && modelData.checked) {
+                                    return "delete"
+                                } else if (modelData.checked) {
+                                    return "check"
+                                } else {
+                                    return "check_box_outline_blank"
+                                }
+                            }
                             onClicked: {
-                                if (checkMouse.containsMouse && modelData.checked) {
+                                if (checkButtonHover.hovered && modelData.checked) {
                                     TodoService.removeTodo(modelData.id)
                                 } else {
                                     TodoService.toggleTodo(modelData.id)
                                 }
+                            }
+
+                            HoverHandler {
+                                id: checkButtonHover
                             }
                         }
                     }
