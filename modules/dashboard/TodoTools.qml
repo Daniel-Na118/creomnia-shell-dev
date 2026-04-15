@@ -30,7 +30,6 @@ Item {
             Layout.preferredWidth: 280
             Layout.maximumWidth: 280
             Layout.alignment: Qt.AlignTop
-            Layout.rightMargin: 15
             spacing: Appearance.spacing.normal
 
             RowLayout {
@@ -63,32 +62,30 @@ Item {
 
                     delegate: RowLayout {
                         Layout.fillWidth: true
+                        Layout.preferredHeight: 40
                         spacing: Appearance.spacing.small
                         
                         required property var modelData
 
-                        StyledRect {
+                        Item {
                             Layout.fillWidth: true
-                            implicitHeight: 40
-                            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-                            radius: Appearance.rounding.small
-                            border.width: 1
-                            border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
+                            Layout.preferredHeight: 40
 
-                            Behavior on color { CAnim {} }
+                            RowLayout {
+                                anchors.fill: parent
+                                spacing: Appearance.padding.normal
 
-                            StyledText {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.bottom: parent.bottom
-                                anchors.leftMargin: Appearance.padding.normal + Appearance.padding.small
-                                anchors.rightMargin: Appearance.padding.normal
-                                verticalAlignment: Text.AlignVCenter
-                                text: modelData.text
-                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                font.strikeout: modelData.checked
-                                elide: Text.ElideRight
+                                Item { Layout.preferredWidth: Appearance.padding.small }
+
+                                StyledText {
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    text: modelData.text
+                                    verticalAlignment: Text.AlignVCenter
+                                    color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                                    font.strikeout: modelData.checked
+                                    elide: Text.ElideRight
+                                }
                             }
                         }
 
