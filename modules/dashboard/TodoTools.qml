@@ -58,84 +58,46 @@ Item {
                 spacing: Appearance.spacing.normal
 
                 Repeater {
-                    id: todoRepeater
                     model: TodoService.todos
 
-                    delegate: Item {
-                        id: todoItemWrapper
-                        width: todoRowLayout.implicitWidth
-                        height: todoItemWrapper.removing ? 0 : todoRowLayout.implicitHeight
-                        clip: true
+                    delegate: RowLayout {
+                        width: parent.width
+                        spacing: Appearance.spacing.normal
+                        
+                        required property var modelData
 
-                        property bool removing: false
-
-                        Behavior on height {
-                            Anim { duration: Appearance.anim.durations.normal }
+                        StyledInputField {
+                            id: todoItemDisplay
+                            Layout.fillWidth: true
+                            text: "  " + modelData.text
+                            readOnly: true
+                            horizontalAlignment: TextInput.AlignLeft
                         }
 
-                        RowLayout {
-                            id: todoRowLayout
-                            width: parent.width
-                            spacing: Appearance.spacing.normal
-                            opacity: todoItemWrapper.removing ? 0 : 1
-                            scale: todoItemWrapper.removing ? 0.95 : 1
-                            transformOrigin: Item.Left
-                            
-                            required property var modelData
-
-                            Behavior on opacity {
-                                Anim { duration: Appearance.anim.durations.normal }
+                        IconButton {
+                            implicitWidth: 28
+                            implicitHeight: 28
+                            icon: {
+                                if (checkHover.hovered && modelData.checked) {
+                                    return "delete"
+                                } else if (modelData.checked) {
+                                    return "check"
+                                } else {
+                                    return "check_box_outline_blank"
+                                }
+                            }
+                            onClicked: {
+                                if (checkHover.hovered && modelData.checked) {
+                                    TodoService.removeTodo(modelData.id)
+                                } else {
+                                    TodoService.toggleTodo(modelData.id)
+                                }
                             }
 
-                            Behavior on scale {
-                                Anim { duration: Appearance.anim.durations.normal }
-                            }
-
-                            StyledInputField {
-                                id: todoItemDisplay
-                                Layout.fillWidth: true
-                                text: "  " + modelData.text
-                                readOnly: true
-                                horizontalAlignment: TextInput.AlignLeft
-                            }
-
-                            IconButton {
-                                implicitWidth: 28
-                                implicitHeight: 28
-                                icon: {
-                                    if (checkHover.hovered && modelData.checked) {
-                                        return "delete"
-                                    } else if (modelData.checked) {
-                                        return "check"
-                                    } else {
-                                        return "check_box_outline_blank"
-                                    }
-                                }
-                                onClicked: {
-                                    if (checkHover.hovered && modelData.checked) {
-                                        todoItemWrapper.removing = true;
-                                        removeTimer.todoId = modelData.id;
-                                        removeTimer.start();
-                                    } else {
-                                        TodoService.toggleTodo(modelData.id)
-                                    }
-                                }
-
-                                HoverHandler {
-                                    id: checkHover
-                                }
+                            HoverHandler {
+                                id: checkHover
                             }
                         }
-                    }
-                }
-
-                Timer {
-                    id: removeTimer
-                    interval: Appearance.anim.durations.normal
-                    property string todoId
-
-                    onTriggered: {
-                        TodoService.removeTodo(todoId);
                     }
                 }
             }
