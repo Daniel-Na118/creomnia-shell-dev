@@ -87,11 +87,15 @@ Item {
                                 horizontalAlignment: TextInput.AlignLeft
                             }
 
+                            HoverHandler {
+                                id: textHover
+                            }
+
                             MouseArea {
                                 anchors.fill: parent
-                                cursorShape: (itemHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                cursorShape: (textHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
                                 onClicked: {
-                                    if (itemHover.hovered && modelData.checked) {
+                                    if (textHover.hovered && modelData.checked) {
                                         TodoService.removeTodo(modelData.id)
                                     }
                                 }
@@ -102,7 +106,7 @@ Item {
                             implicitWidth: 28
                             implicitHeight: 28
                             icon: {
-                                if (itemHover.hovered && modelData.checked) {
+                                if (textHover.hovered && modelData.checked) {
                                     return "delete"
                                 } else if (modelData.checked) {
                                     return "check_box"
