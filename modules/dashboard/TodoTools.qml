@@ -27,8 +27,8 @@ Item {
         // Left Side: Todo List
         ColumnLayout {
             Layout.fillWidth: true
-            Layout.preferredWidth: 250
-            Layout.maximumWidth: 250
+            Layout.preferredWidth: 270
+            Layout.maximumWidth: 270
             Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.normal
 
@@ -92,7 +92,6 @@ Item {
                     IconButton {
                         id: checkboxBtn
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
-                        type: IconButton.Text
                         toggle: false
                         checked: modelData.checked
                         onClicked: {
@@ -226,7 +225,7 @@ Item {
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: 20
-                    Layout.bottomMargin: 15
+                    Layout.bottomMargin: 10
                     spacing: 0
 
                     Item {
