@@ -60,36 +60,34 @@ Item {
                 Repeater {
                     model: TodoService.todos
 
-                    RowLayout {
+                    delegate: RowLayout {
                         width: parent.width
                         spacing: Appearance.spacing.small
+                        
+                        required property var modelData
 
-                        StyledRect {
+                        StyledInputField {
+                            id: todoItemDisplay
                             Layout.fillWidth: true
-                            implicitHeight: 40
-                            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-                            radius: Appearance.rounding.small
-
-                            Behavior on color { CAnim {} }
-
-                            StyledText {
-                                anchors.fill: parent
-                                anchors.leftMargin: Appearance.padding.normal
-                                anchors.rightMargin: Appearance.padding.normal
-                                verticalAlignment: Text.AlignVCenter
-                                text: modelData.text
-                                color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                font.strikeout: modelData.checked
-                                elide: Text.ElideRight
-                            }
+                            text: modelData.text
+                            readOnly: true
+                            horizontalAlignment: TextInput.AlignLeft
                         }
 
                         IconButton {
                             implicitWidth: 28
                             implicitHeight: 28
-                            icon: checkButtonHover.hovered && modelData.checked ? "delete" : (modelData.checked ? "check" : "check_box_outline_blank")
+                            icon: {
+                                if (checkHover.hovered && modelData.checked) {
+                                    return "delete"
+                                } else if (modelData.checked) {
+                                    return "check"
+                                } else {
+                                    return "check_box_outline_blank"
+                                }
+                            }
                             onClicked: {
-                                if (checkButtonHover.hovered && modelData.checked) {
+                                if (checkHover.hovered && modelData.checked) {
                                     TodoService.removeTodo(modelData.id)
                                 } else {
                                     TodoService.toggleTodo(modelData.id)
@@ -97,7 +95,7 @@ Item {
                             }
 
                             HoverHandler {
-                                id: checkButtonHover
+                                id: checkHover
                             }
                         }
                     }
