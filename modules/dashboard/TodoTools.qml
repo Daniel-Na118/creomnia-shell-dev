@@ -55,6 +55,7 @@ Item {
 
             Column {
                 Layout.fillWidth: true
+                Layout.topMargin: Appearance.padding.small
                 spacing: Appearance.spacing.small
 
                 Repeater {
