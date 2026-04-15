@@ -214,6 +214,7 @@ Item {
 
             // Quick Actions
             ColumnLayout {
+                id: quickActions
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.small
 
@@ -266,14 +267,26 @@ Item {
                             radius: width / 2
                             onClicked: {
                                 if (Audio.sink && Audio.sink.audio) {
-                                    if (!Audio.muted) {
-                                        // About to mute - save current volume
+                                    if (Audio.muted) {
+                                        // Unmute and restore volume
+                                        Audio.sink.audio.muted = false;
+                                        // Use saved volume, or default to 0.5 if it's somehow 0
+                                        const volumeToRestore = quickActions.previousVolume > 0 ? quickActions.previousVolume : 0.5;
+                                        Audio.sink.audio.volume = volumeToRestore;
+                                    } else {
+                                        // Mute and save current volume
                                         quickActions.previousVolume = Audio.volume;
                                         Audio.sink.audio.muted = true;
-                                    } else {
-                                        // About to unmute - restore previous volume
-                                        Audio.sink.audio.muted = false;
-                                        Audio.sink.audio.volume = quickActions.previousVolume;
+                                    }
+                                }
+                            }
+
+                            Connections {
+                                target: Audio
+                                function onVolumeChanged() {
+                                    // Always track the volume when not muted so we have a good value to restore
+                                    if (!Audio.muted && Audio.volume > 0) {
+                                        quickActions.previousVolume = Audio.volume;
                                     }
                                 }
                             }
