@@ -48,7 +48,6 @@ Item {
                     icon: "close"
                     visible: TodoService.todos.length > 0
                     onClicked: TodoService.clearAll()
-                    type: IconButton.Text
                 }
             }
 
@@ -78,22 +77,24 @@ Item {
                         }
 
                         StyledText {
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.fill: parent
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            text: modelData.text
+                            text: modelData.text || ""
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
+                            verticalAlignment: Text.AlignVCenter
+                            horizontalAlignment: Text.AlignLeft
                         }
                     }
 
                     IconButton {
+                        id: checkboxBtn
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
-                        color: (itemHover.hovered && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
                         type: IconButton.Text
+                        toggle: false
+                        checked: modelData.checked
                         onClicked: {
                             if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(modelData.id);
@@ -225,7 +226,7 @@ Item {
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: 20
-                    Layout.bottomMargin: 20
+                    Layout.bottomMargin: 15
                     spacing: 0
 
                     Item {
