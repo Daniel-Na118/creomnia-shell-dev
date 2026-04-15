@@ -53,38 +53,6 @@ Item {
                 }
             }
 
-            RowLayout {
-                Layout.fillWidth: true
-                spacing: Appearance.spacing.small
-                visible: TodoService.todos.length < 5
-                implicitHeight: 40
-
-                StyledInputField {
-                    id: todoInput
-                    Layout.fillWidth: true
-                    placeholderText: qsTr("Add a new task...")
-                    
-                    onAccepted: {
-                        if (text.trim() !== "") {
-                            TodoService.addTodo(text.trim());
-                            text = "";
-                        }
-                    }
-                }
-
-                IconButton {
-                    icon: "add"
-                    implicitWidth: 28
-                    implicitHeight: 28
-                    onClicked: {
-                        if (todoInput.text.trim() !== "") {
-                            TodoService.addTodo(todoInput.text.trim());
-                            todoInput.text = "";
-                        }
-                    }
-                }
-            }
-
             Column {
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.small
@@ -129,6 +97,38 @@ Item {
                             HoverHandler {
                                 id: checkHover
                             }
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: Appearance.spacing.small
+                visible: TodoService.todos.length < 5
+                implicitHeight: 40
+
+                StyledInputField {
+                    id: todoInput
+                    Layout.fillWidth: true
+                    placeholderText: qsTr("Add a new task...")
+                    
+                    onAccepted: {
+                        if (text.trim() !== "") {
+                            TodoService.addTodo(text.trim());
+                            text = "";
+                        }
+                    }
+                }
+
+                IconButton {
+                    icon: "add"
+                    implicitWidth: 28
+                    implicitHeight: 28
+                    onClicked: {
+                        if (todoInput.text.trim() !== "") {
+                            TodoService.addTodo(todoInput.text.trim());
+                            todoInput.text = "";
                         }
                     }
                 }
