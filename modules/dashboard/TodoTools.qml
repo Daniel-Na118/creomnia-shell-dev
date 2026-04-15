@@ -86,25 +86,26 @@ Item {
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
                             verticalAlignment: Text.AlignVCenter
-                            text: modelData.text || ""
-                            font.strikeout: modelData.checked
-                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                            text: modelData["text"] || ""
+                            font.strikeout: modelData["checked"] || false
+                            color: (modelData["checked"] || false) ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
                         }
                     }
 
                     IconButton {
                         id: checkboxBtn
-                        icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
+                        icon: (itemHover.hovered && (modelData["checked"] || false)) ? "close" : ((modelData["checked"] || false) ? "check_box" : "check_box_outline_blank")
                         toggle: false
-                        checked: modelData.checked
+                        checked: modelData["checked"] || false
                         implicitWidth: 28
                         implicitHeight: 28
                         onClicked: {
-                            if (itemHover.hovered && modelData.checked) {
-                                TodoService.removeTodo(modelData.id);
+                            const todoId = modelData["id"];
+                            if (itemHover.hovered && (modelData["checked"] || false)) {
+                                TodoService.removeTodo(todoId);
                             } else {
-                                TodoService.toggleTodo(modelData.id);
+                                TodoService.toggleTodo(todoId);
                             }
                         }
                     }
@@ -131,6 +132,8 @@ Item {
 
                 IconButton {
                     icon: "add"
+                    implicitWidth: 28
+                    implicitHeight: 28
                     onClicked: {
                         if (todoInput.text.trim() !== "") {
                             TodoService.addTodo(todoInput.text.trim());
