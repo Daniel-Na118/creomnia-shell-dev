@@ -61,8 +61,11 @@ Item {
                     model: TodoService.todos
 
                     delegate: RowLayout {
+                        id: delegateRoot
                         width: parent.width
                         spacing: Appearance.spacing.normal
+                        implicitHeight: 40
+                        Layout.preferredHeight: 40
                         opacity: itemHover.hovered ? 0.7 : 1
                         
                         required property var modelData
@@ -73,11 +76,12 @@ Item {
 
                         Item {
                             Layout.fillWidth: true
-                            implicitHeight: todoItemDisplay.implicitHeight
+                            Layout.preferredHeight: 40
+                            implicitHeight: 40
 
                             StyledInputField {
                                 id: todoItemDisplay
-                                width: parent.width
+                                anchors.fill: parent
                                 text: "  " + modelData.text
                                 readOnly: true
                                 horizontalAlignment: TextInput.AlignLeft
@@ -99,6 +103,8 @@ Item {
                         }
 
                         IconButton {
+                            Layout.preferredWidth: 28
+                            Layout.preferredHeight: 28
                             implicitWidth: 28
                             implicitHeight: 28
                             icon: {

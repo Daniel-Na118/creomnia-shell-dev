@@ -32,12 +32,10 @@ Singleton {
     function toggleTodo(id: real): void {
         const index = todos.findIndex(t => t.id === id);
         if (index !== -1) {
-            const newList = todos.slice();
-            const todo = newList[index];
+            const newList = [...todos];
             newList[index] = {
-                id: todo.id,
-                text: todo.text,
-                checked: !todo.checked
+                ...newList[index],
+                checked: !newList[index].checked
             };
             todos = newList;
             save();
