@@ -217,6 +217,8 @@ Item {
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.small
 
+                property real previousVolume: 0.5
+
                 StyledText {
                     text: qsTr("Quick Actions")
                     font.pointSize: Appearance.font.size.normal
@@ -264,7 +266,15 @@ Item {
                             radius: width / 2
                             onClicked: {
                                 if (Audio.sink && Audio.sink.audio) {
-                                    Audio.sink.audio.muted = !Audio.sink.audio.muted;
+                                    if (!Audio.muted) {
+                                        // About to mute - save current volume
+                                        quickActions.previousVolume = Audio.volume;
+                                        Audio.sink.audio.muted = true;
+                                    } else {
+                                        // About to unmute - restore previous volume
+                                        Audio.sink.audio.muted = false;
+                                        Audio.sink.audio.volume = quickActions.previousVolume;
+                                    }
                                 }
                             }
                         }
