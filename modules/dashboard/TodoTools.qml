@@ -27,8 +27,8 @@ Item {
         // Left Side: Todo List
         ColumnLayout {
             Layout.fillWidth: true
-            Layout.preferredWidth: 270
-            Layout.maximumWidth: 270
+            Layout.preferredWidth: 280
+            Layout.maximumWidth: 280
             Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.normal
 
@@ -77,15 +77,15 @@ Item {
                         }
 
                         StyledText {
-                            anchors.fill: parent
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            text: modelData.text || ""
+                            text: modelData.text
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignLeft
                         }
                     }
 
@@ -224,8 +224,8 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 20
-                    Layout.bottomMargin: 10
+                    Layout.topMargin: 23
+                    Layout.bottomMargin: 12
                     spacing: 0
 
                     Item {
