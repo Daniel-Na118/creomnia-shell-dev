@@ -53,30 +53,28 @@ Item {
                 }
             }
 
-            Repeater {
+            ListView {
+                Layout.fillWidth: true
+                Layout.preferredHeight: contentHeight
+                interactive: false
                 model: TodoService.todos
+                spacing: Appearance.spacing.small
 
                 delegate: RowLayout {
                     id: delegateRoot
-                    Layout.fillWidth: true
+                    width: parent.width
                     spacing: Appearance.spacing.small
-                    
-                    property var todoItem: modelData
-                    
-                    Component.onCompleted: {
-                        console.log("Todo added:", todoItem.text);
-                    }
 
                     StyledRect {
                         id: rect
                         Layout.fillWidth: true
                         implicitHeight: 40
-                        color: (itemHover.hovered && delegateRoot.todoItem.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
+                        color: (itemHover.hovered && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
                         border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
                         
-                        opacity: (itemHover.hovered && delegateRoot.todoItem.checked) ? 0.6 : 1
+                        opacity: (itemHover.hovered && modelData.checked) ? 0.6 : 1
                         Behavior on opacity { Anim { duration: Appearance.anim.durations.small }}
                         Behavior on color { CAnim {} }
 
@@ -84,34 +82,31 @@ Item {
                             id: itemHover
                         }
 
-                        RowLayout {
-                            anchors.fill: parent
+                        StyledText {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            spacing: 0
-
-                            StyledText {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                verticalAlignment: Text.AlignVCenter
-                                text: delegateRoot.todoItem.text
-                                font.strikeout: delegateRoot.todoItem.checked
-                                color: delegateRoot.todoItem.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                                elide: Text.ElideRight
-                            }
+                            verticalAlignment: Text.AlignVCenter
+                            text: modelData.text
+                            font.strikeout: modelData.checked
+                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                            elide: Text.ElideRight
                         }
                     }
 
                     IconButton {
                         id: checkboxBtn
-                        icon: (itemHover.hovered && delegateRoot.todoItem.checked) ? "close" : (delegateRoot.todoItem.checked ? "check_box" : "check_box_outline_blank")
+                        icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         toggle: false
-                        checked: delegateRoot.todoItem.checked
+                        checked: modelData.checked
                         implicitWidth: 28
                         implicitHeight: 28
                         onClicked: {
-                            const todoId = delegateRoot.todoItem.id;
-                            if (itemHover.hovered && delegateRoot.todoItem.checked) {
+                            const todoId = modelData.id;
+                            if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(todoId);
                             } else {
                                 TodoService.toggleTodo(todoId);
