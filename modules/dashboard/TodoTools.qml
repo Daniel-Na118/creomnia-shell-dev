@@ -67,10 +67,6 @@ Item {
                         
                         required property var modelData
 
-                        Behavior on opacity {
-                            Anim { duration: Appearance.anim.durations.small }
-                        }
-
                         HoverHandler {
                             id: itemHover
                         }
