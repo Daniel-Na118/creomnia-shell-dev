@@ -75,12 +75,27 @@ Item {
                             id: itemHover
                         }
 
-                        StyledInputField {
-                            id: todoItemDisplay
+                        Item {
                             Layout.fillWidth: true
-                            text: "  " + modelData.text
-                            readOnly: true
-                            horizontalAlignment: TextInput.AlignLeft
+                            implicitHeight: todoItemDisplay.implicitHeight
+
+                            StyledInputField {
+                                id: todoItemDisplay
+                                width: parent.width
+                                text: "  " + modelData.text
+                                readOnly: true
+                                horizontalAlignment: TextInput.AlignLeft
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: (itemHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                onClicked: {
+                                    if (itemHover.hovered && modelData.checked) {
+                                        TodoService.removeTodo(modelData.id)
+                                    }
+                                }
+                            }
                         }
 
                         IconButton {
@@ -90,17 +105,13 @@ Item {
                                 if (itemHover.hovered && modelData.checked) {
                                     return "delete"
                                 } else if (modelData.checked) {
-                                    return "check"
+                                    return "check_box"
                                 } else {
                                     return "check_box_outline_blank"
                                 }
                             }
                             onClicked: {
-                                if (itemHover.hovered && modelData.checked) {
-                                    TodoService.removeTodo(modelData.id)
-                                } else {
-                                    TodoService.toggleTodo(modelData.id)
-                                }
+                                TodoService.toggleTodo(modelData.id)
                             }
                         }
                     }
