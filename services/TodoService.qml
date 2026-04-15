@@ -39,6 +39,11 @@ Singleton {
         }
     }
 
+    function clearAll(): void {
+        todos = [];
+        save();
+    }
+
     function save(): void {
         saveTimer.restart();
     }
