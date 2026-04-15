@@ -515,3 +515,7 @@ creomnia scheme set -n dynamic
 The launcher pulls wallpapers from `~/Pictures/Wallpapers` by default. You can change this in the config. Additionally,
 the launcher only shows an odd number of wallpapers at one time. If you only have 2 wallpapers, consider getting more
 (or just putting one).
+
+
+yay -S quickshell-git libcava 
+sudo pacman -S --needed ddcutil brightnessctl networkmanager lm_sensors fish aubio libpipewire glibc gcc-libs ttf-material-symbols-variable (material-symbols-font) ttf-cascadia-code-nerd libqalculate cmake ninja
