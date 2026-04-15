@@ -63,8 +63,17 @@ Item {
                     delegate: RowLayout {
                         width: parent.width
                         spacing: Appearance.spacing.normal
+                        opacity: itemHover.hovered ? 0.7 : 1
                         
                         required property var modelData
+
+                        Behavior on opacity {
+                            Anim { duration: Appearance.anim.durations.small }
+                        }
+
+                        HoverHandler {
+                            id: itemHover
+                        }
 
                         StyledInputField {
                             id: todoItemDisplay
@@ -78,7 +87,7 @@ Item {
                             implicitWidth: 28
                             implicitHeight: 28
                             icon: {
-                                if (checkHover.hovered && modelData.checked) {
+                                if (itemHover.hovered && modelData.checked) {
                                     return "delete"
                                 } else if (modelData.checked) {
                                     return "check"
@@ -87,15 +96,11 @@ Item {
                                 }
                             }
                             onClicked: {
-                                if (checkHover.hovered && modelData.checked) {
+                                if (itemHover.hovered && modelData.checked) {
                                     TodoService.removeTodo(modelData.id)
                                 } else {
                                     TodoService.toggleTodo(modelData.id)
                                 }
-                            }
-
-                            HoverHandler {
-                                id: checkHover
                             }
                         }
                     }
