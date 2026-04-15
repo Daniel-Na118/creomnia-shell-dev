@@ -47,6 +47,8 @@ Item {
                 IconButton {
                     icon: "close"
                     visible: TodoService.todos.length > 0
+                    implicitWidth: 24
+                    implicitHeight: 24
                     onClicked: TodoService.clearAll()
                 }
             }
@@ -62,7 +64,7 @@ Item {
                     StyledRect {
                         id: rect
                         Layout.fillWidth: true
-                        implicitHeight: 35
+                        implicitHeight: 40
                         color: (itemHover.hovered && modelData.checked) ? Colours.layer(Colours.palette.m3surfaceContainer, 3) : Colours.layer(Colours.palette.m3surfaceContainer, 2)
                         radius: Appearance.rounding.small
                         border.width: 1
@@ -79,10 +81,12 @@ Item {
                         StyledText {
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             anchors.leftMargin: Appearance.padding.normal
                             anchors.rightMargin: Appearance.padding.normal
-                            text: modelData.text
+                            verticalAlignment: Text.AlignVCenter
+                            text: modelData.text || ""
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
@@ -94,6 +98,8 @@ Item {
                         icon: (itemHover.hovered && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
                         toggle: false
                         checked: modelData.checked
+                        implicitWidth: 28
+                        implicitHeight: 28
                         onClicked: {
                             if (itemHover.hovered && modelData.checked) {
                                 TodoService.removeTodo(modelData.id);
@@ -225,7 +231,7 @@ Item {
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: 25
-                    Layout.bottomMargin: 15
+                    Layout.bottomMargin: 12
                     spacing: 0
 
                     Item {
