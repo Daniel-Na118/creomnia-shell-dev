@@ -30,6 +30,7 @@ Item {
             Layout.preferredWidth: 280
             Layout.maximumWidth: 280
             Layout.alignment: Qt.AlignTop
+            Layout.rightMargin: 15
             spacing: Appearance.spacing.normal
 
             RowLayout {
@@ -61,17 +62,32 @@ Item {
                     model: TodoService.todos
 
                     delegate: RowLayout {
-                        width: parent.width
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 40
                         spacing: Appearance.spacing.small
                         
                         required property var modelData
 
-                        StyledInputField {
-                            id: todoItemDisplay
+                        Item {
                             Layout.fillWidth: true
-                            text: modelData.text
-                            readOnly: true
-                            horizontalAlignment: TextInput.AlignLeft
+                            Layout.preferredHeight: 40
+
+                            RowLayout {
+                                anchors.fill: parent
+                                spacing: Appearance.padding.normal
+
+                                Item { Layout.preferredWidth: Appearance.padding.small }
+
+                                StyledText {
+                                    Layout.fillWidth: true
+                                    Layout.fillHeight: true
+                                    text: modelData.text
+                                    verticalAlignment: Text.AlignVCenter
+                                    color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
+                                    font.strikeout: modelData.checked
+                                    elide: Text.ElideRight
+                                }
+                            }
                         }
 
                         IconButton {
