@@ -59,35 +59,50 @@ Item {
                 interactive: false
 
                 delegate: StyledRect {
+                    id: delegateRoot
                     width: todoList.width
-                    implicitHeight: todoRow.implicitHeight + Appearance.padding.small * 2
-                    color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
+                    implicitHeight: 35 // Match StyledInputField height
+                    color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
                     radius: Appearance.rounding.small
+                    border.width: 1
+                    border.color: Qt.alpha(Colours.palette.m3outline, 0.3)
+                    
+                    opacity: delegateMouseArea.containsMouse && modelData.checked ? 0.6 : 1
+                    Behavior on opacity { Anim { duration: Appearance.anim.durations.small }}
+
+                    MouseArea {
+                        id: delegateMouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                    }
 
                     RowLayout {
-                        id: todoRow
                         anchors.fill: parent
-                        anchors.margins: Appearance.padding.small
+                        anchors.leftMargin: Appearance.padding.normal
+                        anchors.rightMargin: Appearance.padding.small
                         spacing: Appearance.spacing.small
-
-                        IconButton {
-                            icon: modelData.checked ? "check_box" : "check_box_outline_blank"
-                            color: modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
-                            onClicked: TodoService.toggleTodo(modelData.id)
-                        }
 
                         StyledText {
                             Layout.fillWidth: true
+                            Layout.preferredWidth: 0 // Crucial for elide to work in Layouts
                             text: modelData.text
                             font.strikeout: modelData.checked
                             color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
                             elide: Text.ElideRight
+                            verticalAlignment: Text.AlignVCenter
                         }
 
                         IconButton {
-                            icon: "delete"
-                            color: Colours.palette.m3error
-                            onClicked: TodoService.removeTodo(modelData.id)
+                            icon: (delegateMouseArea.containsMouse && modelData.checked) ? "close" : (modelData.checked ? "check_box" : "check_box_outline_blank")
+                            color: (delegateMouseArea.containsMouse && modelData.checked) ? Colours.palette.m3error : (modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant)
+                            type: IconButton.Text
+                            onClicked: {
+                                if (delegateMouseArea.containsMouse && modelData.checked) {
+                                    TodoService.removeTodo(modelData.id);
+                                } else {
+                                    TodoService.toggleTodo(modelData.id);
+                                }
+                            }
                         }
                     }
                 }
@@ -147,6 +162,12 @@ Item {
                     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
                     radius: Appearance.rounding.normal
 
+                    MouseArea {
+                        id: mouseArea
+                        anchors.fill: parent
+                        hoverEnabled: true
+                    }
+
                     StyledText {
                         id: timerDisplay
                         anchors.centerIn: parent
@@ -188,12 +209,6 @@ Item {
                             type: IconButton.Tonal
                         }
                     }
-
-                    MouseArea {
-                        id: mouseArea
-                        anchors.fill: parent
-                        hoverEnabled: true
-                    }
                 }
             }
 
@@ -211,46 +226,67 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    spacing: Appearance.spacing.small
+                    spacing: 0
 
-                    IconButton {
+                    Item {
                         Layout.fillWidth: true
-                        icon: "dark_mode"
-                        toggle: true
-                        checked: !Colours.light
-                        onClicked: Colours.setMode(checked ? "dark" : "light")
-                    }
+                        implicitHeight: darkModeBtn.implicitHeight
 
-                    IconButton {
-                        Layout.fillWidth: true
-                        icon: "volume_up"
-                        toggle: true
-                        checked: !Audio.muted
-                        onClicked: {
-                            if (Audio.sink && Audio.sink.audio) {
-                                Audio.sink.audio.muted = !checked;
+                        IconButton {
+                            id: darkModeBtn
+                            anchors.centerIn: parent
+                            icon: "dark_mode"
+                            toggle: true
+                            checked: !Colours.light
+                            type: IconButton.Tonal
+                            onClicked: {
+                                if (Colours.scheme !== "") {
+                                    Colours.setMode(checked ? "dark" : "light");
+                                } else {
+                                    checked = !checked; 
+                                }
                             }
                         }
                     }
 
-                    IconButton {
+                    Item {
                         Layout.fillWidth: true
-                        icon: "vpn_key"
-                        toggle: true
-                        checked: VPN.connected
-                        onClicked: VPN.toggle()
-                    }
-                }
+                        implicitHeight: muteBtn.implicitHeight
 
-                SpinBoxRow {
-                    Layout.fillWidth: true
-                    label: qsTr("Pomodoro Time (min)")
-                    value: Config.dashboard.pomodoroTime
-                    min: 1
-                    max: 60
-                    onValueModified: value => {
-                        Config.dashboard.pomodoroTime = value;
-                        Config.save();
+                        IconButton {
+                            id: muteBtn
+                            anchors.centerIn: parent
+                            icon: Audio.muted ? "volume_off" : "volume_up"
+                            toggle: true
+                            checked: !Audio.muted
+                            type: IconButton.Tonal
+                            onClicked: {
+                                if (Audio.sink && Audio.sink.audio) {
+                                    Audio.sink.audio.muted = !checked;
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                        implicitHeight: vpnBtn.implicitHeight
+
+                        IconButton {
+                            id: vpnBtn
+                            anchors.centerIn: parent
+                            icon: "vpn_key"
+                            toggle: true
+                            checked: VPN.connected
+                            type: IconButton.Tonal
+                            onClicked: {
+                                if (VPN.enabled) {
+                                    VPN.toggle();
+                                } else {
+                                    checked = !checked;
+                                }
+                            }
+                        }
                     }
                 }
             }

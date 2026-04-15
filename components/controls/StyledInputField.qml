@@ -26,6 +26,12 @@ Item {
     implicitWidth: 70
     implicitHeight: inputField.implicitHeight + Appearance.padding.small * 2
 
+    onTextChanged: {
+        if (inputField.text !== text) {
+            inputField.text = text;
+        }
+    }
+
     StyledRect {
         id: container
 
@@ -65,7 +71,9 @@ Item {
             enabled: root.enabled
 
             onTextChanged: {
-                root.text = text;
+                if (root.text !== text) {
+                    root.text = text;
+                }
                 root.textEdited(text);
             }
 
@@ -75,13 +83,6 @@ Item {
 
             onAccepted: {
                 root.accepted();
-            }
-
-            Binding {
-                target: inputField
-                property: "text"
-                value: root.text
-                when: !inputField.activeFocus
             }
         }
     }
