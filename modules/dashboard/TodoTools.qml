@@ -256,8 +256,8 @@ Item {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: 30
-                    Layout.bottomMargin: 15
+                    Layout.topMargin: 32
+                    Layout.bottomMargin: 18
                     spacing: 0
 
                     Item {
