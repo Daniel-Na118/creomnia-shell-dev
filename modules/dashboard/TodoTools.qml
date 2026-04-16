@@ -146,7 +146,7 @@ Item {
                         if (text.trim() !== "") {
                             TodoService.addTodo(text.trim());
                             text = "";
-                            forceActiveFocus();
+                            focus = false;
                         }
                     }
                 }
@@ -159,10 +159,11 @@ Item {
                         if (todoInput.text.trim() !== "") {
                             TodoService.addTodo(todoInput.text.trim());
                             todoInput.text = "";
-                            todoInput.forceActiveFocus();
+                            todoInput.focus = false;
                         }
                     }
                 }
+            }
             }
 
             Item { Layout.fillHeight: true }
