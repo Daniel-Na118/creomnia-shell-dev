@@ -53,7 +53,7 @@ Item {
                 }
             }
 
-            ListView {
+            StyledListView {
                 Layout.fillWidth: true
                 Layout.preferredHeight: TodoService.todos.length * 40 + TodoService.todos.length * Appearance.spacing.normal
                 interactive: false
@@ -62,7 +62,7 @@ Item {
 
                 delegate: RowLayout {
                     id: delegateRoot
-                    width: parent.width
+                    width: parent.width - parent.leftMargin - parent.rightMargin
                     spacing: Appearance.spacing.normal
                     implicitHeight: 40
                     Layout.preferredHeight: 40
