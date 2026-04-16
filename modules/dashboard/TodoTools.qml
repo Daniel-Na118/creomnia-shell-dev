@@ -49,13 +49,30 @@ Item {
                     visible: TodoService.todos.length > 0
                     implicitWidth: 24
                     implicitHeight: 24
-                    onClicked: TodoService.clearAll()
+                    onClicked: {
+                        TodoService.clearAll();
+                        todoInput.focus = false;
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: todoInput.focus = false
+                    propagateComposedEvents: true
                 }
             }
 
             Column {
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.normal
+
+                MouseArea {
+                    width: parent.width
+                    height: parent.implicitHeight
+                    onClicked: todoInput.focus = false
+                    propagateComposedEvents: true
+                    z: -1
+                }
 
                 Repeater {
                     model: TodoService.todos
@@ -165,7 +182,13 @@ Item {
                 }
             }
 
-            Item { Layout.fillHeight: true }
+            Item {
+                Layout.fillHeight: true
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: todoInput.focus = false
+                }
+            }
         }
 
         Item { Layout.preferredWidth: 20 }
