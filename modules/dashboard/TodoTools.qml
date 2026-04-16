@@ -146,7 +146,7 @@ Item {
                         if (text.trim() !== "") {
                             TodoService.addTodo(text.trim());
                             text = "";
-                            Qt.callLater(() => todoInput.forceActiveFocus())
+                            forceActiveFocus();
                         }
                     }
                 }
@@ -159,7 +159,7 @@ Item {
                         if (todoInput.text.trim() !== "") {
                             TodoService.addTodo(todoInput.text.trim());
                             todoInput.text = "";
-                            Qt.callLater(() => todoInput.forceActiveFocus())
+                            todoInput.forceActiveFocus();
                         }
                     }
                 }
