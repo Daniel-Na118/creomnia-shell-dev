@@ -66,7 +66,6 @@ Item {
                         spacing: Appearance.spacing.normal
                         implicitHeight: 40
                         Layout.preferredHeight: 40
-                        opacity: itemHover.hovered ? 0.7 : 1
                         
                         required property var modelData
 
@@ -78,6 +77,11 @@ Item {
                             Layout.fillWidth: true
                             Layout.preferredHeight: 40
                             implicitHeight: 40
+                            opacity: itemHover.hovered ? 0.7 : 1
+
+                            Behavior on opacity {
+                                Anim { duration: Appearance.anim.durations.small }
+                            }
 
                             StyledInputField {
                                 id: todoItemDisplay
@@ -93,8 +97,11 @@ Item {
 
                             MouseArea {
                                 anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton
+                                propagateComposedEvents: false
                                 cursorShape: (textHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                onClicked: {
+                                onClicked: (mouse) => {
+                                    mouse.accepted = true
                                     if (textHover.hovered && modelData.checked) {
                                         TodoService.removeTodo(modelData.id)
                                     }
