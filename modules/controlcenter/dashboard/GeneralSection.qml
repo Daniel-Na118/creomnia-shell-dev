@@ -74,7 +74,7 @@ SectionContainer {
 
         SwitchRow {
             Layout.fillWidth: true
-            label: qsTr("Performance Tab")
+            label: qsTr("Stats Tab")
             checked: root.rootItem.showPerformance
             onToggled: checked => {
                 root.rootItem.showPerformance = checked;
