@@ -19,7 +19,7 @@ JsonObject {
     component Commands: JsonObject {
         property list<string> logout: ["loginctl", "terminate-user", ""]
         property list<string> shutdown: ["systemctl", "poweroff"]
-        property list<string> hibernate: ["systemctl", "hibernate"]
+        property list<string> hibernate: ["bash", "-c", "loginctl lock-session && systemctl hibernate"]
         property list<string> reboot: ["systemctl", "reboot"]
     }
 
