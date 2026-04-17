@@ -38,7 +38,7 @@ Item {
 
                 StyledText {
                     Layout.fillWidth: true
-                    text: qsTr("Todo List")
+                    text: qsTr("To-Do List")
                     font.pointSize: Appearance.font.size.large
                     font.weight: 700
                     color: Colours.palette.m3primary
