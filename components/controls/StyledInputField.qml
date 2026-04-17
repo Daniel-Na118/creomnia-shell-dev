@@ -49,8 +49,9 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.IBeamCursor
-            acceptedButtons: Qt.NoButton
             enabled: root.enabled
+
+            onClicked: inputField.forceActiveFocus()
         }
 
         StyledTextField {
@@ -62,9 +63,12 @@ Item {
             validator: root.validator
             readOnly: root.readOnly
             enabled: root.enabled
+            text: root.text
 
             onTextChanged: {
-                root.text = text;
+                if (root.text !== text) {
+                    root.text = text;
+                }
                 root.textEdited(text);
             }
 
@@ -74,13 +78,6 @@ Item {
 
             onAccepted: {
                 root.accepted();
-            }
-
-            Binding {
-                target: inputField
-                property: "text"
-                value: root.text
-                when: !inputField.activeFocus
             }
         }
     }

@@ -11,6 +11,7 @@ JsonObject {
     property bool showTools: true
     property bool showPerformance: true
     property bool showWeather: true
+    property int pomodoroTime: 25
     property Sizes sizes: Sizes {}
     property Performance performance: Performance {}
 

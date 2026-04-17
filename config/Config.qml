@@ -230,6 +230,7 @@ Singleton {
             showTools: dashboard.showTools,
             showPerformance: dashboard.showPerformance,
             showWeather: dashboard.showWeather,
+            pomodoroTime: dashboard.pomodoroTime,
             performance: {
                 showBattery: dashboard.performance.showBattery,
                 showGpu: dashboard.performance.showGpu,

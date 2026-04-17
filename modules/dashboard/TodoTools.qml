@@ -14,102 +14,166 @@ Item {
     id: root
 
     implicitWidth: 600
-    implicitHeight: 400
+    implicitHeight: mainLayout.implicitHeight + Appearance.padding.large * 2
 
     RowLayout {
-        anchors.fill: parent
+        id: mainLayout
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.margins: Appearance.padding.large
         spacing: Appearance.spacing.large
 
         // Left Side: Todo List
         ColumnLayout {
             Layout.fillWidth: true
-            Layout.fillHeight: true
+            Layout.preferredWidth: 280
+            Layout.maximumWidth: 280
+            Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.normal
 
-            StyledText {
-                text: qsTr("Todo List")
-                font.pointSize: Appearance.font.size.large
-                font.weight: 700
-                color: Colours.palette.m3primary
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: Appearance.spacing.normal
+
+                StyledText {
+                    Layout.fillWidth: true
+                    text: qsTr("To-Do List")
+                    font.pointSize: Appearance.font.size.large
+                    font.weight: 700
+                    color: Colours.palette.m3primary
+                }
+
+                IconButton {
+                    icon: "delete_sweep"
+                    visible: TodoService.todos.length > 0
+                    implicitWidth: 24
+                    implicitHeight: 24
+                    onClicked: TodoService.clearAll()
+                }
+            }
+
+            Column {
+                Layout.fillWidth: true
+                spacing: Appearance.spacing.normal
+
+                Repeater {
+                    model: TodoService.todos
+
+                    delegate: RowLayout {
+                        id: delegateRoot
+                        width: parent.width
+                        spacing: Appearance.spacing.normal
+                        implicitHeight: 40
+                        Layout.preferredHeight: 40
+                        
+                        required property var modelData
+
+                        HoverHandler {
+                            id: itemHover
+                        }
+
+                        Item {
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 40
+                            implicitHeight: 40
+                            opacity: itemHover.hovered ? 0.7 : 1
+
+                            Behavior on opacity {
+                                Anim { duration: Appearance.anim.durations.small }
+                            }
+
+                            StyledInputField {
+                                id: todoItemDisplay
+                                anchors.fill: parent
+                                text: "  " + modelData.text
+                                readOnly: true
+                                horizontalAlignment: TextInput.AlignLeft
+                            }
+
+                            HoverHandler {
+                                id: textHover
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton
+                                propagateComposedEvents: false
+                                cursorShape: (textHover.hovered && modelData.checked) ? Qt.PointingHandCursor : Qt.ArrowCursor
+                                onClicked: (mouse) => {
+                                    mouse.accepted = true
+                                    if (textHover.hovered && modelData.checked) {
+                                        TodoService.removeTodo(modelData.id)
+                                    }
+                                }
+                            }
+                        }
+
+                        IconButton {
+                            Layout.preferredWidth: 28
+                            Layout.preferredHeight: 28
+                            implicitWidth: 28
+                            implicitHeight: 28
+                            icon: {
+                                if (textHover.hovered && modelData.checked) {
+                                    return "delete"
+                                } else if (modelData.checked) {
+                                    return "check_box"
+                                } else {
+                                    return "check_box_outline_blank"
+                                }
+                            }
+                            onClicked: {
+                                TodoService.toggleTodo(modelData.id)
+                            }
+                        }
+                    }
+                }
             }
 
             RowLayout {
-                spacing: Appearance.spacing.small
                 Layout.fillWidth: true
+                spacing: Appearance.spacing.small
+                visible: TodoService.todos.length < 5
+                implicitHeight: 40
 
                 StyledInputField {
                     id: todoInput
                     Layout.fillWidth: true
-                    placeholderText: qsTr("Add a new task...")
+                    placeholderText: qsTr("Add a new task")
                     
                     onAccepted: {
                         if (text.trim() !== "") {
                             TodoService.addTodo(text.trim());
                             text = "";
+                            focus = false;
                         }
                     }
                 }
 
                 IconButton {
                     icon: "add"
+                    implicitWidth: 28
+                    implicitHeight: 28
                     onClicked: {
                         if (todoInput.text.trim() !== "") {
                             TodoService.addTodo(todoInput.text.trim());
                             todoInput.text = "";
+                            todoInput.focus = false;
                         }
                     }
                 }
             }
 
-            ListView {
-                id: todoList
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                model: TodoService.todos
-                spacing: Appearance.spacing.smaller
-                clip: true
-
-                delegate: StyledRect {
-                    width: todoList.width
-                    implicitHeight: todoRow.implicitHeight + Appearance.padding.small * 2
-                    color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-                    radius: Appearance.rounding.small
-
-                    RowLayout {
-                        id: todoRow
-                        anchors.fill: parent
-                        anchors.margins: Appearance.padding.small
-                        spacing: Appearance.spacing.small
-
-                        IconButton {
-                            icon: modelData.checked ? "check_box" : "check_box_outline_blank"
-                            color: modelData.checked ? Colours.palette.m3primary : Colours.palette.m3onSurfaceVariant
-                            onClicked: TodoService.toggleTodo(modelData.id)
-                        }
-
-                        StyledText {
-                            Layout.fillWidth: true
-                            text: modelData.text
-                            font.strikeout: modelData.checked
-                            color: modelData.checked ? Colours.palette.m3outline : Colours.palette.m3onSurface
-                            elide: Text.ElideRight
-                        }
-
-                        IconButton {
-                            icon: "delete"
-                            color: Colours.palette.m3error
-                            onClicked: TodoService.removeTodo(modelData.id)
-                        }
-                    }
-                }
-            }
+            Item { Layout.fillHeight: true }
         }
+
+        Item { Layout.preferredWidth: 20 }
 
         // Right Side: Tools
         ColumnLayout {
             implicitWidth: 250
-            Layout.fillHeight: true
+            Layout.alignment: Qt.AlignTop
             spacing: Appearance.spacing.large
 
             // Pomodoro Timer
@@ -126,67 +190,62 @@ Item {
 
                 StyledRect {
                     Layout.fillWidth: true
-                    implicitHeight: 120
+                    implicitHeight: 140
                     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
                     radius: Appearance.rounding.normal
 
-                    ColumnLayout {
+                    HoverHandler {
+                        id: timerHover
+                    }
+
+                    StyledText {
+                        id: timerDisplay
                         anchors.centerIn: parent
-                        spacing: Appearance.spacing.small
-
-                        StyledText {
-                            id: timerDisplay
-                            Layout.alignment: Qt.AlignHCenter
-                            text: {
-                                const mins = Math.floor(pomodoroTimer.timeLeft / 60).toString().padStart(2, '0');
-                                const secs = (pomodoroTimer.timeLeft % 60).toString().padStart(2, '0');
-                                return `${mins}:${secs}`;
-                            }
-                            font.pointSize: Appearance.font.size.huge
-                            font.family: Appearance.font.family.clock
-                            color: Colours.palette.m3primary
+                        text: {
+                            const mins = Math.floor(PomodoroService.timeLeft / 60).toString().padStart(2, '0');
+                            const secs = (PomodoroService.timeLeft % 60).toString().padStart(2, '0');
+                            return `${mins}:${secs}`;
                         }
+                        font.pointSize: 48
+                        font.family: Appearance.font.family.clock
+                        font.weight: 600
+                        color: Colours.palette.m3primary
+                        opacity: timerHover.hovered ? 0.2 : 1
 
-                        RowLayout {
-                            Layout.alignment: Qt.AlignHCenter
-                            spacing: Appearance.spacing.small
-
-                            IconButton {
-                                icon: pomodoroTimer.running ? "pause" : "play_arrow"
-                                onClicked: pomodoroTimer.running = !pomodoroTimer.running
-                            }
-
-                            IconButton {
-                                icon: "restart_alt"
-                                onClicked: {
-                                    pomodoroTimer.running = false;
-                                    pomodoroTimer.timeLeft = 25 * 60;
-                                }
-                            }
+                        Behavior on opacity {
+                            Anim { duration: Appearance.anim.durations.small }
                         }
                     }
 
-                    Timer {
-                        id: pomodoroTimer
-                        interval: 1000
-                        repeat: true
-                        running: false
-                        property int timeLeft: 25 * 60
+                    RowLayout {
+                        anchors.centerIn: parent
+                        spacing: Appearance.spacing.large
+                        opacity: timerHover.hovered ? 1 : 0
+                        visible: opacity > 0
 
-                        onTriggered: {
-                            if (timeLeft > 0) {
-                                timeLeft--;
-                            } else {
-                                running = false;
-                                // Maybe add a notification here
-                            }
+                        Behavior on opacity {
+                            Anim { duration: Appearance.anim.durations.small }
+                        }
+
+                        IconButton {
+                            icon: PomodoroService.running ? "pause" : "play_arrow"
+                            onClicked: PomodoroService.toggle()
+                            type: IconButton.Tonal
+                        }
+
+                        IconButton {
+                            icon: "restart_alt"
+                            onClicked: PomodoroService.reset()
+                            type: IconButton.Tonal
                         }
                     }
                 }
             }
 
+
             // Quick Actions
             ColumnLayout {
+                id: quickActions
                 Layout.fillWidth: true
                 spacing: Appearance.spacing.small
 
@@ -198,19 +257,73 @@ Item {
                 }
 
                 RowLayout {
-                    spacing: Appearance.spacing.small
                     Layout.fillWidth: true
+                    Layout.topMargin: 32
+                    Layout.bottomMargin: 18
+                    spacing: 0
 
-                    ToggleRow {
+                    Item {
                         Layout.fillWidth: true
-                        label: qsTr("Dark Mode")
-                        checked: !Colours.light
-                        toggle.onToggled: Colours.setMode(checked ? "dark" : "light")
+                        implicitHeight: darkModeBtn.implicitHeight
+
+                        IconButton {
+                            id: darkModeBtn
+                            anchors.centerIn: parent
+                            icon: "dark_mode"
+                            toggle: false
+                            checked: !Colours.light
+                            type: IconButton.Tonal
+                            radius: width / 2
+                            onClicked: {
+                                if (Colours.scheme !== "") {
+                                    Colours.setMode(Colours.light ? "dark" : "light");
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                        implicitHeight: muteBtn.implicitHeight
+
+                        IconButton {
+                            id: muteBtn
+                            anchors.centerIn: parent
+                            icon: checked ? "volume_up" : "volume_off"
+                            toggle: false
+                            checked: !Audio.muted
+                            type: IconButton.Tonal
+                            radius: width / 2
+                            onClicked: {
+                                if (Audio.sink?.audio) {
+                                    Audio.sink.audio.muted = !Audio.sink.audio.muted;
+                                }
+                            }
+                        }
+                    }
+
+                    Item {
+                        Layout.fillWidth: true
+                        implicitHeight: vpnBtn.implicitHeight
+
+                        IconButton {
+                            id: vpnBtn
+                            anchors.centerIn: parent
+                            icon: "vpn_key"
+                            toggle: false
+                            checked: VPN.connected
+                            type: IconButton.Tonal
+                            radius: width / 2
+                            onClicked: {
+                                if (VPN.enabled) {
+                                    VPN.toggle();
+                                }
+                            }
+                        }
                     }
                 }
             }
-
-            Item { Layout.fillHeight: true }
         }
     }
 }
+
