@@ -37,7 +37,7 @@ JsonObject {
         },
         {
             id: "tray",
-            enabled: true
+            enabled: false
         },
         {
             id: "clock",
