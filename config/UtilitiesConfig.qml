@@ -22,10 +22,6 @@ JsonObject {
             enabled: true
         },
         {
-            id: "settings",
-            enabled: true
-        },
-        {
             id: "gameMode",
             enabled: true
         },
@@ -36,6 +32,10 @@ JsonObject {
         {
             id: "vpn",
             enabled: false
+        },
+        {
+            id: "settings",
+            enabled: true
         }
     ]
 
