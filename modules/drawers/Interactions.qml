@@ -51,6 +51,16 @@ CustomMouseArea {
         return y > height - Math.max(Config.border.minThickness, Config.border.thickness + panelHeight) - (isCorner ? Config.border.rounding : 0) && withinPanelWidth(panel, x, y);
     }
 
+    function inDockHoverZone(x: real, y: real): bool {
+        // Reveals dock when mouse is on/near the bottom edge in a centered horizontal region
+        const edgeBuffer = Math.max(Config.border.thickness, Config.dock.height);
+        if (y < height - edgeBuffer)
+            return false;
+        const zoneWidth = (width - bar.implicitWidth) * Config.dock.hoverRegionWidthFraction;
+        const centerX = bar.implicitWidth + (width - bar.implicitWidth) / 2;
+        return x >= centerX - zoneWidth / 2 && x <= centerX + zoneWidth / 2;
+    }
+
     function onWheel(event: WheelEvent): void {
         if (fullscreen)
             return;
@@ -85,6 +95,8 @@ CustomMouseArea {
 
             if (Config.bar.showOnHover)
                 bar.isHovered = false;
+
+            visibilities.dock = false;
         }
     }
 
@@ -195,6 +207,13 @@ CustomMouseArea {
                 visibilities.dashboard = true;
             else if (dragY < -Config.dashboard.dragThreshold)
                 visibilities.dashboard = false;
+        }
+
+        // Show dock on hover near/on bottom edge in centered region
+        if (Config.dock.enabled) {
+            const inDockArea = inBottomPanel(panels.dock, x, y) || inDockHoverZone(x, y);
+            if (inDockArea !== visibilities.dock)
+                visibilities.dock = inDockArea;
         }
 
         // Show utilities on hover
