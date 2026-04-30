@@ -10,7 +10,7 @@ JsonObject {
     property int floatMargin: 12
     property int dragThreshold: 30
     property real hoverRegionWidthFraction: 0.5
-    property int hoverRegionHeight: 100
+    property int hoverRegionHeight: 40
     property int maxWindowPreviewWidth: 300
     property int maxWindowPreviewHeight: 200
     property list<string> pinnedApps: []
