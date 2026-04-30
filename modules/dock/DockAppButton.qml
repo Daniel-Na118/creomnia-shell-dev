@@ -46,9 +46,12 @@ Item {
         anchors.bottom: parent.bottom
         anchors.topMargin: Appearance.padding.small
         anchors.bottomMargin: Appearance.padding.small
+        width: 1
         active: root.isSeparator
 
-        sourceComponent: DockSeparator {}
+        sourceComponent: DockSeparator {
+            anchors.fill: parent
+        }
     }
 
     Loader {
