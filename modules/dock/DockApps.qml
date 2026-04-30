@@ -74,7 +74,7 @@ Item {
             window: root.previewWindow
             item: root.dockContent
             rect.x: root.lastHoveredButton ? root.lastHoveredButton.mapToItem(root.dockContent, 0, 0).x : 0
-            rect.y: -(Appearance.padding.normal + 7)
+            rect.y: -(Appearance.padding.normal + 3)
             rect.width: root.lastHoveredButton?.width ?? 0
             rect.height: 0
             gravity: Edges.Top
