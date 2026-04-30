@@ -64,11 +64,7 @@ Item {
             StateLayer {
                 id: stateLayer
 
-                function onClicked(event): void {
-                    if (event && (event.modifiers & Qt.AltModifier)) {
-                        TaskbarApps.togglePin(root.appEntry.appId);
-                        return;
-                    }
+                function onClicked(): void {
                     if (root.toplevels.length === 0) {
                         root.desktopEntry?.execute();
                         return;
@@ -80,7 +76,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                acceptedButtons: Qt.MiddleButton
+                acceptedButtons: Qt.MiddleButton | Qt.RightButton
                 hoverEnabled: true
                 propagateComposedEvents: true
 
@@ -99,6 +95,8 @@ Item {
                 onClicked: event => {
                     if (event.button === Qt.MiddleButton)
                         root.desktopEntry?.execute();
+                    else if (event.button === Qt.RightButton && (event.modifiers & Qt.AltModifier))
+                        TaskbarApps.togglePin(root.appEntry.appId);
                 }
             }
 

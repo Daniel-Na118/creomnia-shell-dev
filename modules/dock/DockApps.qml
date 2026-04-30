@@ -19,12 +19,6 @@ Item {
     property Item lastHoveredButton: null
     property bool buttonHovered: false
 
-    function popupCenterXForButton(button: Item): real {
-        if (!button || !root.previewWindow)
-            return 0;
-        return root.previewWindow.contentItem.mapFromItem(button, button.width / 2, 0).x;
-    }
-
     implicitWidth: listView.implicitWidth
 
     StyledListView {
@@ -58,108 +52,69 @@ Item {
         }
     }
 
+    Timer {
+        id: showTimer
+
+        interval: 80
+        onTriggered: previewPopup.show = previewPopup.shouldShow
+    }
+
     PopupWindow {
         id: previewPopup
 
         readonly property var appEntry: root.lastHoveredButton?.appEntry ?? null
-        readonly property bool shouldShow: Config.dock.showPreviews && (popupMouseArea.containsMouse || root.buttonHovered) && (appEntry?.toplevels?.length ?? 0) > 0
+        readonly property bool shouldShow: Config.dock.showPreviews && root.lastHoveredButton !== null && (popupHover.containsMouse || root.buttonHovered) && (appEntry?.toplevels?.length ?? 0) > 0
 
         property bool show: false
-        property real cachedCenterX: 0
+
+        onShouldShowChanged: showTimer.restart()
 
         anchor {
             window: root.previewWindow
-            adjustment: PopupAdjustment.None
+            item: root.lastHoveredButton
             gravity: Edges.Top
-            edges: Edges.Top
+            edges: Edges.Bottom
+            adjustment: PopupAdjustment.SlideX
+            margins.bottom: Appearance.padding.normal
         }
 
-        visible: popupBackground.opacity > 0
+        visible: show && root.lastHoveredButton !== null
         color: "transparent"
-        implicitWidth: root.previewWindow?.width ?? 1
-        implicitHeight: popupMouseArea.implicitHeight
-
-        onShouldShowChanged: updateTimer.restart()
-
-        Connections {
-            function onLastHoveredButtonChanged(): void {
-                if (root.lastHoveredButton)
-                    previewPopup.cachedCenterX = root.popupCenterXForButton(root.lastHoveredButton);
-            }
-
-            function onButtonHoveredChanged(): void {
-                if (root.buttonHovered && root.lastHoveredButton)
-                    previewPopup.cachedCenterX = root.popupCenterXForButton(root.lastHoveredButton);
-                updateTimer.restart();
-            }
-
-            target: root
-        }
-
-        Timer {
-            id: updateTimer
-
-            interval: 100
-
-            onTriggered: previewPopup.show = previewPopup.shouldShow
-        }
+        implicitWidth: popupBackground.implicitWidth
+        implicitHeight: popupBackground.implicitHeight
 
         MouseArea {
-            id: popupMouseArea
+            id: popupHover
 
-            anchors.bottom: parent.bottom
-            x: previewPopup.cachedCenterX - width / 2
-
-            implicitWidth: popupBackground.implicitWidth + Appearance.padding.normal * 2
-            implicitHeight: Config.dock.maxWindowPreviewHeight + Appearance.padding.normal * 2
+            anchors.fill: parent
             hoverEnabled: true
+        }
 
-            StyledRect {
-                id: popupBackground
+        StyledRect {
+            id: popupBackground
 
-                readonly property int padding: Appearance.padding.small
+            readonly property int padding: Appearance.padding.small
 
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: Appearance.padding.normal
-                anchors.horizontalCenter: parent.horizontalCenter
+            color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
+            radius: Appearance.rounding.normal
+            implicitHeight: previewRow.implicitHeight + padding * 2
+            implicitWidth: previewRow.implicitWidth + padding * 2
 
-                opacity: previewPopup.show ? 1 : 0
-                visible: opacity > 0
-                clip: true
-                color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-                radius: Appearance.rounding.normal
+            RowLayout {
+                id: previewRow
 
-                implicitHeight: previewRow.implicitHeight + padding * 2
-                implicitWidth: previewRow.implicitWidth + padding * 2
+                anchors.centerIn: parent
+                spacing: Appearance.spacing.small
 
-                Behavior on opacity {
-                    Anim {}
-                }
+                Repeater {
+                    model: ScriptModel {
+                        values: previewPopup.appEntry?.toplevels ?? []
+                    }
 
-                Behavior on implicitWidth {
-                    Anim {}
-                }
+                    delegate: WindowPreview {
+                        required property var modelData
 
-                Behavior on implicitHeight {
-                    Anim {}
-                }
-
-                RowLayout {
-                    id: previewRow
-
-                    anchors.centerIn: parent
-                    spacing: Appearance.spacing.small
-
-                    Repeater {
-                        model: ScriptModel {
-                            values: previewPopup.appEntry?.toplevels ?? []
-                        }
-
-                        delegate: WindowPreview {
-                            required property var modelData
-
-                            toplevel: modelData
-                        }
+                        toplevel: modelData
                     }
                 }
             }
