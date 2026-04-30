@@ -59,7 +59,14 @@ Item {
         id: showTimer
 
         interval: 80
-        onTriggered: previewPopup.show = previewPopup.shouldShow
+        onTriggered: previewPopup.show = true
+    }
+
+    Timer {
+        id: hideTimer
+
+        interval: 250
+        onTriggered: previewPopup.show = false
     }
 
     PopupWindow {
@@ -70,7 +77,15 @@ Item {
 
         property bool show: false
 
-        onShouldShowChanged: showTimer.restart()
+        onShouldShowChanged: {
+            if (shouldShow) {
+                hideTimer.stop();
+                showTimer.restart();
+            } else {
+                showTimer.stop();
+                hideTimer.restart();
+            }
+        }
 
         anchor {
             window: root.previewWindow
