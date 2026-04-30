@@ -80,7 +80,7 @@ Item {
             gravity: Edges.Top
             edges: Edges.Bottom
             adjustment: PopupAdjustment.SlideX
-            margins.bottom: Appearance.padding.normal + 6
+            margins.bottom: Appearance.padding.normal + 15
         }
 
         visible: show && root.lastHoveredButton !== null
