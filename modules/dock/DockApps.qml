@@ -74,13 +74,12 @@ Item {
             window: root.previewWindow
             item: root.dockContent
             rect.x: root.lastHoveredButton ? root.lastHoveredButton.mapToItem(root.dockContent, 0, 0).x : 0
-            rect.y: 0
+            rect.y: -(Appearance.padding.normal + 7)
             rect.width: root.lastHoveredButton?.width ?? 0
             rect.height: 0
             gravity: Edges.Top
             edges: Edges.Bottom
             adjustment: PopupAdjustment.SlideX
-            margins.bottom: Appearance.padding.normal + 15
         }
 
         visible: show && root.lastHoveredButton !== null

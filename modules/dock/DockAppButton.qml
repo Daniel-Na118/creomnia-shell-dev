@@ -64,7 +64,17 @@ Item {
             StateLayer {
                 id: stateLayer
 
+                acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
+
                 function onClicked(event): void {
+                    if (event.button === Qt.RightButton || (event.button === Qt.LeftButton && (event.modifiers & Qt.AltModifier))) {
+                        TaskbarApps.togglePin(root.appEntry.appId);
+                        return;
+                    }
+                    if (event.button === Qt.MiddleButton) {
+                        root.desktopEntry?.execute();
+                        return;
+                    }
                     if (root.toplevels.length === 0) {
                         root.desktopEntry?.execute();
                         return;
@@ -76,9 +86,8 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+                acceptedButtons: Qt.NoButton
                 hoverEnabled: true
-                propagateComposedEvents: true
 
                 onEntered: {
                     root.appListRoot.lastHoveredButton = root;
@@ -90,22 +99,6 @@ Item {
                 onExited: {
                     if (root.appListRoot.lastHoveredButton === root)
                         root.appListRoot.buttonHovered = false;
-                }
-
-                onPressed: event => {
-                    // Only consume alt+left for pin; normal left-clicks fall through to StateLayer
-                    if (event.button === Qt.LeftButton && !(event.modifiers & Qt.AltModifier))
-                        event.accepted = false;
-                }
-
-                onClicked: event => {
-                    if (event.button === Qt.MiddleButton) {
-                        root.desktopEntry?.execute();
-                    } else if (event.button === Qt.LeftButton && (event.modifiers & Qt.AltModifier)) {
-                        TaskbarApps.togglePin(root.appEntry.appId);
-                    } else {
-                        event.accepted = false;
-                    }
                 }
             }
 
