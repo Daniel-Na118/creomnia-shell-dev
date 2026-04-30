@@ -59,6 +59,7 @@ StyledRect {
 
             iconSize: Config.dock.iconSize
             previewWindow: root.QsWindow.window
+            dockContent: root
         }
     }
 }

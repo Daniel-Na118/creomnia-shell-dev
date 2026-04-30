@@ -259,6 +259,7 @@ Singleton {
             floatMargin: dock.floatMargin,
             dragThreshold: dock.dragThreshold,
             hoverRegionWidthFraction: dock.hoverRegionWidthFraction,
+            hoverRegionHeight: dock.hoverRegionHeight,
             maxWindowPreviewWidth: dock.maxWindowPreviewWidth,
             maxWindowPreviewHeight: dock.maxWindowPreviewHeight,
             pinnedApps: dock.pinnedApps,

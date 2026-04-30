@@ -52,9 +52,8 @@ CustomMouseArea {
     }
 
     function inDockHoverZone(x: real, y: real): bool {
-        // Reveals dock when mouse is on/near the bottom edge in a centered horizontal region
-        const edgeBuffer = Math.max(Config.border.thickness, Config.dock.height);
-        if (y < height - edgeBuffer)
+        // Reveals dock when mouse is near the bottom edge in a centered horizontal region
+        if (y < height - Config.dock.hoverRegionHeight)
             return false;
         const zoneWidth = (width - bar.implicitWidth) * Config.dock.hoverRegionWidthFraction;
         const centerX = bar.implicitWidth + (width - bar.implicitWidth) / 2;

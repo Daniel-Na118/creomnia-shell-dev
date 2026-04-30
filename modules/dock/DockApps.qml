@@ -12,6 +12,7 @@ Item {
     id: root
 
     required property var previewWindow
+    required property Item dockContent
 
     property real iconSize: 35
     property real spacing: 2
@@ -71,7 +72,11 @@ Item {
 
         anchor {
             window: root.previewWindow
-            item: root.lastHoveredButton
+            item: root.dockContent
+            rect.x: root.lastHoveredButton ? root.lastHoveredButton.mapToItem(root.dockContent, 0, 0).x : 0
+            rect.y: 0
+            rect.width: root.lastHoveredButton?.width ?? 0
+            rect.height: 0
             gravity: Edges.Top
             edges: Edges.Bottom
             adjustment: PopupAdjustment.SlideX
