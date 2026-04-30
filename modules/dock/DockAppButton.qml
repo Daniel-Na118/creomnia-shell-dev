@@ -108,7 +108,7 @@ Item {
                 anchors.centerIn: parent
                 anchors.verticalCenterOffset: -root.countDotHeight / 2
 
-                source: Quickshell.iconPath(Icons.getAppIcon(root.appEntry.appId, ""), "image-missing")
+                source: Icons.getAppIcon(root.appEntry.appId, "image-missing")
                 implicitSize: root.iconSize
             }
 

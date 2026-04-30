@@ -7,6 +7,7 @@ JsonObject {
     property bool monochromeIcons: false
     property int height: 60
     property int iconSize: 35
+    property int floatMargin: 12
     property int dragThreshold: 30
     property real hoverRegionWidthFraction: 0.5
     property int maxWindowPreviewWidth: 300

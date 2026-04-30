@@ -256,6 +256,7 @@ Singleton {
             monochromeIcons: dock.monochromeIcons,
             height: dock.height,
             iconSize: dock.iconSize,
+            floatMargin: dock.floatMargin,
             dragThreshold: dock.dragThreshold,
             hoverRegionWidthFraction: dock.hoverRegionWidthFraction,
             maxWindowPreviewWidth: dock.maxWindowPreviewWidth,

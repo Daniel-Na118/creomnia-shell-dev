@@ -18,9 +18,10 @@ Item {
     readonly property bool shouldBeActive: Config.dock.enabled && !launcherOpen && (root.pinned || visibilities.dock)
 
     property real offsetScale: shouldBeActive ? 0 : 1
+    readonly property int floatMargin: Config.dock.floatMargin
 
     visible: offsetScale < 1
-    anchors.bottomMargin: (-implicitHeight - 5) * offsetScale
+    anchors.bottomMargin: floatMargin - (floatMargin + implicitHeight + 5) * offsetScale
     implicitHeight: content.implicitHeight
     implicitWidth: content.implicitWidth || 400
     opacity: 1 - offsetScale
