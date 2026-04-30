@@ -20,6 +20,8 @@ Item {
     property Item lastHoveredButton: null
     property bool buttonHovered: false
 
+    readonly property bool previewActive: previewPopup.show
+
     implicitWidth: listView.implicitWidth
 
     StyledListView {

@@ -17,6 +17,7 @@ StyledRect {
 
     readonly property int padding: Appearance.padding.small
     readonly property int innerHeight: Config.dock.height
+    readonly property alias previewActive: dockApps.previewActive
 
     color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
     radius: Appearance.rounding.large
