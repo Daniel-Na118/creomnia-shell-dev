@@ -65,10 +65,6 @@ Item {
                 id: stateLayer
 
                 function onClicked(event): void {
-                    if (event && (event.modifiers & Qt.AltModifier)) {
-                        TaskbarApps.togglePin(root.appEntry.appId);
-                        return;
-                    }
                     if (root.toplevels.length === 0) {
                         root.desktopEntry?.execute();
                         return;
@@ -80,7 +76,7 @@ Item {
 
             MouseArea {
                 anchors.fill: parent
-                acceptedButtons: Qt.MiddleButton
+                acceptedButtons: Qt.LeftButton | Qt.MiddleButton
                 hoverEnabled: true
                 propagateComposedEvents: true
 
@@ -96,9 +92,20 @@ Item {
                         root.appListRoot.buttonHovered = false;
                 }
 
+                onPressed: event => {
+                    // Only consume alt+left for pin; normal left-clicks fall through to StateLayer
+                    if (event.button === Qt.LeftButton && !(event.modifiers & Qt.AltModifier))
+                        event.accepted = false;
+                }
+
                 onClicked: event => {
-                    if (event.button === Qt.MiddleButton)
+                    if (event.button === Qt.MiddleButton) {
                         root.desktopEntry?.execute();
+                    } else if (event.button === Qt.LeftButton && (event.modifiers & Qt.AltModifier)) {
+                        TaskbarApps.togglePin(root.appEntry.appId);
+                    } else {
+                        event.accepted = false;
+                    }
                 }
             }
 
