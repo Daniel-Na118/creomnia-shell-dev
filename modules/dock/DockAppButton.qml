@@ -20,7 +20,6 @@ Item {
     property int countDotHeight: 4
     property int lastFocused: -1
 
-    readonly property bool isSeparator: appEntry.appId === "SEPARATOR"
     readonly property var toplevels: appEntry.toplevels
     readonly property bool appIsActive: {
         for (const t of toplevels)
@@ -30,7 +29,7 @@ Item {
     }
     property var desktopEntry: DesktopEntries.heuristicLookup(appEntry.appId)
 
-    implicitWidth: isSeparator ? Appearance.spacing.smaller : height
+    implicitWidth: height
 
     Connections {
         function onApplicationsChanged(): void {
@@ -41,22 +40,7 @@ Item {
     }
 
     Loader {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.topMargin: Appearance.padding.small
-        anchors.bottomMargin: Appearance.padding.small
-        width: 1
-        active: root.isSeparator
-
-        sourceComponent: DockSeparator {
-            anchors.fill: parent
-        }
-    }
-
-    Loader {
         anchors.fill: parent
-        active: !root.isSeparator
 
         sourceComponent: StyledRect {
             id: btn

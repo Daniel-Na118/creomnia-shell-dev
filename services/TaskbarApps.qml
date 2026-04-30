@@ -33,12 +33,6 @@ Singleton {
                 });
         }
 
-        if (pinnedApps.length > 0)
-            map.set("SEPARATOR", {
-                pinned: false,
-                toplevels: []
-            });
-
         const ignoredRegexes = (Config.dock.ignoredAppRegexes ?? []).map(p => new RegExp(p, "i"));
 
         for (const toplevel of ToplevelManager.toplevels.values) {
