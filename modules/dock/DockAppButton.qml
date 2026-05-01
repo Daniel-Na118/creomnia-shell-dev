@@ -19,7 +19,6 @@ Item {
     property int countDotWidth: 10
     property int countDotHeight: 4
     property int lastFocused: -1
-    property bool suppressHover: false
 
     readonly property var toplevels: appEntry.toplevels
     readonly property bool appIsActive: {
@@ -46,7 +45,7 @@ Item {
         sourceComponent: StyledRect {
             id: btn
 
-            color: stateLayer.containsMouse && !root.suppressHover ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : "transparent"
+            color: stateLayer.containsMouse ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : "transparent"
             radius: Appearance.rounding.small
 
             Behavior on color {
@@ -73,7 +72,6 @@ Item {
                     }
                     root.lastFocused = (root.lastFocused + 1) % root.toplevels.length;
                     root.toplevels[root.lastFocused]?.activate();
-                    root.suppressHover = true;
                 }
             }
 
@@ -85,18 +83,14 @@ Item {
                 onEntered: {
                     root.appListRoot.lastHoveredButton = root;
                     root.appListRoot.buttonHovered = true;
-                    root.suppressHover = false;
                     if (root.toplevels.length > 0)
                         root.lastFocused = root.toplevels.length - 1;
                 }
 
                 onExited: {
-                    root.suppressHover = false;
                     if (root.appListRoot.lastHoveredButton === root)
                         root.appListRoot.buttonHovered = false;
                 }
-
-                onPositionChanged: root.suppressHover = false
             }
 
             IconImage {
