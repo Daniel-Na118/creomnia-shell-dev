@@ -19,7 +19,6 @@ Item {
     property int countDotWidth: 10
     property int countDotHeight: 4
     property int lastFocused: -1
-    property bool clickFlash: false
 
     readonly property var toplevels: appEntry.toplevels
     readonly property bool appIsActive: {
@@ -46,7 +45,7 @@ Item {
         sourceComponent: StyledRect {
             id: btn
 
-            color: stateLayer.containsMouse && !root.clickFlash ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : "transparent"
+            color: stateLayer.containsMouse ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : "transparent"
             radius: Appearance.rounding.small
 
             Behavior on color {
@@ -72,10 +71,7 @@ Item {
                         return;
                     }
                     root.lastFocused = (root.lastFocused + 1) % root.toplevels.length;
-                    const target = root.toplevels[root.lastFocused];
-                    root.clickFlash = true;
-                    flashResetTimer.restart();
-                    Qt.callLater(() => target?.activate());
+                    root.toplevels[root.lastFocused]?.activate();
                 }
             }
 
@@ -87,23 +83,14 @@ Item {
                 onEntered: {
                     root.appListRoot.lastHoveredButton = root;
                     root.appListRoot.buttonHovered = true;
-                    root.clickFlash = false;
                     if (root.toplevels.length > 0)
                         root.lastFocused = root.toplevels.length - 1;
                 }
 
                 onExited: {
-                    root.clickFlash = false;
                     if (root.appListRoot.lastHoveredButton === root)
                         root.appListRoot.buttonHovered = false;
                 }
-            }
-
-            Timer {
-                id: flashResetTimer
-
-                interval: 250
-                onTriggered: root.clickFlash = false
             }
 
             IconImage {
