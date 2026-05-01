@@ -20,6 +20,7 @@ Item {
 
     property real offsetScale: shouldBeActive ? 0 : 1
     readonly property int floatMargin: Config.dock.floatMargin
+    readonly property int exclusiveZone: pinned && Config.dock.enabled ? Config.border.thickness + floatMargin + Config.dock.height : Config.border.thickness
 
     visible: offsetScale < 1
     anchors.bottomMargin: floatMargin - (floatMargin + implicitHeight + 5) * offsetScale

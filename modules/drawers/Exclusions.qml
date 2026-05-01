@@ -4,12 +4,14 @@ import QtQuick
 import Quickshell
 import qs.components.containers
 import qs.modules.bar as Bar
+import qs.modules.dock as Dock
 
 Scope {
     id: root
 
     required property ShellScreen screen
     required property Bar.BarWrapper bar
+    required property Dock.Wrapper dock
     required property real borderThickness
 
     ExclusionZone {
@@ -27,6 +29,7 @@ Scope {
 
     ExclusionZone {
         anchors.bottom: true
+        exclusiveZone: root.dock.exclusiveZone
     }
 
     component ExclusionZone: StyledWindow {
