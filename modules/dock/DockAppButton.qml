@@ -74,6 +74,7 @@ Item {
                     root.lastFocused = (root.lastFocused + 1) % root.toplevels.length;
                     root.toplevels[root.lastFocused]?.activate();
                     root.suppressHover = true;
+                    suppressResetTimer.restart();
                 }
             }
 
@@ -95,8 +96,13 @@ Item {
                     if (root.appListRoot.lastHoveredButton === root)
                         root.appListRoot.buttonHovered = false;
                 }
+            }
 
-                onPositionChanged: root.suppressHover = false
+            Timer {
+                id: suppressResetTimer
+
+                interval: 400
+                onTriggered: root.suppressHover = false
             }
 
             IconImage {
