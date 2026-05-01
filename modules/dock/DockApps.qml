@@ -81,6 +81,8 @@ Item {
             if (shouldShow) {
                 hideTimer.stop();
                 showTimer.restart();
+            } else if (popupHover.containsMouse) {
+                showTimer.stop();
             } else {
                 showTimer.stop();
                 hideTimer.restart();
@@ -104,38 +106,40 @@ Item {
         implicitWidth: popupBackground.implicitWidth
         implicitHeight: popupBackground.implicitHeight
 
-        MouseArea {
-            id: popupHover
-
-            anchors.fill: parent
-            hoverEnabled: true
-        }
-
         StyledRect {
             id: popupBackground
 
             readonly property int padding: Appearance.padding.small
 
+            anchors.fill: parent
             color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
             radius: Appearance.rounding.normal
             implicitHeight: previewRow.implicitHeight + padding * 2
             implicitWidth: previewRow.implicitWidth + padding * 2
 
-            RowLayout {
-                id: previewRow
+            MouseArea {
+                id: popupHover
 
-                anchors.centerIn: parent
-                spacing: Appearance.spacing.small
+                anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.NoButton
 
-                Repeater {
-                    model: ScriptModel {
-                        values: previewPopup.appEntry?.toplevels ?? []
-                    }
+                RowLayout {
+                    id: previewRow
 
-                    delegate: WindowPreview {
-                        required property var modelData
+                    anchors.centerIn: parent
+                    spacing: Appearance.spacing.small
 
-                        toplevel: modelData
+                    Repeater {
+                        model: ScriptModel {
+                            values: previewPopup.appEntry?.toplevels ?? []
+                        }
+
+                        delegate: WindowPreview {
+                            required property var modelData
+
+                            toplevel: modelData
+                        }
                     }
                 }
             }

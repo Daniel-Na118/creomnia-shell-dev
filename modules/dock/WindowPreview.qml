@@ -60,13 +60,26 @@ StyledRect {
             }
         }
 
-        ScreencopyView {
+        Item {
             Layout.alignment: Qt.AlignHCenter
+            implicitWidth: screencopy.implicitWidth
+            implicitHeight: screencopy.implicitHeight
 
-            captureSource: root.toplevel
-            live: true
-            paintCursor: true
-            constraintSize: Qt.size(Config.dock.maxWindowPreviewWidth, Config.dock.maxWindowPreviewHeight)
+            ScreencopyView {
+                id: screencopy
+
+                anchors.fill: parent
+                captureSource: root.toplevel
+                live: true
+                paintCursor: true
+                constraintSize: Qt.size(Config.dock.maxWindowPreviewWidth, Config.dock.maxWindowPreviewHeight)
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: root.toplevel?.activate()
+            }
         }
     }
 }
