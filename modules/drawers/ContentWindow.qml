@@ -17,7 +17,7 @@ StyledWindow {
     id: root
 
     readonly property alias bar: bar
-    readonly property alias dock: panels.dock
+    readonly property Item dock: panels.dock ?? null
 
     readonly property HyprlandMonitor monitor: Hypr.monitorFor(screen)
     readonly property bool hasSpecialWorkspace: (monitor?.lastIpcObject.specialWorkspace?.name.length ?? 0) > 0
