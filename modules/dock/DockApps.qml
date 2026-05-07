@@ -110,7 +110,7 @@ Item {
     Timer {
         id: hideTimer
 
-        interval: 250
+        interval: 120
         onTriggered: {
             if (!previewPopup.hovered)
                 previewPopup.show = false;
