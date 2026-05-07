@@ -16,7 +16,8 @@ Item {
     property bool pinned: Config.dock.pinnedOnStartup
     readonly property bool launcherOpen: visibilities.launcher && Config.launcher.enabled
     readonly property bool previewActive: content.item?.previewActive ?? false
-    readonly property bool shouldBeActive: Config.dock.enabled && !launcherOpen && (root.pinned || visibilities.dock || previewActive)
+    readonly property bool menuActive: content.item?.menuActive ?? false
+    readonly property bool shouldBeActive: Config.dock.enabled && !launcherOpen && (root.pinned || visibilities.dock || previewActive || menuActive)
 
     property real offsetScale: shouldBeActive ? 0 : 1
     readonly property int floatMargin: Config.dock.floatMargin

@@ -172,15 +172,8 @@ Item {
                 acceptedButtons: Qt.NoButton
                 hoverEnabled: true
 
-                onEntered: {
-                    root.appListRoot.lastHoveredButton = root;
-                    root.appListRoot.buttonHovered = true;
-                }
-
-                onExited: {
-                    if (root.appListRoot.lastHoveredButton === root)
-                        root.appListRoot.buttonHovered = false;
-                }
+                onEntered: root.appListRoot.onButtonHover(root, true)
+                onExited: root.appListRoot.onButtonHover(root, false)
             }
 
             IconImage {
