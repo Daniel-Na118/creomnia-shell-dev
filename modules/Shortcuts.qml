@@ -108,6 +108,65 @@ Scope {
         }
     }
 
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overview"
+        description: "Show overview while held; release closes"
+        onPressed: {
+            if (root.hasFullscreen)
+                return;
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+        }
+        onReleased: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = false;
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewToggle"
+        description: "Toggle overview"
+        onPressed: {
+            if (root.hasFullscreen)
+                return;
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = !visibilities.overview;
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewCycleNext"
+        description: "Cycle to next workspace in overview"
+        onPressed: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+            Hypr.dispatch("workspace e+1");
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewCyclePrev"
+        description: "Cycle to previous workspace in overview"
+        onPressed: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+            Hypr.dispatch("workspace e-1");
+        }
+    }
+
     IpcHandler {
         function toggle(drawer: string): void {
             if (list().split("\n").includes(drawer)) {

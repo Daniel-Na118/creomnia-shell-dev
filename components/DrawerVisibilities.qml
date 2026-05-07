@@ -9,4 +9,5 @@ PersistentProperties {
     property bool utilities
     property bool sidebar
     property bool dock
+    property bool overview
 }

@@ -10,6 +10,7 @@ Singleton {
 
     function load(screen: ShellScreen, visibilities: DrawerVisibilities): void {
         screens.set(Hypr.monitorFor(screen), visibilities);
+        screens = screens;
     }
 
     function getForActive(): DrawerVisibilities {
