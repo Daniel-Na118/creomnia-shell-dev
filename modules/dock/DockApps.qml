@@ -39,11 +39,17 @@ Item {
 
     function onButtonHover(button, entered): void {
         if (entered) {
-            lastHoveredButton = button;
-            hideTimer.stop();
             const hasWindows = (button?.appEntry?.toplevels?.length ?? 0) > 0;
-            if (hasWindows && activeMenu === null && Config.dock.showPreviews)
-                showTimer.restart();
+            if (hasWindows) {
+                lastHoveredButton = button;
+                hideTimer.stop();
+                if (activeMenu === null && Config.dock.showPreviews)
+                    showTimer.restart();
+            } else {
+                showTimer.stop();
+                if (lastHoveredButton !== null)
+                    hideTimer.restart();
+            }
         } else if (lastHoveredButton === button) {
             showTimer.stop();
             hideTimer.restart();
