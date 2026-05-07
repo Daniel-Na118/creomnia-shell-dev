@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Hyprland
 import qs.components
 import qs.components.containers
 import qs.services
@@ -67,6 +68,12 @@ Item {
                 duration: Appearance.anim.durations.small
             }
         }
+    }
+
+    HyprlandFocusGrab {
+        active: root.activeMenu !== null
+        windows: root.activeMenu ? [root.previewWindow, root.activeMenu] : [root.previewWindow]
+        onCleared: root.activeMenu?.close()
     }
 
     Timer {

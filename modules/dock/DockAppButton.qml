@@ -18,9 +18,25 @@ Item {
     property real iconSize: 35
     property int countDotWidth: 10
     property int countDotHeight: 4
-    property int lastFocused: -1
+    property int cycleIdx: -1
 
     readonly property var toplevels: appEntry.toplevels
+
+    function cycleNext(): void {
+        if (root.toplevels.length === 0)
+            return;
+        let activeIdx = -1;
+        for (let i = 0; i < root.toplevels.length; ++i) {
+            if (root.toplevels[i]?.activated) {
+                activeIdx = i;
+                break;
+            }
+        }
+        const start = activeIdx >= 0 ? activeIdx : root.cycleIdx;
+        const next = (start + 1) % root.toplevels.length;
+        root.cycleIdx = next;
+        root.toplevels[next]?.activate();
+    }
 
     function showContextMenu(): void {
         const rows = [];
@@ -143,8 +159,11 @@ Item {
                         root.desktopEntry?.execute();
                         return;
                     }
-                    root.lastFocused = (root.lastFocused + 1) % root.toplevels.length;
-                    root.toplevels[root.lastFocused]?.activate();
+                    if (root.toplevels.length === 1) {
+                        root.toplevels[0]?.activate();
+                        return;
+                    }
+                    root.cycleNext();
                 }
             }
 
@@ -156,8 +175,6 @@ Item {
                 onEntered: {
                     root.appListRoot.lastHoveredButton = root;
                     root.appListRoot.buttonHovered = true;
-                    if (root.toplevels.length > 0)
-                        root.lastFocused = root.toplevels.length - 1;
                 }
 
                 onExited: {
