@@ -53,6 +53,8 @@ Scope {
             }
             readonly property bool overviewOpen: (visibilities?.overview ?? false) && Config.overview.enabled
 
+            Component.onCompleted: console.log("[overview panel] CREATED screen=" + modelData + " monitor=" + monitor + " mapSize=" + Visibilities.screens.size + " initialVisibilities=" + visibilities)
+            onMonitorChanged: console.log("[overview panel] monitor changed=" + monitor)
             onOverviewOpenChanged: console.log("[overview panel] overviewOpen=" + overviewOpen + " visibilities=" + visibilities)
             onVisibilitiesChanged: console.log("[overview panel] visibilities changed=" + visibilities)
 
