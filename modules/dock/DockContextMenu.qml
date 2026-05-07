@@ -23,7 +23,7 @@ PopupWindow {
     readonly property int textIconSpacing: Appearance.spacing.small
     readonly property int minRowWidth: 160
     readonly property int maxRowWidth: 320
-    readonly property int gapToItem: Appearance.padding.small
+    readonly property int gapToItem: Appearance.padding.normal + 3
 
     function open() { visible = true; }
     function close() { visible = false; }
