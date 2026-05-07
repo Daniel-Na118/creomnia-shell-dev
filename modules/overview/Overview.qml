@@ -47,16 +47,8 @@ Scope {
 
             readonly property HyprlandMonitor monitor: Hypr.monitorFor(modelData)
             readonly property bool isFocused: Hypr.focusedMonitor?.id === monitor?.id
-            readonly property var visibilities: {
-                Visibilities.screens; // touch the map to track changes
-                return Visibilities.screens.get(monitor) ?? null;
-            }
+            readonly property var visibilities: Visibilities.screens.get(monitor) ?? null
             readonly property bool overviewOpen: (visibilities?.overview ?? false) && Config.overview.enabled
-
-            Component.onCompleted: console.log("[overview panel] CREATED screen=" + modelData + " monitor=" + monitor + " mapSize=" + Visibilities.screens.size + " initialVisibilities=" + visibilities)
-            onMonitorChanged: console.log("[overview panel] monitor changed=" + monitor)
-            onOverviewOpenChanged: console.log("[overview panel] overviewOpen=" + overviewOpen + " visibilities=" + visibilities)
-            onVisibilitiesChanged: console.log("[overview panel] visibilities changed=" + visibilities)
 
             screen: modelData
             visible: overviewOpen

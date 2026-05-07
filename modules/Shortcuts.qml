@@ -4,6 +4,7 @@ import Quickshell.Io
 import Creomnia
 import qs.components.misc
 import qs.services
+import qs.config
 import qs.modules.controlcenter
 
 Scope {
@@ -114,11 +115,9 @@ Scope {
         name: "overview"
         description: "Show overview while held; release closes"
         onPressed: {
-            console.log("[overview] press fired, fullscreen=" + root.hasFullscreen + " focusedMonitor=" + Hypr.focusedMonitor + " mapSize=" + Visibilities.screens.size);
             if (root.hasFullscreen)
                 return;
             const visibilities = Visibilities.getForActive();
-            console.log("[overview] visibilities=" + visibilities + " currentValue=" + (visibilities ? visibilities.overview : "n/a"));
             if (visibilities)
                 visibilities.overview = true;
         }
@@ -152,7 +151,10 @@ Scope {
             const visibilities = Visibilities.getForActive();
             if (visibilities)
                 visibilities.overview = true;
-            Hypr.dispatch("workspace e+1");
+            const total = Config.overview.rows * Config.overview.columns;
+            const current = Hypr.focusedWorkspace?.id ?? 1;
+            const next = ((current - 1 + 1) % total) + 1;
+            Hypr.dispatch(`workspace ${next}`);
         }
     }
 
@@ -165,7 +167,10 @@ Scope {
             const visibilities = Visibilities.getForActive();
             if (visibilities)
                 visibilities.overview = true;
-            Hypr.dispatch("workspace e-1");
+            const total = Config.overview.rows * Config.overview.columns;
+            const current = Hypr.focusedWorkspace?.id ?? 1;
+            const prev = ((current - 1 - 1 + total) % total) + 1;
+            Hypr.dispatch(`workspace ${prev}`);
         }
     }
 
