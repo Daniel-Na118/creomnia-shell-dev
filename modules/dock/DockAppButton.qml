@@ -21,6 +21,68 @@ Item {
     property int lastFocused: -1
 
     readonly property var toplevels: appEntry.toplevels
+
+    function showContextMenu(): void {
+        const rows = [];
+        const iconSrc = Icons.getAppIcon(root.appEntry.appId, "image-missing");
+
+        for (let i = 0; i < root.toplevels.length; ++i) {
+            const t = root.toplevels[i];
+            rows.push({
+                kind: "row",
+                label: t.title || root.appEntry.appId,
+                iconSource: iconSrc,
+                onTriggered: () => t.activate()
+            });
+        }
+        if (root.toplevels.length > 0) rows.push({ kind: "separator" });
+
+        if (root.desktopEntry?.actions?.length > 0) {
+            for (let i = 0; i < root.desktopEntry.actions.length; ++i) {
+                const a = root.desktopEntry.actions[i];
+                rows.push({
+                    kind: "row",
+                    label: a.name || a.id,
+                    iconSource: a.icon ? Icons.getAppIcon(a.icon, "image-missing") : "",
+                    onTriggered: () => a.execute()
+                });
+            }
+            rows.push({ kind: "separator" });
+        }
+
+        if (root.desktopEntry) {
+            const hasWindows = root.toplevels.length > 0;
+            if (!hasWindows || !root.desktopEntry.singleMainWindow) {
+                const baseName = root.desktopEntry.name || root.appEntry.appId;
+                rows.push({
+                    kind: "row",
+                    label: hasWindows ? "New Window – " + baseName : baseName,
+                    iconSource: iconSrc,
+                    onTriggered: () => root.desktopEntry.execute()
+                });
+            }
+        }
+
+        rows.push({
+            kind: "row",
+            label: root.appEntry.pinned ? "Unpin from Dock" : "Pin to Dock",
+            iconSource: "",
+            onTriggered: () => TaskbarApps.togglePin(root.appEntry.appId)
+        });
+
+        if (root.toplevels.length === 1) {
+            rows.push({
+                kind: "row",
+                label: "Close",
+                iconSource: "",
+                onTriggered: () => root.toplevels[0].close()
+            });
+        }
+
+        dockContextMenu.rows = rows;
+        root.appListRoot.requestMenuOpen(dockContextMenu);
+    }
+
     readonly property bool appIsActive: {
         for (const t of toplevels)
             if (t?.activated)
@@ -37,6 +99,17 @@ Item {
         }
 
         target: DesktopEntries
+    }
+
+    DockContextMenu {
+        id: dockContextMenu
+
+        anchorWindow: root.appListRoot.previewWindow
+        anchorItem: root
+
+        onVisibleChanged: {
+            if (!visible) root.appListRoot.notifyMenuClosed(dockContextMenu);
+        }
     }
 
     Loader {
@@ -58,8 +131,8 @@ Item {
                 acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
 
                 function onClicked(event): void {
-                    if (event.button === Qt.RightButton || (event.button === Qt.LeftButton && (event.modifiers & Qt.AltModifier))) {
-                        TaskbarApps.togglePin(root.appEntry.appId);
+                    if (event.button === Qt.RightButton) {
+                        root.showContextMenu();
                         return;
                     }
                     if (event.button === Qt.MiddleButton) {

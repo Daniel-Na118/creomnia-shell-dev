@@ -19,8 +19,22 @@ Item {
 
     property Item lastHoveredButton: null
     property bool buttonHovered: false
+    property var activeMenu: null
 
     readonly property bool previewActive: previewPopup.show
+
+    function requestMenuOpen(menu): void {
+        if (activeMenu && activeMenu !== menu) activeMenu.close();
+        activeMenu = menu;
+        showTimer.stop();
+        hideTimer.stop();
+        previewPopup.show = false;
+        menu.open();
+    }
+
+    function notifyMenuClosed(menu): void {
+        if (activeMenu === menu) activeMenu = null;
+    }
 
     implicitWidth: listView.implicitWidth
 
@@ -73,7 +87,7 @@ Item {
         id: previewPopup
 
         readonly property var appEntry: root.lastHoveredButton?.appEntry ?? null
-        readonly property bool shouldShow: Config.dock.showPreviews && root.lastHoveredButton !== null && (popupHover.containsMouse || root.buttonHovered) && (appEntry?.toplevels?.length ?? 0) > 0
+        readonly property bool shouldShow: Config.dock.showPreviews && root.lastHoveredButton !== null && (popupHover.containsMouse || root.buttonHovered) && (appEntry?.toplevels?.length ?? 0) > 0 && root.activeMenu === null
 
         property bool show: false
 
