@@ -40,7 +40,7 @@ Item {
 
     function showContextMenu(): void {
         const rows = [];
-        const iconSrc = Icons.getAppIcon(root.appEntry.appId, "");
+        const iconSrc = root.desktopEntry?.icon ? Quickshell.iconPath(root.desktopEntry.icon) : "";
 
         for (let i = 0; i < root.toplevels.length; ++i) {
             const t = root.toplevels[i];
@@ -59,7 +59,7 @@ Item {
                 rows.push({
                     kind: "row",
                     label: a.name || a.id,
-                    iconSource: a.icon ? Icons.getAppIcon(a.icon, "") : "",
+                    iconSource: a.icon ? Quickshell.iconPath(a.icon) : "",
                     onTriggered: () => a.execute()
                 });
             }
