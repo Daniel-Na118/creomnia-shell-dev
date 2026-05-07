@@ -102,7 +102,7 @@ Scope {
                     id: overviewLoader
 
                     anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.top: parent.top
 
                     active: panelWindow.overviewOpen
 
