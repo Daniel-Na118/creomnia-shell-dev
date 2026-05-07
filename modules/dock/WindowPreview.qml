@@ -71,7 +71,7 @@ StyledRect {
                 anchors.fill: parent
                 captureSource: root.toplevel
                 live: true
-                paintCursor: true
+                paintCursor: false
                 constraintSize: Qt.size(Config.dock.maxWindowPreviewWidth, Config.dock.maxWindowPreviewHeight)
             }
 
