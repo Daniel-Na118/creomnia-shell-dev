@@ -59,6 +59,7 @@ Item {
 
                 Repeater {
                     model: ScriptModel {
+                        objectProp: "id"
                         values: TodoService.todos
                     }
 
