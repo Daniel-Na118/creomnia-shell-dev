@@ -5,8 +5,8 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import Quickshell.Wayland
+import Creomnia.Config
 import qs.services
-import qs.config
 
 Scope {
     id: root

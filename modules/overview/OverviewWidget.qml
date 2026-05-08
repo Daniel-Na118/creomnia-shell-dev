@@ -4,10 +4,10 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Wayland
+import Creomnia.Config
 import qs.components
 import qs.components.effects
 import qs.services
-import qs.config
 
 Item {
     id: root
@@ -36,8 +36,8 @@ Item {
         const usable = transformVertical ? (monitor.width - (monitorData.reserved?.[1] ?? 0) - (monitorData.reserved?.[3] ?? 0)) : (monitor.height - (monitorData.reserved?.[1] ?? 0) - (monitorData.reserved?.[3] ?? 0));
         return usable * overviewScale / monitor.scale;
     }
-    readonly property real largeWorkspaceRadius: Appearance.rounding.large
-    readonly property real smallWorkspaceRadius: Appearance.rounding.small
+    readonly property real largeWorkspaceRadius: Tokens.rounding.large
+    readonly property real smallWorkspaceRadius: Tokens.rounding.small
     readonly property real workspaceSpacing: 5
     readonly property real workspaceNumberSize: 250 * (monitor?.scale ?? 1)
     readonly property int workspaceZ: 0
@@ -207,7 +207,7 @@ Item {
                     readonly property int workspaceRowIndex: root.getWsRow(winData?.workspace.id)
                     readonly property real xWithinWorkspaceWidget: Math.max((winData?.at[0] - (winMonitor?.x ?? 0) - (winMonitor?.reserved[0] ?? 0)) * root.overviewScale, 0)
                     readonly property real yWithinWorkspaceWidget: Math.max((winData?.at[1] - (winMonitor?.y ?? 0) - (winMonitor?.reserved[1] ?? 0)) * root.overviewScale, 0)
-                    readonly property real minRadius: Appearance.rounding.small
+                    readonly property real minRadius: Tokens.rounding.small
                     readonly property bool atLeft: workspaceColIndex === 0
                     readonly property bool atRight: workspaceColIndex === Config.overview.columns - 1
                     readonly property bool atTop: workspaceRowIndex === 0

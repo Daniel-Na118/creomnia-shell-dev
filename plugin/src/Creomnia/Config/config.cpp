@@ -5,12 +5,14 @@
 #include "borderconfig.hpp"
 #include "controlcenterconfig.hpp"
 #include "dashboardconfig.hpp"
+#include "dockconfig.hpp"
 #include "generalconfig.hpp"
 #include "launcherconfig.hpp"
 #include "lockconfig.hpp"
 #include "monitorconfigmanager.hpp"
 #include "notifsconfig.hpp"
 #include "osdconfig.hpp"
+#include "overviewconfig.hpp"
 #include "serviceconfig.hpp"
 #include "sessionconfig.hpp"
 #include "sidebarconfig.hpp"
@@ -41,9 +43,11 @@ GlobalConfig::GlobalConfig(QObject* parent)
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
     , m_controlCenter(new ControlCenterConfig(this))
+    , m_dock(new DockConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
+    , m_overview(new OverviewConfig(this))
     , m_session(new SessionConfig(this))
     , m_winfo(new WInfoConfig(this))
     , m_lock(new LockConfig(this))
@@ -63,9 +67,11 @@ GlobalConfig::GlobalConfig(GlobalConfig* fallback, const QString& filePath, cons
     , m_border(new BorderConfig(this))
     , m_dashboard(new DashboardConfig(this))
     , m_controlCenter(new ControlCenterConfig(this))
+    , m_dock(new DockConfig(this))
     , m_launcher(new LauncherConfig(this))
     , m_notifs(new NotifsConfig(this))
     , m_osd(new OsdConfig(this))
+    , m_overview(new OverviewConfig(this))
     , m_session(new SessionConfig(this))
     , m_winfo(new WInfoConfig(this))
     , m_lock(new LockConfig(this))

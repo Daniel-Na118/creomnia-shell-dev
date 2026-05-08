@@ -15,11 +15,13 @@ qml_module(Creomnia-config
         borderconfig.hpp
         controlcenterconfig.hpp
         dashboardconfig.hpp
+        dockconfig.hpp
         generalconfig.hpp
         launcherconfig.hpp
         lockconfig.hpp
         notifsconfig.hpp
         osdconfig.hpp
+        overviewconfig.hpp
         serviceconfig.hpp
         sessionconfig.hpp
         sidebarconfig.hpp

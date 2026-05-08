@@ -4,9 +4,9 @@ import QtQuick
 import Qt5Compat.GraphicalEffects
 import Quickshell
 import Quickshell.Wayland
+import Creomnia.Config
 import qs.components
 import qs.services
-import qs.config
 import qs.utils
 
 Item {
@@ -54,7 +54,7 @@ Item {
     readonly property real iconGapRatio: 0.06
     readonly property real iconToWindowRatio: centerIcons ? 0.35 : 0.15
     readonly property real iconToWindowRatioCompact: 0.6
-    readonly property bool compactMode: Appearance.font.size.smaller * 4 > targetWindowHeight || Appearance.font.size.smaller * 4 > targetWindowWidth
+    readonly property bool compactMode: Tokens.font.size.smaller * 4 > targetWindowHeight || Tokens.font.size.smaller * 4 > targetWindowWidth
     readonly property string iconPath: Icons.getAppIcon(windowData?.class ?? "", "image-missing")
 
     x: initX
