@@ -9,7 +9,9 @@ Singleton {
     property var bars: new Map()
 
     function load(screen: ShellScreen, visibilities: DrawerVisibilities): void {
-        screens.set(Hypr.monitorFor(screen), visibilities);
+        const next = new Map(screens);
+        next.set(Hypr.monitorFor(screen), visibilities);
+        screens = next;
     }
 
     function getForActive(): DrawerVisibilities {

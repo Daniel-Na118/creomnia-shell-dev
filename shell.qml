@@ -7,6 +7,7 @@ import "modules/drawers"
 import "modules/background"
 import "modules/areapicker"
 import "modules/lock"
+import "modules/overview"
 import Quickshell
 
 ShellRoot {
@@ -19,6 +20,7 @@ ShellRoot {
         id: lock
     }
 
+    Overview {}
     Shortcuts {}
     BatteryMonitor {}
     IdleMonitors {

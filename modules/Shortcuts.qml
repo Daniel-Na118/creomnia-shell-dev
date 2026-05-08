@@ -4,6 +4,7 @@ import Quickshell.Io
 import Creomnia
 import qs.components.misc
 import qs.services
+import qs.config
 import qs.modules.controlcenter
 
 Scope {
@@ -105,6 +106,71 @@ Scope {
                 return;
             const visibilities = Visibilities.getForActive();
             visibilities.utilities = !visibilities.utilities;
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overview"
+        description: "Show overview while held; release closes"
+        onPressed: {
+            if (root.hasFullscreen)
+                return;
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+        }
+        onReleased: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = false;
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewToggle"
+        description: "Toggle overview"
+        onPressed: {
+            if (root.hasFullscreen)
+                return;
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = !visibilities.overview;
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewCycleNext"
+        description: "Cycle to next workspace in overview"
+        onPressed: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+            const total = Config.overview.rows * Config.overview.columns;
+            const current = Hypr.focusedWorkspace?.id ?? 1;
+            const next = ((current - 1 + 1) % total) + 1;
+            Hypr.dispatch(`workspace ${next}`);
+        }
+    }
+
+    // qmllint disable unresolved-type
+    CustomShortcut {
+        // qmllint enable unresolved-type
+        name: "overviewCyclePrev"
+        description: "Cycle to previous workspace in overview"
+        onPressed: {
+            const visibilities = Visibilities.getForActive();
+            if (visibilities)
+                visibilities.overview = true;
+            const total = Config.overview.rows * Config.overview.columns;
+            const current = Hypr.focusedWorkspace?.id ?? 1;
+            const prev = ((current - 1 - 1 + total) % total) + 1;
+            Hypr.dispatch(`workspace ${prev}`);
         }
     }
 
