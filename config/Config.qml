@@ -10,23 +10,23 @@ import qs.utils
 Singleton {
     id: root
 
-    property alias appearance: GlobalConfig.appearance
-    property alias general: GlobalConfig.general
-    property alias background: GlobalConfig.background
-    property alias bar: GlobalConfig.bar
-    property alias border: GlobalConfig.border
-    property alias dashboard: GlobalConfig.dashboard
-    property alias controlCenter: GlobalConfig.controlCenter
-    property alias launcher: GlobalConfig.launcher
-    property alias notifs: GlobalConfig.notifs
-    property alias osd: GlobalConfig.osd
-    property alias session: GlobalConfig.session
-    property alias winfo: GlobalConfig.winfo
-    property alias lock: GlobalConfig.lock
-    property alias utilities: GlobalConfig.utilities
-    property alias sidebar: GlobalConfig.sidebar
-    property alias services: GlobalConfig.services
-    property alias paths: GlobalConfig.paths
+    readonly property var appearance: GlobalConfig.appearance
+    readonly property var general: GlobalConfig.general
+    readonly property var background: GlobalConfig.background
+    readonly property var bar: GlobalConfig.bar
+    readonly property var border: GlobalConfig.border
+    readonly property var dashboard: GlobalConfig.dashboard
+    readonly property var controlCenter: GlobalConfig.controlCenter
+    readonly property var launcher: GlobalConfig.launcher
+    readonly property var notifs: GlobalConfig.notifs
+    readonly property var osd: GlobalConfig.osd
+    readonly property var session: GlobalConfig.session
+    readonly property var winfo: GlobalConfig.winfo
+    readonly property var lock: GlobalConfig.lock
+    readonly property var utilities: GlobalConfig.utilities
+    readonly property var sidebar: GlobalConfig.sidebar
+    readonly property var services: GlobalConfig.services
+    readonly property var paths: GlobalConfig.paths
 
     property bool recentlySaved: false
 
