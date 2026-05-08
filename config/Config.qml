@@ -4,30 +4,29 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Creomnia
+import Creomnia.Config
 import qs.utils
 
 Singleton {
     id: root
 
-    property alias appearance: adapter.appearance
-    property alias general: adapter.general
-    property alias background: adapter.background
-    property alias bar: adapter.bar
-    property alias border: adapter.border
-    property alias dashboard: adapter.dashboard
-    property alias controlCenter: adapter.controlCenter
-    property alias dock: adapter.dock
-    property alias launcher: adapter.launcher
-    property alias notifs: adapter.notifs
-    property alias osd: adapter.osd
-    property alias overview: adapter.overview
-    property alias session: adapter.session
-    property alias winfo: adapter.winfo
-    property alias lock: adapter.lock
-    property alias utilities: adapter.utilities
-    property alias sidebar: adapter.sidebar
-    property alias services: adapter.services
-    property alias paths: adapter.paths
+    property alias appearance: GlobalConfig.appearance
+    property alias general: GlobalConfig.general
+    property alias background: GlobalConfig.background
+    property alias bar: GlobalConfig.bar
+    property alias border: GlobalConfig.border
+    property alias dashboard: GlobalConfig.dashboard
+    property alias controlCenter: GlobalConfig.controlCenter
+    property alias launcher: GlobalConfig.launcher
+    property alias notifs: GlobalConfig.notifs
+    property alias osd: GlobalConfig.osd
+    property alias session: GlobalConfig.session
+    property alias winfo: GlobalConfig.winfo
+    property alias lock: GlobalConfig.lock
+    property alias utilities: GlobalConfig.utilities
+    property alias sidebar: GlobalConfig.sidebar
+    property alias services: GlobalConfig.services
+    property alias paths: GlobalConfig.paths
 
     property bool recentlySaved: false
 
@@ -518,28 +517,6 @@ Singleton {
         }
         onSaveFailed: err => Toaster.toast(qsTr("Failed to save config"), FileViewError.toString(err), "settings_alert", Toast.Error)
 
-        JsonAdapter { // qmllint disable unresolved-type
-            id: adapter
 
-            property AppearanceConfig appearance: AppearanceConfig {}
-            property GeneralConfig general: GeneralConfig {}
-            property BackgroundConfig background: BackgroundConfig {}
-            property BarConfig bar: BarConfig {}
-            property BorderConfig border: BorderConfig {}
-            property DashboardConfig dashboard: DashboardConfig {}
-            property ControlCenterConfig controlCenter: ControlCenterConfig {}
-            property DockConfig dock: DockConfig {}
-            property LauncherConfig launcher: LauncherConfig {}
-            property NotifsConfig notifs: NotifsConfig {}
-            property OsdConfig osd: OsdConfig {}
-            property OverviewConfig overview: OverviewConfig {}
-            property SessionConfig session: SessionConfig {}
-            property WInfoConfig winfo: WInfoConfig {}
-            property LockConfig lock: LockConfig {}
-            property UtilitiesConfig utilities: UtilitiesConfig {}
-            property SidebarConfig sidebar: SidebarConfig {}
-            property ServiceConfig services: ServiceConfig {}
-            property UserPaths paths: UserPaths {}
-        }
     }
 }
