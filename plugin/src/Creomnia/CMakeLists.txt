@@ -41,10 +41,6 @@ function(qml_module arg_TARGET)
     target_link_libraries(${arg_TARGET} PRIVATE Creomnia-pch Qt::Core Qt::Qml ${arg_LIBRARIES})
 endfunction()
 
-<<<<<<< HEAD:plugin/src/Creomnia/CMakeLists.txt
-qml_module(creomnia
-    URI Creomnia
-=======
 add_library(Creomnia-pch INTERFACE)
 target_precompile_headers(Creomnia-pch INTERFACE
     <qobject.h>
@@ -62,7 +58,6 @@ target_precompile_headers(Creomnia-pch INTERFACE
 
 qml_module(Creomnia
     URI Creomnia
->>>>>>> 4763a690cd41ba8c13e69d89a0d2d655332d1e89:plugin/src/Creomnia/CMakeLists.txt
     SOURCES
         cutils.hpp cutils.cpp
         qalculator.hpp qalculator.cpp
