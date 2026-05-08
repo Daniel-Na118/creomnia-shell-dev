@@ -3,7 +3,8 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
-import qs.config
+import Creomnia.Config
+import qs.config as QsConfig
 
 Singleton {
     id: root
@@ -17,7 +18,7 @@ Singleton {
             Config.dock.pinnedApps = Config.dock.pinnedApps.filter(id => id !== appId);
         else
             Config.dock.pinnedApps = Config.dock.pinnedApps.concat([appId]);
-        Config.save();
+        QsConfig.Config.save();
     }
 
     property list<var> apps: {

@@ -17,9 +17,11 @@ Singleton {
     readonly property var border: GlobalConfig.border
     readonly property var dashboard: GlobalConfig.dashboard
     readonly property var controlCenter: GlobalConfig.controlCenter
+    readonly property var dock: GlobalConfig.dock
     readonly property var launcher: GlobalConfig.launcher
     readonly property var notifs: GlobalConfig.notifs
     readonly property var osd: GlobalConfig.osd
+    readonly property var overview: GlobalConfig.overview
     readonly property var session: GlobalConfig.session
     readonly property var winfo: GlobalConfig.winfo
     readonly property var lock: GlobalConfig.lock

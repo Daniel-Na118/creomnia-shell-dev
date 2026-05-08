@@ -3,7 +3,7 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Creomnia
-import qs.config
+import Creomnia.Config
 
 Singleton {
     id: root

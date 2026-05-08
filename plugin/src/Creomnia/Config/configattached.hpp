@@ -18,11 +18,13 @@ class Config : public QQuickAttachedPropertyPropagator, public QQmlParserStatus 
     Q_MOC_INCLUDE("borderconfig.hpp")
     Q_MOC_INCLUDE("controlcenterconfig.hpp")
     Q_MOC_INCLUDE("dashboardconfig.hpp")
+    Q_MOC_INCLUDE("dockconfig.hpp")
     Q_MOC_INCLUDE("generalconfig.hpp")
     Q_MOC_INCLUDE("launcherconfig.hpp")
     Q_MOC_INCLUDE("lockconfig.hpp")
     Q_MOC_INCLUDE("notifsconfig.hpp")
     Q_MOC_INCLUDE("osdconfig.hpp")
+    Q_MOC_INCLUDE("overviewconfig.hpp")
     Q_MOC_INCLUDE("serviceconfig.hpp")
     Q_MOC_INCLUDE("sessionconfig.hpp")
     Q_MOC_INCLUDE("sidebarconfig.hpp")
@@ -38,9 +40,11 @@ class Config : public QQuickAttachedPropertyPropagator, public QQmlParserStatus 
     Q_PROPERTY(const Creomnia::config::BorderConfig* border READ border NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::DashboardConfig* dashboard READ dashboard NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::ControlCenterConfig* controlCenter READ controlCenter NOTIFY sourceChanged)
+    Q_PROPERTY(const Creomnia::config::DockConfig* dock READ dock NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::LauncherConfig* launcher READ launcher NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::NotifsConfig* notifs READ notifs NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::OsdConfig* osd READ osd NOTIFY sourceChanged)
+    Q_PROPERTY(const Creomnia::config::OverviewConfig* overview READ overview NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::SessionConfig* session READ session NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::WInfoConfig* winfo READ winfo NOTIFY sourceChanged)
     Q_PROPERTY(const Creomnia::config::LockConfig* lock READ lock NOTIFY sourceChanged)
@@ -62,9 +66,11 @@ public:
     [[nodiscard]] const BorderConfig* border() const;
     [[nodiscard]] const DashboardConfig* dashboard() const;
     [[nodiscard]] const ControlCenterConfig* controlCenter() const;
+    [[nodiscard]] const DockConfig* dock() const;
     [[nodiscard]] const LauncherConfig* launcher() const;
     [[nodiscard]] const NotifsConfig* notifs() const;
     [[nodiscard]] const OsdConfig* osd() const;
+    [[nodiscard]] const OverviewConfig* overview() const;
     [[nodiscard]] const SessionConfig* session() const;
     [[nodiscard]] const WInfoConfig* winfo() const;
     [[nodiscard]] const LockConfig* lock() const;
