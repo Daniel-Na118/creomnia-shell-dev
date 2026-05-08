@@ -42,13 +42,8 @@ ColumnLayout {
 
         MonoText {
             Layout.fillWidth: true
-<<<<<<< HEAD
             text: "creomniafetch.sh"
-            font.pointSize: root.width > 400 ? Appearance.font.size.larger : Appearance.font.size.normal
-=======
-            text: "Creomniafetch.sh"
             font.pointSize: root.width > 400 ? Tokens.font.size.larger : Tokens.font.size.normal
->>>>>>> 4763a690cd41ba8c13e69d89a0d2d655332d1e89
             elide: Text.ElideRight
         }
 

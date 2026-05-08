@@ -5,13 +5,7 @@
 #include <qqmlintegration.h>
 #include <qquickpainteditem.h>
 
-<<<<<<< HEAD:plugin/src/Creomnia/Internal/sparklineitem.hpp
-#include "circularbuffer.hpp"
-
 namespace creomnia::internal {
-=======
-namespace Creomnia::internal {
->>>>>>> 4763a690cd41ba8c13e69d89a0d2d655332d1e89:plugin/src/Creomnia/Internal/sparklineitem.hpp
 
 class CircularBuffer;
 
