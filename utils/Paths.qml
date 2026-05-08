@@ -2,8 +2,9 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+
 import Creomnia
-import qs.config
+import Creomnia.Config
 
 Singleton {
     id: root
@@ -19,9 +20,10 @@ Singleton {
 
     readonly property string imagecache: `${cache}/imagecache`
     readonly property string notifimagecache: `${imagecache}/notifs`
-    readonly property string wallsdir: Quickshell.env("CREOMNIA_WALLPAPERS_DIR") || absolutePath(Config.paths.wallpaperDir)
-    readonly property string recsdir: Quickshell.env("CREOMNIA_RECORDINGS_DIR") || `${videos}/Recordings`
-    readonly property string libdir: Quickshell.env("CREOMNIA_LIB_DIR") || "/usr/lib/creomnia"
+
+    readonly property string wallsdir: Quickshell.env("Creomnia_WALLPAPERS_DIR") || absolutePath(GlobalConfig.paths.wallpaperDir)
+    readonly property string recsdir: Quickshell.env("Creomnia_RECORDINGS_DIR") || `${videos}/Recordings`
+    readonly property string libdir: Quickshell.env("Creomnia_LIB_DIR") || "/usr/lib/Creomnia"
 
     function toLocalFile(path: url): string {
         path = Qt.resolvedUrl(path);

@@ -1,8 +1,9 @@
 pragma Singleton
 
 import Quickshell
+
 import Creomnia
-import qs.config
+import Creomnia.Config
 import qs.utils
 
 Searcher {
@@ -13,7 +14,7 @@ Searcher {
 
         if (entry.runInTerminal)
             Quickshell.execDetached({
-                command: ["app2unit", "--", ...Config.general.apps.terminal, `${Quickshell.shellDir}/assets/wrap_term_launch.sh`, ...entry.command],
+                command: ["app2unit", "--", ...GlobalConfig.general.apps.terminal, `${Quickshell.shellDir}/assets/wrap_term_launch.sh`, ...entry.command],
                 workingDirectory: entry.workingDirectory
             });
         else
@@ -24,7 +25,7 @@ Searcher {
     }
 
     function search(search: string): list<var> {
-        const prefix = Config.launcher.specialPrefix;
+        const prefix = GlobalConfig.launcher.specialPrefix;
 
         if (search.startsWith(`${prefix}i `)) {
             keys = ["id", "name"];
@@ -66,13 +67,13 @@ Searcher {
     }
 
     list: appDb.apps
-    useFuzzy: Config.launcher.useFuzzy.apps
+    useFuzzy: GlobalConfig.launcher.useFuzzy.apps
 
     AppDb {
         id: appDb
 
         path: `${Paths.state}/apps.sqlite`
-        favouriteApps: Config.launcher.favouriteApps
-        entries: DesktopEntries.applications.values.filter(a => !Strings.testRegexList(Config.launcher.hiddenApps, a.id))
+        favouriteApps: GlobalConfig.launcher.favouriteApps
+        entries: DesktopEntries.applications.values.filter(a => !Strings.testRegexList(GlobalConfig.launcher.hiddenApps, a.id))
     }
 }

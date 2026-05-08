@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import Quickshell
+import Creomnia.Config
 import qs.components.containers
 import qs.modules.bar as Bar
 
@@ -34,7 +35,7 @@ Scope {
     component ExclusionZone: StyledWindow {
         screen: root.screen
         name: "border-exclusion"
-        exclusiveZone: root.borderThickness
+        exclusiveZone: contentItem.Config.border.thickness
         mask: Region {}
         implicitWidth: 1
         implicitHeight: 1

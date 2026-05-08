@@ -2,27 +2,18 @@ import QtQuick
 import Quickshell
 import Creomnia.Internal
 import qs.utils
+import Creomnia.Images
 
 Image {
     id: root
 
-    property alias path: manager.path
+    property string path
 
     asynchronous: true
     fillMode: Image.PreserveAspectCrop
-
-    Connections {
-        function onDevicePixelRatioChanged(): void {
-            manager.updateSource();
-        }
-
-        target: QsWindow.window
-    }
-
-    CachingImageManager {
-        id: manager
-
-        item: root
-        cacheDir: Qt.resolvedUrl(Paths.imagecache)
+    source: IUtils.urlForPath(path, fillMode)
+    sourceSize: {
+        const dpr = (QsWindow.window as QsWindow)?.devicePixelRatio ?? 1;
+        return Qt.size(width * dpr, height * dpr);
     }
 }

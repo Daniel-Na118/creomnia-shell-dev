@@ -2,9 +2,9 @@
 
 ```json
 {
+    "enabled": true,
     "appearance": {
-        "mediaGifSpeedAdjustment": 300,
-        "sessionGifSpeed": 0.7,
+        "deformScale": 1,
         "anim": {
             "durations": {
                 "scale": 1
@@ -38,6 +38,9 @@
     },
     "general": {
         "logo": "creomnia",
+        "showOverFullscreen": false,
+        "mediaGifSpeedAdjustment": 300,
+        "sessionGifSpeed": 0.7,
         "apps": {
             "terminal": ["foot"],
             "audio": ["pavucontrol"],
@@ -222,13 +225,18 @@
     },
     "border": {
         "rounding": 25,
+        "smoothing": 32,
         "thickness": 10
     },
     "dashboard": {
         "enabled": true,
+        "showOnHover": true,
+        "showDashboard": true,
+        "showMedia": true,
+        "showPerformance": true,
+        "showWeather": true,
         "dragThreshold": 50,
-        "mediaUpdateInterval": 500,
-        "showOnHover": true
+        "mediaUpdateInterval": 500
     },
     "launcher": {
         "actionPrefix": ">",
@@ -483,6 +491,69 @@
             }
         ]
     }
+}
+```
+
+</details>
+
+### Advanced configuration
+
+> [!WARNING]
+> Do NOT change any of these options if you do not know what you are doing. These options control the
+> tokens used internally within the shell, and can cause visual issues if changed. The existence of
+> the options are also not guaranteed across versions, and may change or be removed without notice.
+
+A separate `~/.config/Creomnia/shell-tokens.json` file allows editing the internal tokens without
+touching the source code of the shell. These tokens affect, for example, individual rounding,
+spacing, padding, font size, animation duration and easing curves tokens, and the sizes of certain
+components. The appearance scale values in `shell.json` are multiplied against these base
+token values to produce the final computed values.
+
+Per-monitor token overrides are also available at
+`~/.config/Creomnia/monitors/<screen-name>/shell-tokens.json`.
+
+### Home Manager Module
+
+For NixOS users, a home manager module is also available.
+
+<details><summary><code>home.nix</code></summary>
+
+```nix
+programs.creomnia = {
+  enable = true;
+  systemd = {
+    enable = false; # if you prefer starting from your compositor
+    target = "graphical-session.target";
+    environment = [];
+  };
+  settings = {
+    bar.status = {
+      showBattery = false;
+    };
+    paths.wallpaperDir = "~/Images";
+  };
+  cli = {
+    enable = true; # Also add creomnia-cli to path
+    settings = {
+      theme.enableGtk = false;
+    };
+  };
+};
+```
+
+The module automatically adds Creomnia shell to the path with **full functionality**. The CLI is not required, however you have the option to enable and configure it.
+
+</details>
+
+## FAQ
+
+### My screen is flickering, help pls!
+
+Try disabling VRR in the hyprland config. You can do this by adding the following to `~/.config/Creomnia/hypr-user.conf`:
+
+```conf
+misc {
+    vrr = 0
 }
 ```
 

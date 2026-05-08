@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Wayland
+import Creomnia.Config
 
 // qmllint disable uncreatable-type
 PanelWindow {
@@ -8,4 +9,7 @@ PanelWindow {
 
     WlrLayershell.namespace: `creomnia-${name}`
     color: "transparent"
+
+    contentItem.Config.screen: screen.name
+    contentItem.Tokens.screen: screen.name
 }

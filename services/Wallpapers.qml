@@ -3,16 +3,17 @@ pragma Singleton
 import QtQuick
 import Quickshell
 import Quickshell.Io
+
+import Creomnia.Config
 import Creomnia.Models
 import qs.services
-import qs.config
 import qs.utils
 
 Searcher {
     id: root
 
     readonly property string currentNamePath: `${Paths.state}/wallpaper/path.txt`
-    readonly property list<string> smartArg: Config.services.smartScheme ? [] : ["--no-smart"]
+    readonly property list<string> smartArg: GlobalConfig.services.smartScheme ? [] : ["--no-smart"]
 
     property bool showPreview: false
     readonly property string current: showPreview ? previewPath : actualCurrent
@@ -41,7 +42,7 @@ Searcher {
 
     list: wallpapers.entries
     key: "relativePath"
-    useFuzzy: Config.launcher.useFuzzy.wallpapers
+    useFuzzy: GlobalConfig.launcher.useFuzzy.wallpapers
     extraOpts: useFuzzy ? ({}) : ({
             forward: false
         })
