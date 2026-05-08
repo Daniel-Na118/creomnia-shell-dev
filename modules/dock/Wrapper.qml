@@ -1,0 +1,55 @@
+pragma ComponentBehavior: Bound
+
+import QtQuick
+import Quickshell
+import qs.components
+import qs.services
+import qs.config
+
+Item {
+    id: root
+
+    required property ShellScreen screen
+    required property DrawerVisibilities visibilities
+    required property var panels
+
+    property bool pinned: Config.dock.pinnedOnStartup
+    readonly property bool launcherOpen: visibilities.launcher && Config.launcher.enabled
+    readonly property bool previewActive: content.item?.previewActive ?? false
+    readonly property bool menuActive: content.item?.menuActive ?? false
+    readonly property bool shouldBeActive: Config.dock.enabled && !launcherOpen && (root.pinned || visibilities.dock || previewActive || menuActive)
+
+    property real offsetScale: shouldBeActive ? 0 : 1
+    readonly property int floatMargin: Config.dock.floatMargin
+    readonly property int exclusiveZone: pinned && Config.dock.enabled ? Config.border.thickness + floatMargin + Config.dock.height : Config.border.thickness
+
+    visible: offsetScale < 1
+    anchors.bottomMargin: floatMargin - (floatMargin + implicitHeight + 5) * offsetScale
+    implicitHeight: content.implicitHeight
+    implicitWidth: content.implicitWidth || 400
+    opacity: 1 - offsetScale
+
+    Component.onCompleted: Qt.callLater(() => TaskbarApps)
+
+    Behavior on offsetScale {
+        Anim {
+            duration: Appearance.anim.durations.expressiveDefaultSpatial
+            easing.bezierCurve: Appearance.anim.curves.expressiveDefaultSpatial
+        }
+    }
+
+    Loader {
+        id: content
+
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        active: root.shouldBeActive || root.visible
+
+        sourceComponent: Content {
+            visibilities: root.visibilities
+            panels: root.panels
+            wrapper: root
+        }
+    }
+}

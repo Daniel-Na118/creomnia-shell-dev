@@ -10,6 +10,7 @@ Scope {
 
     required property ShellScreen screen
     required property Bar.BarWrapper bar
+    required property Item dock
     required property real borderThickness
 
     ExclusionZone {
@@ -27,6 +28,7 @@ Scope {
 
     ExclusionZone {
         anchors.bottom: true
+        exclusiveZone: root.dock?.exclusiveZone ?? root.borderThickness
     }
 
     component ExclusionZone: StyledWindow {

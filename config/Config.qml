@@ -16,6 +16,7 @@ Singleton {
     property alias border: adapter.border
     property alias dashboard: adapter.dashboard
     property alias controlCenter: adapter.controlCenter
+    property alias dock: adapter.dock
     property alias launcher: adapter.launcher
     property alias notifs: adapter.notifs
     property alias osd: adapter.osd
@@ -46,6 +47,7 @@ Singleton {
             border: serializeBorder(),
             dashboard: serializeDashboard(),
             controlCenter: serializeControlCenter(),
+            dock: serializeDock(),
             launcher: serializeLauncher(),
             notifs: serializeNotifs(),
             osd: serializeOsd(),
@@ -244,6 +246,26 @@ Singleton {
 
     function serializeControlCenter(): var {
         return {};
+    }
+
+    function serializeDock(): var {
+        return {
+            enabled: dock.enabled,
+            pinnedOnStartup: dock.pinnedOnStartup,
+            showPreviews: dock.showPreviews,
+            monochromeIcons: dock.monochromeIcons,
+            height: dock.height,
+            iconSize: dock.iconSize,
+            floatMargin: dock.floatMargin,
+            dragThreshold: dock.dragThreshold,
+            hoverRegionWidthFraction: dock.hoverRegionWidthFraction,
+            hoverRegionHeight: dock.hoverRegionHeight,
+            maxWindowPreviewWidth: dock.maxWindowPreviewWidth,
+            maxWindowPreviewHeight: dock.maxWindowPreviewHeight,
+            pinnedApps: dock.pinnedApps,
+            ignoredAppRegexes: dock.ignoredAppRegexes,
+            excludedScreens: dock.excludedScreens
+        };
     }
 
     function serializeLauncher(): var {
@@ -491,6 +513,7 @@ Singleton {
             property BorderConfig border: BorderConfig {}
             property DashboardConfig dashboard: DashboardConfig {}
             property ControlCenterConfig controlCenter: ControlCenterConfig {}
+            property DockConfig dock: DockConfig {}
             property LauncherConfig launcher: LauncherConfig {}
             property NotifsConfig notifs: NotifsConfig {}
             property OsdConfig osd: OsdConfig {}
