@@ -4,27 +4,26 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Creomnia.Config
-import qs.config as QsConfig
 
 Singleton {
     id: root
 
     function isPinned(appId: string): bool {
-        return Config.dock.pinnedApps.indexOf(appId) !== -1;
+        return GlobalConfig.dock.pinnedApps.indexOf(appId) !== -1;
     }
 
     function togglePin(appId: string): void {
         if (root.isPinned(appId))
-            Config.dock.pinnedApps = Config.dock.pinnedApps.filter(id => id !== appId);
+            GlobalConfig.dock.pinnedApps = GlobalConfig.dock.pinnedApps.filter(id => id !== appId);
         else
-            Config.dock.pinnedApps = Config.dock.pinnedApps.concat([appId]);
-        QsConfig.Config.save();
+            GlobalConfig.dock.pinnedApps = GlobalConfig.dock.pinnedApps.concat([appId]);
+        GlobalConfig.save();
     }
 
     property list<var> apps: {
         const map = new Map();
 
-        const pinnedApps = Config.dock.pinnedApps ?? [];
+        const pinnedApps = GlobalConfig.dock.pinnedApps ?? [];
         for (const appId of pinnedApps) {
             const key = appId.toLowerCase();
             if (!map.has(key))
@@ -34,7 +33,7 @@ Singleton {
                 });
         }
 
-        const ignoredRegexes = (Config.dock.ignoredAppRegexes ?? []).map(p => new RegExp(p, "i"));
+        const ignoredRegexes = (GlobalConfig.dock.ignoredAppRegexes ?? []).map(p => new RegExp(p, "i"));
 
         for (const toplevel of ToplevelManager.toplevels.values) {
             const appId = toplevel.appId ?? "";

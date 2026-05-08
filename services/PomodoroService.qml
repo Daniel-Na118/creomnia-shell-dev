@@ -8,7 +8,7 @@ import Creomnia.Config
 Singleton {
     id: root
 
-    property int timeLeft: Config.dashboard.pomodoroTime * 60
+    property int timeLeft: GlobalConfig.dashboard.pomodoroTime * 60
     property bool running: false
 
     function toggle(): void {
@@ -17,11 +17,11 @@ Singleton {
 
     function reset(): void {
         running = false;
-        timeLeft = Config.dashboard.pomodoroTime * 60;
+        timeLeft = GlobalConfig.dashboard.pomodoroTime * 60;
     }
 
     Connections {
-        target: Config.dashboard
+        target: GlobalConfig.dashboard
         function onPomodoroTimeChanged() {
             if (!root.running) {
                 root.reset();
