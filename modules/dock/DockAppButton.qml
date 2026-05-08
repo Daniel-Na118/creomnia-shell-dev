@@ -18,9 +18,87 @@ Item {
     property real iconSize: 35
     property int countDotWidth: 10
     property int countDotHeight: 4
-    property int lastFocused: -1
+    property int cycleIdx: -1
 
     readonly property var toplevels: appEntry.toplevels
+
+    function cycleNext(): void {
+        if (root.toplevels.length === 0)
+            return;
+        let activeIdx = -1;
+        for (let i = 0; i < root.toplevels.length; ++i) {
+            if (root.toplevels[i]?.activated) {
+                activeIdx = i;
+                break;
+            }
+        }
+        const start = activeIdx >= 0 ? activeIdx : root.cycleIdx;
+        const next = (start + 1) % root.toplevels.length;
+        root.cycleIdx = next;
+        root.toplevels[next]?.activate();
+    }
+
+    function showContextMenu(): void {
+        const rows = [];
+        const iconSrc = root.desktopEntry?.icon ? Quickshell.iconPath(root.desktopEntry.icon) : "";
+
+        for (let i = 0; i < root.toplevels.length; ++i) {
+            const t = root.toplevels[i];
+            rows.push({
+                kind: "row",
+                label: t.title || root.appEntry.appId,
+                iconSource: iconSrc,
+                onTriggered: () => t.activate()
+            });
+        }
+        if (root.toplevels.length > 0) rows.push({ kind: "separator" });
+
+        if (root.desktopEntry?.actions?.length > 0) {
+            for (let i = 0; i < root.desktopEntry.actions.length; ++i) {
+                const a = root.desktopEntry.actions[i];
+                rows.push({
+                    kind: "row",
+                    label: a.name || a.id,
+                    iconSource: a.icon ? Quickshell.iconPath(a.icon) : "",
+                    onTriggered: () => a.execute()
+                });
+            }
+            rows.push({ kind: "separator" });
+        }
+
+        if (root.desktopEntry) {
+            const hasWindows = root.toplevels.length > 0;
+            if (!hasWindows || !root.desktopEntry.singleMainWindow) {
+                const baseName = root.desktopEntry.name || root.appEntry.appId;
+                rows.push({
+                    kind: "row",
+                    label: hasWindows ? "New Window – " + baseName : baseName,
+                    iconSource: iconSrc,
+                    onTriggered: () => root.desktopEntry.execute()
+                });
+            }
+        }
+
+        rows.push({
+            kind: "row",
+            label: root.appEntry.pinned ? "Unpin from Dock" : "Pin to Dock",
+            iconSource: "",
+            onTriggered: () => TaskbarApps.togglePin(root.appEntry.appId)
+        });
+
+        if (root.toplevels.length === 1) {
+            rows.push({
+                kind: "row",
+                label: "Close",
+                iconSource: "",
+                onTriggered: () => root.toplevels[0].close()
+            });
+        }
+
+        dockContextMenu.rows = rows;
+        root.appListRoot.requestMenuOpen(dockContextMenu);
+    }
+
     readonly property bool appIsActive: {
         for (const t of toplevels)
             if (t?.activated)
@@ -37,6 +115,17 @@ Item {
         }
 
         target: DesktopEntries
+    }
+
+    DockContextMenu {
+        id: dockContextMenu
+
+        anchorWindow: root.appListRoot.previewWindow
+        anchorItem: root
+
+        onVisibleChanged: {
+            if (!visible) root.appListRoot.notifyMenuClosed(dockContextMenu);
+        }
     }
 
     Loader {
@@ -58,8 +147,8 @@ Item {
                 acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
 
                 function onClicked(event): void {
-                    if (event.button === Qt.RightButton || (event.button === Qt.LeftButton && (event.modifiers & Qt.AltModifier))) {
-                        TaskbarApps.togglePin(root.appEntry.appId);
+                    if (event.button === Qt.RightButton) {
+                        root.showContextMenu();
                         return;
                     }
                     if (event.button === Qt.MiddleButton) {
@@ -70,8 +159,11 @@ Item {
                         root.desktopEntry?.execute();
                         return;
                     }
-                    root.lastFocused = (root.lastFocused + 1) % root.toplevels.length;
-                    root.toplevels[root.lastFocused]?.activate();
+                    if (root.toplevels.length === 1) {
+                        root.toplevels[0]?.activate();
+                        return;
+                    }
+                    root.cycleNext();
                 }
             }
 
@@ -80,17 +172,8 @@ Item {
                 acceptedButtons: Qt.NoButton
                 hoverEnabled: true
 
-                onEntered: {
-                    root.appListRoot.lastHoveredButton = root;
-                    root.appListRoot.buttonHovered = true;
-                    if (root.toplevels.length > 0)
-                        root.lastFocused = root.toplevels.length - 1;
-                }
-
-                onExited: {
-                    if (root.appListRoot.lastHoveredButton === root)
-                        root.appListRoot.buttonHovered = false;
-                }
+                onEntered: root.appListRoot.onButtonHover(root, true)
+                onExited: root.appListRoot.onButtonHover(root, false)
             }
 
             IconImage {

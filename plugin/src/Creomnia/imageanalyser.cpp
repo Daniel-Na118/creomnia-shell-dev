@@ -146,10 +146,11 @@ void ImageAnalyser::update() {
             m_futureWatcher->setFuture(QtConcurrent::run(&ImageAnalyser::analyse, grabResult->image(), m_rescaleSize));
         });
     } else {
-        m_futureWatcher->setFuture(QtConcurrent::run([=, this](QPromise<AnalyseResult>& promise) {
-            const QImage image(m_source);
-            analyse(promise, image, m_rescaleSize);
-        }));
+        m_futureWatcher->setFuture(QtConcurrent::run(
+            [source = m_source, rescaleSize = m_rescaleSize](QPromise<AnalyseResult>& promise) {
+                const QImage image(source);
+                analyse(promise, image, rescaleSize);
+            }));
     }
 }
 

@@ -3,6 +3,7 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Hyprland
 import qs.components
 import qs.components.containers
 import qs.services
@@ -18,9 +19,42 @@ Item {
     property real spacing: 2
 
     property Item lastHoveredButton: null
-    property bool buttonHovered: false
+    property var activeMenu: null
 
-    readonly property bool previewActive: previewPopup.show
+    readonly property bool previewActive: previewPopup.show || previewPopup.hovered
+    readonly property bool menuActive: activeMenu !== null
+
+    function requestMenuOpen(menu): void {
+        if (activeMenu && activeMenu !== menu) activeMenu.close();
+        activeMenu = menu;
+        showTimer.stop();
+        hideTimer.stop();
+        previewPopup.show = false;
+        menu.open();
+    }
+
+    function notifyMenuClosed(menu): void {
+        if (activeMenu === menu) activeMenu = null;
+    }
+
+    function onButtonHover(button, entered): void {
+        if (entered) {
+            const hasWindows = (button?.appEntry?.toplevels?.length ?? 0) > 0;
+            if (hasWindows) {
+                lastHoveredButton = button;
+                hideTimer.stop();
+                if (activeMenu === null && Config.dock.showPreviews)
+                    showTimer.restart();
+            } else {
+                showTimer.stop();
+                if (lastHoveredButton !== null)
+                    hideTimer.restart();
+            }
+        } else if (lastHoveredButton === button) {
+            showTimer.stop();
+            hideTimer.restart();
+        }
+    }
 
     implicitWidth: listView.implicitWidth
 
@@ -55,38 +89,47 @@ Item {
         }
     }
 
+    HyprlandFocusGrab {
+        active: root.activeMenu !== null
+        windows: root.activeMenu ? [root.previewWindow, root.activeMenu] : [root.previewWindow]
+        onCleared: root.activeMenu?.close()
+    }
+
     Timer {
         id: showTimer
 
         interval: 80
-        onTriggered: previewPopup.show = true
+        onTriggered: {
+            if (root.activeMenu)
+                return;
+            if ((root.lastHoveredButton?.appEntry?.toplevels?.length ?? 0) > 0)
+                previewPopup.show = true;
+        }
     }
 
     Timer {
         id: hideTimer
 
-        interval: 250
-        onTriggered: previewPopup.show = false
+        interval: 120
+        onTriggered: {
+            if (!previewPopup.hovered)
+                previewPopup.show = false;
+        }
     }
 
     PopupWindow {
         id: previewPopup
 
         readonly property var appEntry: root.lastHoveredButton?.appEntry ?? null
-        readonly property bool shouldShow: Config.dock.showPreviews && root.lastHoveredButton !== null && (popupHover.containsMouse || root.buttonHovered) && (appEntry?.toplevels?.length ?? 0) > 0
+        readonly property bool hovered: popupHover.containsMouse
 
         property bool show: false
 
-        onShouldShowChanged: {
-            if (shouldShow) {
+        onHoveredChanged: {
+            if (hovered)
                 hideTimer.stop();
-                showTimer.restart();
-            } else if (popupHover.containsMouse) {
-                showTimer.stop();
-            } else {
-                showTimer.stop();
+            else
                 hideTimer.restart();
-            }
         }
 
         anchor {
@@ -101,7 +144,7 @@ Item {
             adjustment: PopupAdjustment.SlideX
         }
 
-        visible: show && root.lastHoveredButton !== null
+        visible: (show || hovered) && root.lastHoveredButton !== null && (appEntry?.toplevels?.length ?? 0) > 0 && root.activeMenu === null
         color: "transparent"
         implicitWidth: popupBackground.implicitWidth
         implicitHeight: popupBackground.implicitHeight
