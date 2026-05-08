@@ -3,10 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Creomnia.Config
 import qs.components
 import qs.components.controls
 import qs.services
-import qs.config
 
 StyledRect {
     id: root
@@ -15,13 +15,13 @@ StyledRect {
     required property var panels
     required property Item wrapper
 
-    readonly property int padding: Appearance.padding.small
+    readonly property int padding: Tokens.padding.small
     readonly property int innerHeight: Config.dock.height
     readonly property alias previewActive: dockApps.previewActive
     readonly property alias menuActive: dockApps.menuActive
 
     color: Colours.layer(Colours.palette.m3surfaceContainer, 1)
-    radius: Appearance.rounding.large
+    radius: Tokens.rounding.large
 
     implicitWidth: dockRow.implicitWidth + padding * 2
     implicitHeight: innerHeight
@@ -31,7 +31,7 @@ StyledRect {
 
         anchors.fill: parent
         anchors.margins: root.padding
-        spacing: Appearance.spacing.small
+        spacing: Tokens.spacing.small
 
         IconButton {
             id: pinButton
@@ -42,8 +42,8 @@ StyledRect {
             toggle: true
             checked: root.wrapper.pinned
             type: IconButton.Tonal
-            padding: Appearance.padding.small
-            font.pointSize: Appearance.font.size.larger
+            padding: Tokens.padding.small
+            font.pointSize: Tokens.font.size.larger
 
             onClicked: root.wrapper.pinned = !root.wrapper.pinned
         }

@@ -4,25 +4,25 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import Creomnia.Config
 import qs.components
 import qs.components.controls
 import qs.services
-import qs.config
 import qs.utils
 
 Item {
     id: root
 
     implicitWidth: 600
-    implicitHeight: mainLayout.implicitHeight + Appearance.padding.large * 2
+    implicitHeight: mainLayout.implicitHeight + Tokens.padding.large * 2
 
     RowLayout {
         id: mainLayout
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: Appearance.padding.large
-        spacing: Appearance.spacing.large
+        anchors.margins: Tokens.padding.large
+        spacing: Tokens.spacing.large
 
         // Left Side: Todo List
         ColumnLayout {
@@ -30,16 +30,16 @@ Item {
             Layout.preferredWidth: 280
             Layout.maximumWidth: 280
             Layout.alignment: Qt.AlignTop
-            spacing: Appearance.spacing.normal
+            spacing: Tokens.spacing.normal
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.normal
+                spacing: Tokens.spacing.normal
 
                 StyledText {
                     Layout.fillWidth: true
                     text: qsTr("To-Do List")
-                    font.pointSize: Appearance.font.size.large
+                    font.pointSize: Tokens.font.size.large
                     font.weight: 700
                     color: Colours.palette.m3primary
                 }
@@ -55,7 +55,7 @@ Item {
 
             Column {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.normal
+                spacing: Tokens.spacing.normal
 
                 Repeater {
                     model: ScriptModel {
@@ -66,7 +66,7 @@ Item {
                     delegate: RowLayout {
                         id: delegateRoot
                         width: parent.width
-                        spacing: Appearance.spacing.normal
+                        spacing: Tokens.spacing.normal
                         implicitHeight: 40
                         Layout.preferredHeight: 40
                         
@@ -83,7 +83,7 @@ Item {
                             opacity: itemHover.hovered ? 0.7 : 1
 
                             Behavior on opacity {
-                                Anim { duration: Appearance.anim.durations.small }
+                                Anim { duration: Tokens.anim.durations.small }
                             }
 
                             StyledInputField {
@@ -136,7 +136,7 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.small
+                spacing: Tokens.spacing.small
                 visible: TodoService.todos.length < 5
                 implicitHeight: 40
 
@@ -177,16 +177,16 @@ Item {
         ColumnLayout {
             implicitWidth: 250
             Layout.alignment: Qt.AlignTop
-            spacing: Appearance.spacing.large
+            spacing: Tokens.spacing.large
 
             // Pomodoro Timer
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.small
+                spacing: Tokens.spacing.small
 
                 StyledText {
                     text: qsTr("Pomodoro Timer")
-                    font.pointSize: Appearance.font.size.normal
+                    font.pointSize: Tokens.font.size.normal
                     font.weight: 700
                     color: Colours.palette.m3secondary
                 }
@@ -195,7 +195,7 @@ Item {
                     Layout.fillWidth: true
                     implicitHeight: 140
                     color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-                    radius: Appearance.rounding.normal
+                    radius: Tokens.rounding.normal
 
                     HoverHandler {
                         id: timerHover
@@ -210,24 +210,24 @@ Item {
                             return `${mins}:${secs}`;
                         }
                         font.pointSize: 48
-                        font.family: Appearance.font.family.clock
+                        font.family: Tokens.font.family.clock
                         font.weight: 600
                         color: Colours.palette.m3primary
                         opacity: timerHover.hovered ? 0.2 : 1
 
                         Behavior on opacity {
-                            Anim { duration: Appearance.anim.durations.small }
+                            Anim { duration: Tokens.anim.durations.small }
                         }
                     }
 
                     RowLayout {
                         anchors.centerIn: parent
-                        spacing: Appearance.spacing.large
+                        spacing: Tokens.spacing.large
                         opacity: timerHover.hovered ? 1 : 0
                         visible: opacity > 0
 
                         Behavior on opacity {
-                            Anim { duration: Appearance.anim.durations.small }
+                            Anim { duration: Tokens.anim.durations.small }
                         }
 
                         IconButton {
@@ -250,11 +250,11 @@ Item {
             ColumnLayout {
                 id: quickActions
                 Layout.fillWidth: true
-                spacing: Appearance.spacing.small
+                spacing: Tokens.spacing.small
 
                 StyledText {
                     text: qsTr("Quick Actions")
-                    font.pointSize: Appearance.font.size.normal
+                    font.pointSize: Tokens.font.size.normal
                     font.weight: 700
                     color: Colours.palette.m3secondary
                 }

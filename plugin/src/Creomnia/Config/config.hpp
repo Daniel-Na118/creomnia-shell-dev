@@ -12,11 +12,13 @@ class BarConfig;
 class BorderConfig;
 class ControlCenterConfig;
 class DashboardConfig;
+class DockConfig;
 class GeneralConfig;
 class LauncherConfig;
 class LockConfig;
 class NotifsConfig;
 class OsdConfig;
+class OverviewConfig;
 class ServiceConfig;
 class SessionConfig;
 class SidebarConfig;
@@ -34,11 +36,13 @@ class GlobalConfig : public RootConfig {
     Q_MOC_INCLUDE("borderconfig.hpp")
     Q_MOC_INCLUDE("controlcenterconfig.hpp")
     Q_MOC_INCLUDE("dashboardconfig.hpp")
+    Q_MOC_INCLUDE("dockconfig.hpp")
     Q_MOC_INCLUDE("generalconfig.hpp")
     Q_MOC_INCLUDE("launcherconfig.hpp")
     Q_MOC_INCLUDE("lockconfig.hpp")
     Q_MOC_INCLUDE("notifsconfig.hpp")
     Q_MOC_INCLUDE("osdconfig.hpp")
+    Q_MOC_INCLUDE("overviewconfig.hpp")
     Q_MOC_INCLUDE("serviceconfig.hpp")
     Q_MOC_INCLUDE("sessionconfig.hpp")
     Q_MOC_INCLUDE("sidebarconfig.hpp")
@@ -54,9 +58,11 @@ class GlobalConfig : public RootConfig {
     CONFIG_SUBOBJECT(BorderConfig, border)
     CONFIG_SUBOBJECT(DashboardConfig, dashboard)
     CONFIG_SUBOBJECT(ControlCenterConfig, controlCenter)
+    CONFIG_SUBOBJECT(DockConfig, dock)
     CONFIG_SUBOBJECT(LauncherConfig, launcher)
     CONFIG_SUBOBJECT(NotifsConfig, notifs)
     CONFIG_SUBOBJECT(OsdConfig, osd)
+    CONFIG_SUBOBJECT(OverviewConfig, overview)
     CONFIG_SUBOBJECT(SessionConfig, session)
     CONFIG_SUBOBJECT(WInfoConfig, winfo)
     CONFIG_SUBOBJECT(LockConfig, lock)
