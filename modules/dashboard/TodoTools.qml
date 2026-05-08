@@ -58,7 +58,9 @@ Item {
                 spacing: Appearance.spacing.normal
 
                 Repeater {
-                    model: TodoService.todos
+                    model: ScriptModel {
+                        values: TodoService.todos
+                    }
 
                     delegate: RowLayout {
                         id: delegateRoot
@@ -296,7 +298,11 @@ Item {
                             radius: width / 2
                             onClicked: {
                                 if (Audio.sink?.audio) {
-                                    Audio.sink.audio.muted = !Audio.sink.audio.muted;
+                                    if (Audio.sink.audio.muted && Audio.sink.audio.volume === 0) {
+                                        Audio.setVolume(0.2);
+                                    } else {
+                                        Audio.sink.audio.muted = !Audio.sink.audio.muted;
+                                    }
                                 }
                             }
                         }
