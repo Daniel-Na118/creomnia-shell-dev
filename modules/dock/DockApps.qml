@@ -4,10 +4,10 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Hyprland
+import Creomnia.Config
 import qs.components
 import qs.components.containers
 import qs.services
-import qs.config
 
 Item {
     id: root
@@ -84,7 +84,7 @@ Item {
 
         Behavior on implicitWidth {
             Anim {
-                duration: Appearance.anim.durations.small
+                duration: Tokens.anim.durations.small
             }
         }
     }
@@ -136,7 +136,7 @@ Item {
             window: root.previewWindow
             item: root.dockContent
             rect.x: root.lastHoveredButton ? root.lastHoveredButton.mapToItem(root.dockContent, 0, 0).x : 0
-            rect.y: -(Appearance.padding.normal + 3)
+            rect.y: -(Tokens.padding.normal + 3)
             rect.width: root.lastHoveredButton?.width ?? 0
             rect.height: 0
             gravity: Edges.Top
@@ -152,11 +152,11 @@ Item {
         StyledRect {
             id: popupBackground
 
-            readonly property int padding: Appearance.padding.small
+            readonly property int padding: Tokens.padding.small
 
             anchors.fill: parent
             color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-            radius: Appearance.rounding.normal
+            radius: Tokens.rounding.normal
             implicitHeight: previewRow.implicitHeight + padding * 2
             implicitWidth: previewRow.implicitWidth + padding * 2
 
@@ -171,7 +171,7 @@ Item {
                     id: previewRow
 
                     anchors.centerIn: parent
-                    spacing: Appearance.spacing.small
+                    spacing: Tokens.spacing.small
 
                     Repeater {
                         model: ScriptModel {

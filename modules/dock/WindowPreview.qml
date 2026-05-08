@@ -3,10 +3,10 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Wayland
+import Creomnia.Config
 import qs.components
 import qs.components.controls
 import qs.services
-import qs.config
 
 StyledRect {
     id: root
@@ -14,12 +14,12 @@ StyledRect {
     required property Toplevel toplevel
 
     color: stateLayer.containsMouse ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 3) : "transparent"
-    radius: Appearance.rounding.small
+    radius: Tokens.rounding.small
 
     implicitWidth: layout.implicitWidth + padding * 2
     implicitHeight: layout.implicitHeight + padding * 2
 
-    readonly property int padding: Appearance.padding.small
+    readonly property int padding: Tokens.padding.small
 
     StateLayer {
         id: stateLayer
@@ -34,19 +34,19 @@ StyledRect {
 
         anchors.fill: parent
         anchors.margins: root.padding
-        spacing: Appearance.spacing.smaller
+        spacing: Tokens.spacing.smaller
 
         RowLayout {
             Layout.fillWidth: true
             Layout.maximumWidth: Config.dock.maxWindowPreviewWidth
-            spacing: Appearance.spacing.smaller
+            spacing: Tokens.spacing.smaller
 
             StyledText {
                 Layout.fillWidth: true
 
                 text: root.toplevel?.title ?? ""
                 color: Colours.palette.m3onSurface
-                font.pointSize: Appearance.font.size.small
+                font.pointSize: Tokens.font.size.small
                 elide: Text.ElideRight
             }
 
@@ -54,7 +54,7 @@ StyledRect {
                 icon: "close"
                 type: IconButton.Text
                 padding: 2
-                font.pointSize: Appearance.font.size.normal
+                font.pointSize: Tokens.font.size.normal
 
                 onClicked: root.toplevel?.close()
             }

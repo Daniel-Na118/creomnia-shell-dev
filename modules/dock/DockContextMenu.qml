@@ -3,9 +3,9 @@ pragma ComponentBehavior: Bound
 import QtQuick
 import Quickshell
 import Quickshell.Widgets
+import Creomnia.Config
 import qs.components
 import qs.services
-import qs.config
 
 PopupWindow {
     id: root
@@ -17,13 +17,13 @@ PopupWindow {
 
     readonly property int rowHeight: 28
     readonly property int separatorHeight: 9
-    readonly property int outerPadding: Appearance.padding.small
-    readonly property int rowHPadding: Appearance.padding.normal
+    readonly property int outerPadding: Tokens.padding.small
+    readonly property int rowHPadding: Tokens.padding.normal
     readonly property int iconSize: 14
-    readonly property int textIconSpacing: Appearance.spacing.small
+    readonly property int textIconSpacing: Tokens.spacing.small
     readonly property int minRowWidth: 160
     readonly property int maxRowWidth: 320
-    readonly property int gapToItem: Appearance.padding.normal + 3
+    readonly property int gapToItem: Tokens.padding.normal + 3
 
     function open() { visible = true; }
     function close() { visible = false; }
@@ -56,7 +56,7 @@ PopupWindow {
 
         anchors.fill: parent
         color: Colours.layer(Colours.palette.m3surfaceContainer, 2)
-        radius: Appearance.rounding.normal
+        radius: Tokens.rounding.normal
 
         implicitWidth: Math.min(root.maxRowWidth,
             Math.max(root.minRowWidth, menuColumn.implicitWidth + root.outerPadding * 2))
@@ -102,7 +102,7 @@ PopupWindow {
                     StyledRect {
                         visible: !rowItem.isSeparator
                         anchors.fill: parent
-                        radius: Appearance.rounding.small
+                        radius: Tokens.rounding.small
                         color: rowHover.containsMouse
                             ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2)
                             : "transparent"
@@ -133,7 +133,7 @@ PopupWindow {
                             anchors.rightMargin: root.rowHPadding
                             text: rowItem.modelData.label ?? ""
                             color: Colours.palette.m3onSurface
-                            font.pointSize: Appearance.font.size.small
+                            font.pointSize: Tokens.font.size.small
                             elide: Text.ElideRight
                         }
 

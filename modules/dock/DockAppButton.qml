@@ -4,9 +4,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
+import Creomnia.Config
 import qs.components
 import qs.services
-import qs.config
 import qs.utils
 
 Item {
@@ -135,7 +135,7 @@ Item {
             id: btn
 
             color: stateLayer.containsMouse ? Colours.layer(Colours.palette.m3surfaceContainerHighest, 2) : "transparent"
-            radius: Appearance.rounding.small
+            radius: Tokens.rounding.small
 
             Behavior on color {
                 CAnim {}
@@ -196,7 +196,7 @@ Item {
                     model: Math.min(root.toplevels.length, 3)
 
                     delegate: StyledRect {
-                        radius: Appearance.rounding.full
+                        radius: Tokens.rounding.full
                         implicitWidth: root.toplevels.length <= 3 ? root.countDotWidth : root.countDotHeight
                         implicitHeight: root.countDotHeight
                         color: root.appIsActive ? Colours.palette.m3primary : Qt.alpha(Colours.palette.m3onSurfaceVariant, 0.6)

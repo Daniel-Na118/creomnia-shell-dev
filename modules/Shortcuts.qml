@@ -2,9 +2,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Creomnia
+import Creomnia.Config
 import qs.components.misc
 import qs.services
-import qs.config
 import qs.modules.controlcenter
 
 Scope {
