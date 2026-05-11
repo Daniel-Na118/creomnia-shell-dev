@@ -34,7 +34,7 @@ Scope {
     }
 
     function cycle(direction: int): void {
-        Hypr.dispatch(`workspace ${direction > 0 ? "e+1" : "e-1"}`);
+        Hypr.dispatch(`workspace ${direction > 0 ? "r+1" : "r-1"}`);
     }
 
     Variants {

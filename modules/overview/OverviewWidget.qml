@@ -19,7 +19,11 @@ Item {
     readonly property var monitorData: HyprlandData.monitors.find(m => m.id === root.monitor?.id) ?? null
     readonly property int effectiveActiveWorkspaceId: Math.max(1, Math.min(100, monitor?.activeWorkspace?.id ?? 1))
     readonly property int workspacesShown: Config.overview.rows * Config.overview.columns
-    readonly property int workspaceGroup: Math.floor((effectiveActiveWorkspaceId - 1) / workspacesShown)
+    readonly property int monitorIndex: {
+        const idx = Hypr.monitors.values.findIndex(m => m.id === root.monitor?.id);
+        return idx >= 0 ? idx : 0;
+    }
+    readonly property int workspaceGroup: monitorIndex
 
     readonly property real overviewScale: Config.overview.scale
     readonly property real workspaceImplicitWidth: {
