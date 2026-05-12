@@ -519,3 +519,26 @@ the launcher only shows an odd number of wallpapers at one time. If you only hav
 
 yay -S quickshell-git libcava 
 sudo pacman -S --needed ddcutil brightnessctl networkmanager lm_sensors fish aubio libpipewire glibc gcc-libs ttf-material-symbols-variable (material-symbols-font) ttf-cascadia-code-nerd libqalculate cmake ninja
+
+
+
+### Config for Monitors
+~/.config/creomnia/shell.json
+"overview": {
+    "rows": 1,
+    "columns": 5
+}
+
+
+Find monitor name with hyprctl monitors
+~/.config/hypr/hyprland.conf
+workspace = 1,  monitor:DP-1, persistent:true
+  workspace = 2,  monitor:DP-1, persistent:true
+  workspace = 3,  monitor:DP-1, persistent:true
+  workspace = 4,  monitor:DP-1, persistent:true
+  workspace = 5,  monitor:DP-1, persistent:true
+  workspace = 6,  monitor:DP-2, persistent:true
+  workspace = 7,  monitor:DP-2, persistent:true
+  workspace = 8,  monitor:DP-2, persistent:true
+  workspace = 9,  monitor:DP-2, persistent:true
+  workspace = 10, monitor:DP-2, persistent:true
