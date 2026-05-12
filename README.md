@@ -533,12 +533,12 @@ sudo pacman -S --needed ddcutil brightnessctl networkmanager lm_sensors fish aub
 Find monitor name with hyprctl monitors
 ~/.config/hypr/hyprland.conf
 workspace = 1,  monitor:DP-1, persistent:true
-  workspace = 2,  monitor:DP-1, persistent:true
-  workspace = 3,  monitor:DP-1, persistent:true
-  workspace = 4,  monitor:DP-1, persistent:true
-  workspace = 5,  monitor:DP-1, persistent:true
-  workspace = 6,  monitor:DP-2, persistent:true
-  workspace = 7,  monitor:DP-2, persistent:true
-  workspace = 8,  monitor:DP-2, persistent:true
-  workspace = 9,  monitor:DP-2, persistent:true
-  workspace = 10, monitor:DP-2, persistent:true
+workspace = 2,  monitor:DP-1, persistent:true
+workspace = 3,  monitor:DP-1, persistent:true
+workspace = 4,  monitor:DP-1, persistent:true
+workspace = 5,  monitor:DP-1, persistent:true
+workspace = 6,  monitor:DP-2, persistent:true
+workspace = 7,  monitor:DP-2, persistent:true
+workspace = 8,  monitor:DP-2, persistent:true
+workspace = 9,  monitor:DP-2, persistent:true
+workspace = 10, monitor:DP-2, persistent:true
