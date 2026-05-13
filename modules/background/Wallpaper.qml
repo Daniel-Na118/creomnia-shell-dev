@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import Quickshell
 import qs.components
 import qs.components.filedialog
 import qs.components.images
@@ -11,7 +12,9 @@ import qs.utils
 Item {
     id: root
 
-    property string source: Wallpapers.current
+    required property ShellScreen screen
+
+    property string source: Wallpapers.currentFor(screen?.name ?? "")
     property Image current: one
     property bool completed
 
@@ -75,7 +78,7 @@ Item {
                             title: qsTr("Select a wallpaper")
                             filterLabel: qsTr("Image files")
                             filters: Images.validImageExtensions
-                            onAccepted: path => Wallpapers.setWallpaper(path)
+                            onAccepted: path => Wallpapers.setWallpaper(path, root.screen?.name ?? "")
                         }
 
                         StateLayer {

@@ -32,7 +32,7 @@ GridView {
     delegate: Item {
         required property var modelData
         required property int index
-        readonly property bool isCurrent: modelData && modelData.path === Wallpapers.actualCurrent
+        readonly property bool isCurrent: modelData && modelData.path === Wallpapers.currentFor(Hypr.focusedMonitor?.name ?? "")
         readonly property real itemMargin: Appearance.spacing.normal / 2
         readonly property real itemRadius: Appearance.rounding.normal
 
@@ -41,7 +41,7 @@ GridView {
 
         StateLayer {
             function onClicked(): void {
-                Wallpapers.setWallpaper(modelData.path);
+                Wallpapers.setWallpaper(modelData.path, Hypr.focusedMonitor?.name ?? "");
             }
 
             anchors.fill: parent

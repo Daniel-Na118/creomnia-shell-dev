@@ -12,17 +12,55 @@ Searcher {
     id: root
 
     readonly property string currentNamePath: `${Paths.state}/wallpaper/path.txt`
+    readonly property string perMonitorPath: `${Paths.state}/wallpaper/per-monitor.json`
     readonly property list<string> smartArg: Config.services.smartScheme ? [] : ["--no-smart"]
+    readonly property string primaryMonitorName: Hypr.monitors.values[0]?.name ?? ""
 
     property bool showPreview: false
     readonly property string current: showPreview ? previewPath : actualCurrent
     property string previewPath
     property string actualCurrent
     property bool previewColourLock
+    property var perMonitor: ({})
 
-    function setWallpaper(path: string): void {
-        actualCurrent = path;
-        Quickshell.execDetached(["creomnia", "wallpaper", "-f", path, ...smartArg]);
+    function setWallpaper(path: string, monitorName: string): void {
+        if (!monitorName || monitorName === root.primaryMonitorName) {
+            if (root.perMonitor[monitorName] !== undefined) {
+                const next = Object.assign({}, root.perMonitor);
+                delete next[monitorName];
+                root.perMonitor = next;
+                root._savePerMonitor();
+            }
+            actualCurrent = path;
+            Quickshell.execDetached(["creomnia", "wallpaper", "-f", path, ...smartArg]);
+        } else {
+            const next = Object.assign({}, root.perMonitor);
+            next[monitorName] = path;
+            root.perMonitor = next;
+            root._savePerMonitor();
+        }
+    }
+
+    function clearWallpaper(monitorName: string): void {
+        if (!monitorName || root.perMonitor[monitorName] === undefined)
+            return;
+        const next = Object.assign({}, root.perMonitor);
+        delete next[monitorName];
+        root.perMonitor = next;
+        root._savePerMonitor();
+    }
+
+    function currentFor(monitorName: string): string {
+        if (root.showPreview)
+            return root.previewPath;
+        if (monitorName && root.perMonitor[monitorName])
+            return root.perMonitor[monitorName];
+        return root.actualCurrent;
+    }
+
+    function _savePerMonitor(): void {
+        Quickshell.execDetached(["mkdir", "-p", `${Paths.state}/wallpaper`]);
+        perMonitorFile.setText(JSON.stringify(root.perMonitor, null, 2));
     }
 
     function preview(path: string): void {
@@ -47,12 +85,16 @@ Searcher {
         })
 
     IpcHandler {
-        function get(): string {
-            return root.actualCurrent;
+        function get(monitor: string): string {
+            return monitor ? root.currentFor(monitor) : root.actualCurrent;
         }
 
-        function set(path: string): void {
-            root.setWallpaper(path);
+        function set(path: string, monitor: string): void {
+            root.setWallpaper(path, monitor);
+        }
+
+        function clear(monitor: string): void {
+            root.clearWallpaper(monitor);
         }
 
         function list(): string {
@@ -69,6 +111,26 @@ Searcher {
         onLoaded: {
             root.actualCurrent = text().trim();
             root.previewColourLock = false;
+        }
+    }
+
+    FileView {
+        id: perMonitorFile
+
+        path: root.perMonitorPath
+        watchChanges: true
+        onFileChanged: reload()
+        onLoaded: {
+            try {
+                const parsed = JSON.parse(text());
+                root.perMonitor = (parsed && typeof parsed === "object") ? parsed : ({});
+            } catch (e) {
+                root.perMonitor = ({});
+            }
+        }
+        onLoadFailed: err => {
+            if (err === FileViewError.FileNotFound)
+                root.perMonitor = ({});
         }
     }
 

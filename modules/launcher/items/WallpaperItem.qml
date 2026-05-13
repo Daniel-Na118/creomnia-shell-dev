@@ -26,7 +26,7 @@ Item {
 
     StateLayer {
         function onClicked(): void {
-            Wallpapers.setWallpaper(root.modelData.path);
+            Wallpapers.setWallpaper(root.modelData.path, Hypr.focusedMonitor?.name ?? "");
             root.visibilities.launcher = false;
         }
 
