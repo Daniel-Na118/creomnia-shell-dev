@@ -14,7 +14,9 @@ Item {
 
     required property ShellScreen screen
 
-    property string source: Wallpapers.currentFor(screen?.name ?? "")
+    readonly property string monitorName: Hypr.monitorFor(screen)?.name ?? screen?.name ?? ""
+
+    property string source: Wallpapers.currentFor(monitorName)
     property Image current: one
     property bool completed
 
@@ -78,7 +80,7 @@ Item {
                             title: qsTr("Select a wallpaper")
                             filterLabel: qsTr("Image files")
                             filters: Images.validImageExtensions
-                            onAccepted: path => Wallpapers.setWallpaper(path, root.screen?.name ?? "")
+                            onAccepted: path => Wallpapers.setWallpaper(path, root.monitorName)
                         }
 
                         StateLayer {

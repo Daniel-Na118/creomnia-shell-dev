@@ -59,7 +59,6 @@ Searcher {
     }
 
     function _savePerMonitor(): void {
-        Quickshell.execDetached(["mkdir", "-p", `${Paths.state}/wallpaper`]);
         perMonitorFile.setText(JSON.stringify(root.perMonitor, null, 2));
     }
 
@@ -117,6 +116,8 @@ Searcher {
     FileView {
         id: perMonitorFile
 
+        property bool initialized: false
+
         path: root.perMonitorPath
         watchChanges: true
         onFileChanged: reload()
@@ -127,10 +128,16 @@ Searcher {
             } catch (e) {
                 root.perMonitor = ({});
             }
+            initialized = true;
         }
         onLoadFailed: err => {
-            if (err === FileViewError.FileNotFound)
+            if (err === FileViewError.FileNotFound && !initialized) {
                 root.perMonitor = ({});
+                initialized = true;
+            }
+        }
+        onSaveFailed: err => {
+            console.warn("Wallpapers: failed to save per-monitor wallpapers:", FileViewError.toString(err));
         }
     }
 
