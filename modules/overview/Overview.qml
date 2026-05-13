@@ -33,7 +33,9 @@ Scope {
         return Visibilities.getForActive()?.overview ?? false;
     }
 
-    function cycle(direction: int): void {
+    function cycle(direction: int, monitorName: string): void {
+        if (monitorName)
+            Hypr.dispatch(`focusmonitor ${monitorName}`);
         Hypr.dispatch(`workspace ${direction > 0 ? "r+1" : "r-1"}`);
     }
 
@@ -85,16 +87,16 @@ Scope {
                         root.close();
                         event.accepted = true;
                     } else if (event.key === Qt.Key_Left) {
-                        Hypr.dispatch("workspace r-1");
+                        root.cycle(-1, panelWindow.monitor?.name ?? "");
                         event.accepted = true;
                     } else if (event.key === Qt.Key_Right) {
-                        Hypr.dispatch("workspace r+1");
+                        root.cycle(1, panelWindow.monitor?.name ?? "");
                         event.accepted = true;
                     } else if (event.key === Qt.Key_Tab) {
                         if (event.modifiers & Qt.ShiftModifier)
-                            root.cycle(-1);
+                            root.cycle(-1, panelWindow.monitor?.name ?? "");
                         else
-                            root.cycle(1);
+                            root.cycle(1, panelWindow.monitor?.name ?? "");
                         event.accepted = true;
                     }
                 }
@@ -130,11 +132,11 @@ Scope {
         }
 
         function cycleNext(): void {
-            root.cycle(1);
+            root.cycle(1, "");
         }
 
         function cyclePrev(): void {
-            root.cycle(-1);
+            root.cycle(-1, "");
         }
 
         target: "overview"
