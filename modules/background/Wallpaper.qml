@@ -29,13 +29,11 @@ Item {
             one.update();
     }
 
-    Component.onCompleted: {
+    Component.onCompleted: Qt.callLater(() => {
         if (source)
-            Qt.callLater(() => {
-                one.update();
-                completed = true;
-            });
-    }
+            one.update();
+        completed = true;
+    })
 
     Loader {
         asynchronous: true
@@ -118,6 +116,8 @@ Item {
     component Img: CachingImage {
         id: img
 
+        readonly property bool active: root.current === img
+
         function update(): void {
             if (path === root.source)
                 root.current = this;
@@ -127,29 +127,20 @@ Item {
 
         anchors.fill: parent
 
-        opacity: 0
-        scale: Wallpapers.showPreview ? 1 : 0.8
+        opacity: active ? 1 : 0
+        scale: active ? 1 : (Wallpapers.showPreview ? 1 : 0.8)
 
         onStatusChanged: {
             if (status === Image.Ready)
                 root.current = this;
         }
 
-        states: State {
-            name: "visible"
-            when: root.current === img
-
-            PropertyChanges {
-                img.opacity: 1
-                img.scale: 1
-            }
+        Behavior on opacity {
+            Anim {}
         }
 
-        transitions: Transition {
-            Anim {
-                target: img
-                properties: "opacity,scale"
-            }
+        Behavior on scale {
+            Anim {}
         }
     }
 }
