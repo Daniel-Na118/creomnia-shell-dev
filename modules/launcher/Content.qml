@@ -86,7 +86,7 @@ Item {
                     if (list.showWallpapers) {
                         if (Colours.scheme === "dynamic" && currentItem.modelData.path !== Wallpapers.actualCurrent)
                             Wallpapers.previewColourLock = true;
-                        Wallpapers.setWallpaper(currentItem.modelData.path);
+                        Wallpapers.setWallpaper(currentItem.modelData.path, Hypr.focusedMonitor?.name ?? "");
                         root.visibilities.launcher = false;
                     } else if (text.startsWith(Config.launcher.actionPrefix)) {
                         if (text.startsWith(`${Config.launcher.actionPrefix}calc `))

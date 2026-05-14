@@ -54,7 +54,7 @@ PathView {
     }
 
     Component.onCompleted: currentIndex = Wallpapers.list.findIndex(w => w.path === Wallpapers.actualCurrent)
-    Component.onDestruction: Wallpapers.stopPreview()
+    Component.onDestruction: Qt.callLater(() => Wallpapers.stopPreview())
 
     onCurrentItemChanged: {
         if (currentItem)

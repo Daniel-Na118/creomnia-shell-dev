@@ -17,7 +17,7 @@ Item {
     readonly property string monitorName: Hypr.monitorFor(screen)?.name ?? screen?.name ?? ""
 
     property string source: Wallpapers.currentFor(monitorName)
-    property Image current: one
+    property Image current
     property bool completed
 
     onSourceChanged: {
